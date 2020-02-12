@@ -74,13 +74,38 @@ Mesh* Mesh::generaPoligono(GLuint numL,GLdouble rd)
     mesh->mNumVertices = numL;
     mesh->vVertices.reserve(mesh->mNumVertices);
 
-    GLdouble tempAng = 90;
-    GLdouble increment = 360 / numL;
+    GLdouble tempAng = 90.0;
+    GLdouble increment = 360.0 / numL;
 
     for (int i = 0; i < numL; i++) {
         mesh->vVertices.emplace_back(rd * cos(radians(tempAng)), rd * sin(radians(tempAng)), 0.0);
         tempAng += increment;
     }
    
+    return mesh;
+}
+//-------------------------------------------------------------------------
+
+Mesh* Mesh::generaSierpinsky(GLdouble rd, GLuint numP )
+{
+    Mesh* tri = generaPoligono(3, rd);
+    Mesh* mesh = new Mesh();
+
+    mesh->mPrimitive = GL_POINTS;
+
+    mesh->mNumVertices = numP;
+    mesh->vVertices.reserve(mesh->mNumVertices);
+
+    glm::dvec3 vTemp = tri->vVertices[rand() % 3];
+
+    for (int i = 0; i < numP; i++) {
+        mesh->vVertices.emplace_back(vTemp);
+        GLuint v = rand() % 3;
+        vTemp = dvec3((vTemp.x+ tri->vVertices[v].x)/2.0, (vTemp.y + tri->vVertices[v].y)/2.0, (vTemp.z + tri->vVertices[v].z) / 2.0);
+    }
+
+    delete tri;
+    tri = nullptr;
+
     return mesh;
 }
