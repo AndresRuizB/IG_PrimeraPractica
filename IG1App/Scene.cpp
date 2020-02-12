@@ -16,7 +16,12 @@ void Scene::init()
 
     // Graphics objects (entities) of the scene
 	gObjects.push_back(new EjesRGB(400.0));
-	
+	Poligono* triangulo = new Poligono(3, 150);
+	triangulo->changeColor({1,1,0,0});
+	gObjects.push_back(triangulo);
+	Poligono* circunferencia = new Poligono(360, 150);
+	circunferencia->changeColor({ 1,0,0.85,0 });
+	gObjects.push_back(circunferencia);
 }
 //-------------------------------------------------------------------------
 void Scene::free() 

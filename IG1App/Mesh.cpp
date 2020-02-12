@@ -65,3 +65,22 @@ Mesh * Mesh::createRGBAxes(GLdouble l)
 }
 //-------------------------------------------------------------------------
 
+Mesh* Mesh::generaPoligono(GLuint numL,GLdouble rd)
+{
+    Mesh* mesh = new Mesh();
+    
+    mesh->mPrimitive = GL_LINE_LOOP;
+
+    mesh->mNumVertices = numL;
+    mesh->vVertices.reserve(mesh->mNumVertices);
+
+    GLdouble tempAng = 90;
+    GLdouble increment = 360 / numL;
+
+    for (int i = 0; i < numL; i++) {
+        mesh->vVertices.emplace_back(rd * cos(radians(tempAng)), rd * sin(radians(tempAng)), 0.0);
+        tempAng += increment;
+    }
+   
+    return mesh;
+}

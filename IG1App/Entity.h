@@ -12,7 +12,7 @@
 class Abs_Entity  // abstract class
 {
 public:
-	Abs_Entity(): mModelMat(1.0) {};  // 4x4 identity matrix
+	Abs_Entity(): mModelMat(1.0), mColor(0) {};  // 4x4 identity matrix
 	virtual ~Abs_Entity() {};
 
 	Abs_Entity(const Abs_Entity& e) = delete;  // no copy constructor
@@ -24,11 +24,14 @@ public:
 	glm::dmat4 const& modelMat() const { return mModelMat; };
 	void setModelMat(glm::dmat4 const& aMat) { mModelMat = aMat; };
 	
+	void changeColor(glm::dvec4 const& color) {mColor = color; };
+
 protected:
 
 	Mesh* mMesh = nullptr;   // the mesh
 	glm::dmat4 mModelMat;    // modeling matrix
-	
+	glm::dvec4 mColor;
+
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const; 
 };
@@ -39,6 +42,16 @@ class EjesRGB : public Abs_Entity
 public:
 	explicit EjesRGB(GLdouble l);
 	~EjesRGB();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+
+class Poligono : public Abs_Entity
+{
+public:
+	explicit Poligono(GLuint numL,GLdouble rd);
+	~Poligono();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 

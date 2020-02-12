@@ -1,9 +1,2 @@
-﻿  Camera.cpp
-  Entity.cpp
-  IG1App.cpp
-  main.cpp
-  Mesh.cpp
-  Scene.cpp
-  Viewport.cpp
-  Generando código...
+﻿  Scene.cpp
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe
