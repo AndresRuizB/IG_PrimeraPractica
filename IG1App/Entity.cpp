@@ -84,10 +84,61 @@ void Sierpinsky::render(dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
-		glPointSize(0.1);
+		glPointSize(2);
 		glColor4dv(value_ptr(mColor));
 		mMesh->render();
 		glColor3d(1, 1, 1);
 		glPointSize(1);
+	}
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+TrianguloRGB::TrianguloRGB(GLdouble rd) : Abs_Entity()
+{
+	mMesh = Mesh::generaTrianguloRGB(rd);
+}
+//-------------------------------------------------------------------------
+
+TrianguloRGB::~TrianguloRGB()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void TrianguloRGB::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		mMesh->render();
+		glColor3d(1, 1, 1);
+	}
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+RectanguloRGB::RectanguloRGB(GLdouble w, GLdouble h) : Abs_Entity()
+{
+	mMesh = Mesh::generaRectanguloRGB(w,h);
+}
+//-------------------------------------------------------------------------
+
+RectanguloRGB::~RectanguloRGB()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void RectanguloRGB::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		mMesh->render();
+		glColor3d(1, 1, 1);
 	}
 }

@@ -66,5 +66,24 @@ public:
 };
 
 //-------------------------------------------------------------------------
+class TrianguloRGB : public Abs_Entity
+{
+public:
+	explicit TrianguloRGB(GLdouble rd);
+	~TrianguloRGB();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+class RectanguloRGB : public Abs_Entity
+{
+public:
+	explicit RectanguloRGB(GLdouble w, GLdouble h);
+	~RectanguloRGB();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+
 
 #endif //_H_Entities_H_

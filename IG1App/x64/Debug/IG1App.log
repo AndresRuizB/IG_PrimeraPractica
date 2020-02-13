@@ -1,2 +1,4 @@
-﻿  Scene.cpp
+﻿  Mesh.cpp
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(80,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(101,20): warning C4018: '<': no coinciden signed/unsigned
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe
