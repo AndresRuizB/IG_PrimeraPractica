@@ -18,21 +18,22 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 
-	/*
+	
 	Poligono* triangulo = new Poligono(3, 150);
 	triangulo->changeColor({1,1,0,0});
 	gObjects.push_back(triangulo);
 	Poligono* circunferencia = new Poligono(200, 150);
 	circunferencia->changeColor({ 1,0,0.85,0 });
 	gObjects.push_back(circunferencia);
-
+	/*
 	Sierpinsky* s = new Sierpinsky(1000,200);
 	gObjects.push_back(s);	
 	TrianguloRGB* tri = new TrianguloRGB(100.0);
 	gObjects.push_back(tri);
-	*/
+	
 	RectanguloRGB* rect = new RectanguloRGB(100, 200);
 	gObjects.push_back(rect);
+	*/
 }
 //-------------------------------------------------------------------------
 void Scene::free() 

@@ -86,7 +86,10 @@ void Sierpinsky::render(dmat4 const& modelViewMat) const
 		upload(aMat);
 		glPointSize(2);
 		glColor4dv(value_ptr(mColor));
+		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
 		mMesh->render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(1, 1, 1);
 		glPointSize(1);
 	}
@@ -112,7 +115,10 @@ void TrianguloRGB::render(dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 		glColor4dv(value_ptr(mColor));
+		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_BACK, GL_POINT);
 		mMesh->render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(1, 1, 1);
 	}
 }
