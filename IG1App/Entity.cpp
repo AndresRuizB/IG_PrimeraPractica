@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 
@@ -7,7 +8,13 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
-void Abs_Entity::upload(dmat4 const& modelViewMat) const 
+void Abs_Entity::update()
+{
+}
+
+//-------------------------------------------------------------------------
+
+void Abs_Entity::upload(dmat4 const& modelViewMat) const
 { 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
@@ -84,12 +91,9 @@ void Sierpinsky::render(dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
-		glPointSize(2);
+		glPointSize(1);
 		glColor4dv(value_ptr(mColor));
-		glPolygonMode(GL_BACK, GL_LINE);
-		glPolygonMode(GL_BACK, GL_POINT);
 		mMesh->render();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(1, 1, 1);
 		glPointSize(1);
 	}
@@ -116,11 +120,25 @@ void TrianguloRGB::render(dmat4 const& modelViewMat) const
 		upload(aMat);
 		glColor4dv(value_ptr(mColor));
 		glPolygonMode(GL_BACK, GL_LINE);
-		glPolygonMode(GL_BACK, GL_POINT);
 		mMesh->render();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(1, 1, 1);
 	}
+}
+
+//-------------------------------------------------------------------------
+
+void TrianguloRGB::update()	//la animacion del triangulo
+{
+	GLdouble radiusTranslation = 300, speedRotation = 8.0, speedTranslation = 4.0;
+
+	dmat4 mI = dmat4(1);	//matriz unidad
+	dmat4 rMat = rotate(mI, radians(speedRotation*frame), dvec3(0.0, 0.0, 1.0));
+	dmat4 tMat = translate(mI, dvec3(cos(radians(speedTranslation *frame))* radiusTranslation,
+									 sin(radians(speedTranslation *frame))* radiusTranslation, 0.0));
+
+	setModelMat( tMat* rMat* mI);
+	frame++;
 }
 
 //-------------------------------------------------------------------------
@@ -144,7 +162,9 @@ void RectanguloRGB::render(dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 		glColor4dv(value_ptr(mColor));
+		glPolygonMode(GL_BACK, GL_POINT);
 		mMesh->render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glColor3d(1, 1, 1);
 	}
 }

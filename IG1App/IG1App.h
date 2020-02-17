@@ -64,8 +64,8 @@ protected:
 	
 	bool mStop = false; // main event processing loop
 	int mWinId = 0;	    // window's identifier
-	int mWinW = 800;    // window's width 
-	int mWinH = 600;    // window's height
+	int mWinW = 1920;    // window's width 
+	int mWinH = 1080;    // window's height
 };
 //-------------------------------------------------------------------------
 

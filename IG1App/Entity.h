@@ -4,7 +4,7 @@
 
 #include <GL/freeglut.h>
 #include <glm.hpp>
-
+#include <iostream>
 #include "Mesh.h"
 
 //-------------------------------------------------------------------------
@@ -19,6 +19,7 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete;  // no copy assignment
 
 	virtual void render(glm::dmat4 const& modelViewMat) const = 0;  // abstract method
+	virtual void update();  // abstract method
 
 	// modeling matrix
 	glm::dmat4 const& modelMat() const { return mModelMat; };
@@ -31,6 +32,7 @@ protected:
 	Mesh* mMesh = nullptr;   // the mesh
 	glm::dmat4 mModelMat;    // modeling matrix
 	glm::dvec4 mColor;
+	int frame = 0;
 
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const; 
@@ -72,6 +74,7 @@ public:
 	explicit TrianguloRGB(GLdouble rd);
 	~TrianguloRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
 };
 
 //-------------------------------------------------------------------------

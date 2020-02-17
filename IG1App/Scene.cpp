@@ -7,36 +7,42 @@ using namespace glm;
 //-------------------------------------------------------------------------
 
 void Scene::init()
-{ 
+{
 	setGL();  // OpenGL settings
 
 	// allocate memory and load resources
-    // Lights
-    // Textures
+	// Lights
+	// Textures
 
-    // Graphics objects (entities) of the scene
+	// Graphics objects (entities) of the scene
 
-	gObjects.push_back(new EjesRGB(400.0));
+	gObjects.push_back(new EjesRGB(400.0));	
 
-	
-	Poligono* triangulo = new Poligono(3, 150);
-	triangulo->changeColor({1,1,0,0});
+	Poligono* triangulo = new Poligono(3,600);
+	triangulo->changeColor({ 1,1,0,0 });
 	gObjects.push_back(triangulo);
-	Poligono* circunferencia = new Poligono(200, 150);
+	triangulo->setModelMat(translate(triangulo->modelMat(), dvec3(0.0, 0.0, -90.0)));
+	triangulo->setModelMat(rotate(triangulo->modelMat(),radians(180.0), dvec3(0.0, 0.0, 1.0)));
+
+	Poligono* circunferencia = new Poligono(200, 300);
 	circunferencia->changeColor({ 1,0,0.85,0 });
 	gObjects.push_back(circunferencia);
-	/*
-	Sierpinsky* s = new Sierpinsky(1000,200);
-	gObjects.push_back(s);	
-	TrianguloRGB* tri = new TrianguloRGB(100.0);
-	gObjects.push_back(tri);
+
+	Sierpinsky* s = new Sierpinsky(100000, 300);
+	gObjects.push_back(s);
+	s->changeColor({ 1.0, 1.0, 0.0, 1.0 });
 	
-	RectanguloRGB* rect = new RectanguloRGB(100, 200);
+	RectanguloRGB* rect = new RectanguloRGB(1920, 1080);
 	gObjects.push_back(rect);
-	*/
+	rect->setModelMat(translate(rect->modelMat(), dvec3(0.0,0.0,-100.0)));
+
+	TrianguloRGB* triRGB = new TrianguloRGB(100.0);
+	gObjects.push_back(triRGB);
+	triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
+
 }
 //-------------------------------------------------------------------------
-void Scene::free() 
+void Scene::free()
 { // release memory and resources   
 
 	for (Abs_Entity* el : gObjects)
@@ -45,7 +51,7 @@ void Scene::free()
 	}
 }
 //-------------------------------------------------------------------------
-void Scene::setGL() 
+void Scene::setGL()
 {
 	// OpenGL basic setting
 	glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque)
@@ -53,20 +59,29 @@ void Scene::setGL()
 
 }
 //-------------------------------------------------------------------------
-void Scene::resetGL() 
+void Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 }
 //-------------------------------------------------------------------------
 
-void Scene::render(Camera const& cam) const 
+void Scene::update()
+{
+	for (Abs_Entity* e : gObjects)
+	{
+	  e->update();
+	}
+}
+//-------------------------------------------------------------------------
+
+void Scene::render(Camera const& cam) const
 {
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)
 	{
-	  el->render(cam.viewMat());
+		el->render(cam.viewMat());
 	}
 }
 //-------------------------------------------------------------------------
