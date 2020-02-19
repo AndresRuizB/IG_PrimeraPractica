@@ -168,3 +168,51 @@ void RectanguloRGB::render(dmat4 const& modelViewMat) const
 		glColor3d(1, 1, 1);
 	}
 }
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Estrella3D::Estrella3D(GLdouble re, GLdouble ri, GLdouble np, GLdouble h) : Abs_Entity()
+{
+	mMesh = Mesh::generaEstrella3D(re, ri, np, h);
+}
+//-------------------------------------------------------------------------
+
+Estrella3D::~Estrella3D()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Estrella3D::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+
+		dmat4 mI = dmat4(1);
+		dmat4 rMat = rotate(mI, radians(180.0), dvec3(0.0, 1.0, 0.0));
+		aMat = modelViewMat * mModelMat * rMat;
+		upload(aMat);
+		mMesh->render();
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glColor3d(1, 1, 1);
+	}
+}
+//-------------------------------------------------------------------------
+
+void Estrella3D::update()	//la animacion del triangulo
+{
+	GLdouble radiusTranslation = 300, speedRotation = 8.0, speedTranslation = 4.0;
+
+	dmat4 mI = dmat4(1);	//matriz unidad
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 1.0));
+
+	setModelMat( rMat * mI);
+	frame++;
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------

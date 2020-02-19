@@ -16,8 +16,9 @@ void Scene::init()
 
 	// Graphics objects (entities) of the scene
 
-	gObjects.push_back(new EjesRGB(400.0));	
+	gObjects.push_back(new EjesRGB(400.0));
 
+	/*
 	Poligono* triangulo = new Poligono(3,600);
 	triangulo->changeColor({ 1,1,0,0 });
 	gObjects.push_back(triangulo);
@@ -31,7 +32,7 @@ void Scene::init()
 	Sierpinsky* s = new Sierpinsky(100000, 300);
 	gObjects.push_back(s);
 	s->changeColor({ 1.0, 1.0, 0.0, 1.0 });
-	
+
 	RectanguloRGB* rect = new RectanguloRGB(1920, 1080);
 	gObjects.push_back(rect);
 	rect->setModelMat(translate(rect->modelMat(), dvec3(0.0,0.0,-100.0)));
@@ -39,8 +40,14 @@ void Scene::init()
 	TrianguloRGB* triRGB = new TrianguloRGB(100.0);
 	gObjects.push_back(triRGB);
 	triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
+	*/
+
+	Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
+	gObjects.push_back(estrella);
 
 }
+
+
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   

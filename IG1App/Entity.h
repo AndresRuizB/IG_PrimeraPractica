@@ -88,5 +88,15 @@ public:
 
 //-------------------------------------------------------------------------
 
+class Estrella3D : public Abs_Entity
+{
+public:
+	explicit Estrella3D(GLdouble re, GLdouble ri, GLdouble np, GLdouble h);
+	~Estrella3D();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
+};
+
+//-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_
