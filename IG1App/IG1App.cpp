@@ -72,6 +72,7 @@ void IG1App::iniWinOpenGL()
 	glutKeyboardFunc(s_key);
 	glutSpecialFunc(s_specialKey);
 	glutDisplayFunc(s_display);
+	glutIdleFunc(s_update);
 	
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
@@ -85,6 +86,22 @@ void IG1App::free()
 	delete mViewPort; mViewPort = nullptr;
 }
 //-------------------------------------------------------------------------
+
+void IG1App::update()
+{
+	if (updating){
+
+		if ((glutGet(GLUT_ELAPSED_TIME) - mLastUpdateTime) > 17) { //a 60 fps, hay 16.6666 ms entre frame y frame
+
+			mScene->update();
+			display();
+			mLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
+		}
+	}
+
+}
+//-------------------------------------------------------------------------
+
 
 void IG1App::display() const   
 {  // double buffering
@@ -129,7 +146,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->set2D();
 		break;
 	case 'u':
-		mScene->update();
+		updating = !updating;
 		break;
 	case '1':
 		delete mScene;
@@ -186,4 +203,5 @@ void IG1App::specialKey(int key, int x, int y)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to display()
 }
 //-------------------------------------------------------------------------
+
 

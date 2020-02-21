@@ -206,7 +206,7 @@ void Estrella3D::render(dmat4 const& modelViewMat) const
 
 void Estrella3D::update()	//la animacion de la estrella
 {
-	GLdouble radiusTranslation = 300, speedRotation = 8.0, speedTranslation = 4.0;
+	GLdouble radiusTranslation = 300, speedRotation = 4.0, speedTranslation = 4.0;
 
 	dmat4 mI = dmat4(1);	//matriz unidad
 	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.9));
