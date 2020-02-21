@@ -15,26 +15,26 @@ void Abs_Entity::update()
 //-------------------------------------------------------------------------
 
 void Abs_Entity::upload(dmat4 const& modelViewMat) const
-{ 
+{
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
+EjesRGB::EjesRGB(GLdouble l) : Abs_Entity()
 {
-  mMesh = Mesh::createRGBAxes(l);
+	mMesh = Mesh::createRGBAxes(l);
 }
 //-------------------------------------------------------------------------
 
-EjesRGB::~EjesRGB() 
-{ 
-	delete mMesh; mMesh = nullptr; 
+EjesRGB::~EjesRGB()
+{
+	delete mMesh; mMesh = nullptr;
 };
 //-------------------------------------------------------------------------
 
-void EjesRGB::render(dmat4 const& modelViewMat) const 
+void EjesRGB::render(dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
@@ -133,11 +133,11 @@ void TrianguloRGB::update()	//la animacion del triangulo
 	GLdouble radiusTranslation = 300, speedRotation = 8.0, speedTranslation = 4.0;
 
 	dmat4 mI = dmat4(1);	//matriz unidad
-	dmat4 rMat = rotate(mI, radians(speedRotation*frame), dvec3(0.0, 0.0, 1.0));
-	dmat4 tMat = translate(mI, dvec3(cos(radians(speedTranslation *frame))* radiusTranslation,
-									 sin(radians(speedTranslation *frame))* radiusTranslation, 0.0));
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 0.0, 1.0));
+	dmat4 tMat = translate(mI, dvec3(cos(radians(speedTranslation * frame)) * radiusTranslation,
+		sin(radians(speedTranslation * frame)) * radiusTranslation, 0.0));
 
-	setModelMat( tMat* rMat* mI);
+	setModelMat(tMat * rMat * mI);
 	frame++;
 }
 
@@ -146,7 +146,7 @@ void TrianguloRGB::update()	//la animacion del triangulo
 
 RectanguloRGB::RectanguloRGB(GLdouble w, GLdouble h) : Abs_Entity()
 {
-	mMesh = Mesh::generaRectanguloRGB(w,h);
+	mMesh = Mesh::generaRectanguloRGB(w, h);
 }
 //-------------------------------------------------------------------------
 
@@ -204,15 +204,42 @@ void Estrella3D::render(dmat4 const& modelViewMat) const
 }
 //-------------------------------------------------------------------------
 
-void Estrella3D::update()	//la animacion del triangulo
+void Estrella3D::update()	//la animacion de la estrella
 {
 	GLdouble radiusTranslation = 300, speedRotation = 8.0, speedTranslation = 4.0;
 
 	dmat4 mI = dmat4(1);	//matriz unidad
-	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 1.0));
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.9));
 
-	setModelMat( rMat * mI);
+	setModelMat( rMat *  mI);
 	frame++;
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Caja::Caja(GLdouble ld) : Abs_Entity()
+{
+	mMesh = Mesh::generaContCubo(ld);
+}
+//-------------------------------------------------------------------------
+
+Caja::~Caja()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Caja::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		mMesh->render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glColor3d(1, 1, 1);
+	}
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------

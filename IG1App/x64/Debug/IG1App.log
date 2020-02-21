@@ -1,6 +1,2 @@
-﻿  Mesh.cpp
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(80,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(101,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(173,30): warning C4244: '=': conversión de 'GLdouble' a 'GLuint'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(180,20): warning C4018: '<': no coinciden signed/unsigned
+﻿  IG1App.cpp
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe

@@ -177,12 +177,38 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble ri, GLdouble np, GLdouble h)
 	GLdouble tempAng = 90, increment = 360 / np;
 
 
-	for (int i = 0; i < mesh->mNumVertices-2; i+=2) {
+	for (int i = 0; i < mesh->mNumVertices - 1; i += 2) {
 		mesh->vVertices.emplace_back(re * cos(radians(tempAng)), re * sin(radians(tempAng)), h);
-		mesh->vVertices.emplace_back(ri * cos(radians(tempAng - increment/2)), ri * sin(radians(tempAng- increment/2)), h);
+		mesh->vVertices.emplace_back(ri * cos(radians(tempAng - increment / 2)), ri * sin(radians(tempAng - increment / 2)), h);
 		tempAng -= increment;
 	}
 
 	return mesh;
-	
+
+}
+
+//-------------------------------------------------------------------------
+
+Mesh* Mesh::generaContCubo(GLdouble ld)
+{
+
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+
+	mesh->vVertices.emplace_back(0.0, ld, ld); //v0
+	mesh->vVertices.emplace_back(0.0, 0.0, ld); //v1
+	mesh->vVertices.emplace_back(ld, ld, ld); //v2
+	mesh->vVertices.emplace_back(ld, 0.0, ld); //v3
+	mesh->vVertices.emplace_back(ld, ld, 0.0); //v4
+	mesh->vVertices.emplace_back(ld, 0.0, 0.0); //v5
+	mesh->vVertices.emplace_back(0.0, ld, 0.0); //v6
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0); //v8
+	mesh->vVertices.emplace_back(0.0, ld, ld); //v9 == v0
+	mesh->vVertices.emplace_back(0.0, 0.0, ld); //v10 == v1
+
+	return mesh;
+
 }

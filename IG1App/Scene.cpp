@@ -18,32 +18,42 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 
-	/*
-	Poligono* triangulo = new Poligono(3,600);
-	triangulo->changeColor({ 1,1,0,0 });
-	gObjects.push_back(triangulo);
-	triangulo->setModelMat(translate(triangulo->modelMat(), dvec3(0.0, 0.0, -90.0)));
-	triangulo->setModelMat(rotate(triangulo->modelMat(),radians(180.0), dvec3(0.0, 0.0, 1.0)));
+	if (mId == 0 ) {
+	
+		Poligono* triangulo = new Poligono(3, 600);
+		triangulo->changeColor({ 1,1,0,0 });
+		gObjects.push_back(triangulo);
+		triangulo->setModelMat(translate(triangulo->modelMat(), dvec3(0.0, 0.0, -90.0)));
+		triangulo->setModelMat(rotate(triangulo->modelMat(), radians(180.0), dvec3(0.0, 0.0, 1.0)));
 
-	Poligono* circunferencia = new Poligono(200, 300);
-	circunferencia->changeColor({ 1,0,0.85,0 });
-	gObjects.push_back(circunferencia);
+		Poligono* circunferencia = new Poligono(200, 300);
+		circunferencia->changeColor({ 1,0,0.85,0 });
+		gObjects.push_back(circunferencia);
 
-	Sierpinsky* s = new Sierpinsky(100000, 300);
-	gObjects.push_back(s);
-	s->changeColor({ 1.0, 1.0, 0.0, 1.0 });
+		Sierpinsky* s = new Sierpinsky(100000, 300);
+		gObjects.push_back(s);
+		s->changeColor({ 1.0, 1.0, 0.0, 1.0 });
 
-	RectanguloRGB* rect = new RectanguloRGB(1920, 1080);
-	gObjects.push_back(rect);
-	rect->setModelMat(translate(rect->modelMat(), dvec3(0.0,0.0,-100.0)));
+		RectanguloRGB* rect = new RectanguloRGB(1920, 1080);
+		gObjects.push_back(rect);
+		rect->setModelMat(translate(rect->modelMat(), dvec3(0.0, 0.0, -100.0)));
 
-	TrianguloRGB* triRGB = new TrianguloRGB(100.0);
-	gObjects.push_back(triRGB);
-	triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
-	*/
+		TrianguloRGB* triRGB = new TrianguloRGB(100.0);
+		gObjects.push_back(triRGB);
+		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));		
 
-	Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
-	gObjects.push_back(estrella);
+	}
+	else if (mId == 1) {
+
+		Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
+		gObjects.push_back(estrella);
+
+		Caja* caja = new Caja(100);
+		caja->setModelMat(translate(caja->modelMat(), dvec3(400.0, 0.0, 0.0)));
+		gObjects.push_back(caja);
+
+	}
+	
 
 }
 
@@ -70,6 +80,11 @@ void Scene::resetGL()
 {
 	glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
+}
+//-------------------------------------------------------------------------
+void Scene::setState(int id)
+{
+	Scene::mId = id;
 }
 //-------------------------------------------------------------------------
 
