@@ -21,6 +21,7 @@ public:
 	static Mesh* generaRectanguloRGB(GLdouble w, GLdouble h);
 	static Mesh* generaEstrella3D(GLdouble re, GLdouble ri, GLdouble np, GLdouble h);
 	static Mesh* generaContCubo(GLdouble ld);
+	static Mesh* generaEstrellaTextCor(GLdouble re, GLdouble ri, GLuint np, GLdouble h);
 
 	Mesh() {};
 	virtual ~Mesh() {};
@@ -40,6 +41,7 @@ protected:
 	GLuint mNumVertices = 0;  // number of elements ( = vVertices.size())
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
+	std::vector<glm::dvec2> vTextCoords;    // texture data array
 	virtual void draw() const;
 };
 //-------------------------------------------------------------------------

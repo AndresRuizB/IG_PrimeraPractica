@@ -243,3 +243,48 @@ void Caja::render(dmat4 const& modelViewMat) const
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
+
+Estrella3DText::Estrella3DText(GLdouble re, GLdouble ri, GLdouble np, GLdouble h) : Abs_Entity()
+{
+	mMesh = Mesh::generaEstrellaTextCor(re, ri, np, h);
+}
+//-------------------------------------------------------------------------
+
+Estrella3DText::~Estrella3DText()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Estrella3DText::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+		dmat4 mI = dmat4(1);
+		dmat4 rMat = rotate(mI, radians(180.0), dvec3(0.0, 1.0, 0.0));
+		aMat = modelViewMat * mModelMat * rMat;
+		upload(aMat);
+		mMesh->render();
+
+		glColor3d(1, 1, 1);
+	}
+}
+//-------------------------------------------------------------------------
+
+void Estrella3DText::update()	//la animacion de la estrella
+{
+	GLdouble radiusTranslation = 300, speedRotation = 4.0, speedTranslation = 4.0;
+
+	dmat4 mI = dmat4(1);	//matriz unidad
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.9));
+
+	setModelMat(rMat * mI);
+	frame++;
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------

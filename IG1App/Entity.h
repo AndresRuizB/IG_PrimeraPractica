@@ -6,6 +6,7 @@
 #include <glm.hpp>
 #include <iostream>
 #include "Mesh.h"
+#include "Texture.h"
 
 //-------------------------------------------------------------------------
 
@@ -27,9 +28,11 @@ public:
 	
 	void changeColor(glm::dvec4 const& color) {mColor = color; };
 
+	void setTexture(Texture* tex) { mTexture = tex; };
 protected:
 
 	Mesh* mMesh = nullptr;   // the mesh
+	Texture* mTexture = nullptr;
 	glm::dmat4 mModelMat;    // modeling matrix
 	glm::dvec4 mColor;
 	int frame = 0;
@@ -108,5 +111,17 @@ public:
 };
 
 //-------------------------------------------------------------------------
+
+class Estrella3DText : public Abs_Entity
+{
+public:
+	explicit Estrella3DText(GLdouble re, GLdouble ri, GLdouble np, GLdouble h);
+	~Estrella3DText();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
+};
+
+//-------------------------------------------------------------------------
+
 
 #endif //_H_Entities_H_

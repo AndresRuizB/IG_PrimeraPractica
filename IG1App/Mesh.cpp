@@ -23,10 +23,16 @@ void Mesh::render() const
 			glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
 		}
 
+		if (vTextCoords.size() > 0) {
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTextCoords.data());
+		}
+
 		draw();
 
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	}
 }
 //-------------------------------------------------------------------------
@@ -211,4 +217,29 @@ Mesh* Mesh::generaContCubo(GLdouble ld)
 
 	return mesh;
 
+}
+
+//-------------------------------------------------------------------------
+
+Mesh* Mesh::generaEstrellaTextCor(GLdouble re, GLdouble ri, GLuint np, GLdouble h) {
+
+	Mesh* mesh = Mesh::generaEstrella3D(re, ri, np, h);
+
+	mesh->vTextCoords.reserve(2.0 * np + 2.0);
+	mesh->vTextCoords.emplace_back(0.5, 0.5);
+
+	for (int i = 0; i < ((2.0*np+2) / 8); i++) {
+
+		mesh->vTextCoords.emplace_back(0, 0);
+		mesh->vTextCoords.emplace_back(0, 0.5);
+		mesh->vTextCoords.emplace_back(0, 1);
+		mesh->vTextCoords.emplace_back(0.5, 1);
+		mesh->vTextCoords.emplace_back(1, 1);
+		mesh->vTextCoords.emplace_back(1, 0.5);
+		mesh->vTextCoords.emplace_back(1, 0);
+		mesh->vTextCoords.emplace_back(0.5, 0);
+	}
+
+
+	return mesh;
 }
