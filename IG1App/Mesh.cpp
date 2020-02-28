@@ -228,7 +228,7 @@ Mesh* Mesh::generaEstrellaTextCor(GLdouble re, GLdouble ri, GLuint np, GLdouble 
 	mesh->vTextCoords.reserve(2.0 * np + 2.0);
 	mesh->vTextCoords.emplace_back(0.5, 0.5);
 
-	for (int i = 0; i < ((2.0*np+2) / 8); i++) {
+	for (int i = 0; i < ((2.0 * np + 2) / 8); i++) {
 
 		mesh->vTextCoords.emplace_back(0, 0);
 		mesh->vTextCoords.emplace_back(0, 0.5);
@@ -240,6 +240,39 @@ Mesh* Mesh::generaEstrellaTextCor(GLdouble re, GLdouble ri, GLuint np, GLdouble 
 		mesh->vTextCoords.emplace_back(0.5, 0);
 	}
 
+
+	return mesh;
+}
+
+//-------------------------------------------------------------------------
+
+Mesh* Mesh::generaRectanguloTextCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh) {
+
+	Mesh* mesh = Mesh::generaRectangulo(w, h);
+
+	mesh->vTextCoords.reserve(4);
+	mesh->vTextCoords.emplace_back(0, 1 * rh);
+	mesh->vTextCoords.emplace_back(0, 0);
+	mesh->vTextCoords.emplace_back(1 * rw, 1 * rh);
+	mesh->vTextCoords.emplace_back(1 * rw, 0);
+
+	return mesh;
+}
+//-------------------------------------------------------------------------
+
+Mesh* Mesh::generaCajaTextCor(GLdouble nl) {
+
+	Mesh* mesh = Mesh::generaContCubo (nl);
+
+	mesh->vTextCoords.reserve(10);
+		
+	for (int i = 0; i < 3; i++) {
+
+		mesh->vTextCoords.emplace_back(0.0, 1.0);
+		mesh->vTextCoords.emplace_back(0.0, 0.0);
+		mesh->vTextCoords.emplace_back(1.0, 1.0);
+		mesh->vTextCoords.emplace_back(1.0, 0.0);
+	}	
 
 	return mesh;
 }

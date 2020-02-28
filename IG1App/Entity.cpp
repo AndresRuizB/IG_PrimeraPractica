@@ -288,3 +288,98 @@ void Estrella3DText::update()	//la animacion de la estrella
 }
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
+
+Suelo::Suelo(GLdouble w, GLdouble h, GLuint rw, GLuint rh) : Abs_Entity()
+{
+	mMesh = Mesh::generaRectanguloTextCor(w, h, rw, rh);
+	this->setModelMat(rotate(this->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
+}
+//-------------------------------------------------------------------------
+
+Suelo::~Suelo()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Suelo::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+		glColor3d(1, 1, 1);
+	}
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+CajaText::CajaText(GLdouble ld) : Abs_Entity()
+{
+	mMesh = Mesh::generaCajaTextCor(ld);
+}
+//-------------------------------------------------------------------------
+
+CajaText::~CajaText()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void CajaText::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+
+		glCullFace(GL_FRONT);
+		mTextureInside->bind(GL_REPLACE);
+		mMesh->render();
+
+
+		glCullFace(GL_FRONT / GL_BACK);
+		glDisable(GL_CULL_FACE);
+		glColor3d(1, 1, 1);
+	}
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Foto::Foto(GLdouble w, GLdouble h) : Abs_Entity()
+{
+	mMesh = Mesh::generaRectanguloTextCor(w,h,1,1);
+}
+//-------------------------------------------------------------------------
+
+Foto::~Foto()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Foto::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glColor4dv(value_ptr(mColor));
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+		glColor3d(1, 1, 1);
+	}
+}
+
+void Foto::update() {
+	mTexture->loadColorBuffer();
+}

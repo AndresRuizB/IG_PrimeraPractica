@@ -123,5 +123,36 @@ public:
 
 //-------------------------------------------------------------------------
 
+class Suelo : public Abs_Entity
+{
+public:
+	explicit Suelo(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~Suelo();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class CajaText : public Abs_Entity
+{
+public:
+	explicit CajaText(GLdouble ld);
+	~CajaText();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	void setTextureInside(Texture* tex) { mTextureInside = tex; };
+private:
+	Texture* mTextureInside = nullptr;
+};
+
+class Foto: public Abs_Entity
+{
+public:
+	explicit Foto(GLdouble w, GLdouble h);
+	~Foto();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
+};
 
 #endif //_H_Entities_H_

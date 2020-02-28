@@ -14,9 +14,15 @@ void Scene::init()
 	// Lights
 	// Textures
 
-	Texture* t = new Texture();
-	t->load("../Bmps/baldosaP.bmp");
-	gTextures.push_back(t);
+	Texture *baldP = new Texture(), *baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture();
+	baldP->load("../Bmps/baldosaP.bmp");
+	gTextures.push_back(baldP);
+	baldC->load("../Bmps/baldosaC.bmp");
+	gTextures.push_back(baldC);
+	containertxt->load("../Bmps/container.bmp");
+	gTextures.push_back(containertxt);
+	papelC->load("../Bmps/papelC.bmp");
+	gTextures.push_back(papelC);
 
 
 	// Graphics objects (entities) of the scene
@@ -60,9 +66,31 @@ void Scene::init()
 	}
 	else if(mId == 2)
 	{
-		Estrella3DText* estrellaText = new Estrella3DText(300, 100, 10, 200);
+		/*
+		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
+		estrellaText->setModelMat(translate(estrellaText->modelMat(), dvec3(100.0, 300.0, 100.0)));
 		gObjects.push_back(estrellaText);
+		
+		CajaText* cajaTxt = new CajaText(200);
+		cajaTxt->setTexture(gTextures[2]);
+		cajaTxt->setTextureInside(gTextures[3]);
+		gObjects.push_back(cajaTxt);
+
+		*/
+
+		Suelo* suelo = new Suelo(700, 700, 4, 4);
+		suelo->setTexture(gTextures[1]);
+		gObjects.push_back(suelo);
+
+
+		Texture* fotoTxt = new Texture();
+		fotoTxt->loadColorBuffer();
+
+		Foto* foton = new Foto(100,400);
+		foton->setTexture(fotoTxt);
+
+		gObjects.push_back(foton);
 	}
 
 }
