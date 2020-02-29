@@ -60,7 +60,7 @@ void Texture::loadColorBuffer() {
     if (mId == 0) init();
 
     mWidth = IG1App::s_ig1app.winWidth();
-    mHeight = IG1App::s_ig1app.winWidth();
+    mHeight = IG1App::s_ig1app.winHeight();
 
     GLint level = 0;   //Base image level
     GLint border = 0;  //No border

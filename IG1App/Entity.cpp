@@ -282,8 +282,8 @@ void Estrella3DText::update()	//la animacion de la estrella
 
 	dmat4 mI = dmat4(1);	//matriz unidad
 	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.9));
-
-	setModelMat(rMat * mI);
+	dmat4 tMat = translate(mI, dvec3(100.0, 300.0, 100.0));
+	setModelMat(tMat * rMat * mI);
 	frame++;
 }
 //-------------------------------------------------------------------------

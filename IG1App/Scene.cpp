@@ -14,7 +14,8 @@ void Scene::init()
 	// Lights
 	// Textures
 
-	Texture *baldP = new Texture(), *baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture();
+	Texture* baldP = new Texture(), * baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture(),
+		* fotoTxt = new Texture(), * windowC = new Texture();
 	baldP->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(baldP);
 	baldC->load("../Bmps/baldosaC.bmp");
@@ -23,7 +24,10 @@ void Scene::init()
 	gTextures.push_back(containertxt);
 	papelC->load("../Bmps/papelC.bmp");
 	gTextures.push_back(papelC);
-
+	fotoTxt->loadColorBuffer();
+	gTextures.push_back(fotoTxt);
+	windowC->load("../Bmps/windowC.bmp");
+	gTextures.push_back(windowC);	//5
 
 	// Graphics objects (entities) of the scene
 
@@ -65,8 +69,7 @@ void Scene::init()
 
 	}
 	else if(mId == 2)
-	{
-		/*
+	{		
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
 		estrellaText->setModelMat(translate(estrellaText->modelMat(), dvec3(100.0, 300.0, 100.0)));
@@ -75,22 +78,18 @@ void Scene::init()
 		CajaText* cajaTxt = new CajaText(200);
 		cajaTxt->setTexture(gTextures[2]);
 		cajaTxt->setTextureInside(gTextures[3]);
-		gObjects.push_back(cajaTxt);
+		gObjects.push_back(cajaTxt);		
 
-		*/
-
-		Suelo* suelo = new Suelo(700, 700, 4, 4);
+		Suelo* suelo = new Suelo(600, 600, 4, 4);
 		suelo->setTexture(gTextures[1]);
 		gObjects.push_back(suelo);
-
-
-		Texture* fotoTxt = new Texture();
-		fotoTxt->loadColorBuffer();
-
-		Foto* foton = new Foto(100,400);
-		foton->setTexture(fotoTxt);
-
+		
+		Foto* foton = new Foto(400,600);
+		foton->setModelMat(rotate(foton->modelMat(), radians(-90.0), dvec3(1.0,0.0,0.0)));
+		foton->setModelMat(translate(foton->modelMat(), dvec3(0.0, 0.0, 1.0)));
+		foton->setTexture(gTextures[4]);
 		gObjects.push_back(foton);
+
 	}
 
 }
