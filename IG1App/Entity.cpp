@@ -383,3 +383,40 @@ void Foto::render(dmat4 const& modelViewMat) const
 void Foto::update() {
 	mTexture->loadColorBuffer();
 }
+
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Cristalera::Cristalera(GLdouble ld) : Abs_Entity()
+{
+	mMesh = Mesh::generaCajaTextCor(ld);
+}
+//-------------------------------------------------------------------------
+
+Cristalera::~Cristalera()
+{
+	delete mMesh; mMesh = nullptr;
+};
+//-------------------------------------------------------------------------
+
+void Cristalera::render(dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mTexture->bind(GL_REPLACE);
+		glColor4dv(value_ptr(mColor));
+		glEnable(GL_BLEND);
+		glDepthMask(GL_FALSE);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		mMesh->render();
+
+		glColor3d(1, 1, 1);
+		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+	}
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------

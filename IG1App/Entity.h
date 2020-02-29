@@ -146,6 +146,10 @@ private:
 	Texture* mTextureInside = nullptr;
 };
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+
 class Foto: public Abs_Entity
 {
 public:
@@ -154,5 +158,17 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update();
 };
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Cristalera : public Abs_Entity
+{
+public:
+	explicit Cristalera(GLdouble ld);
+	~Cristalera();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
 
 #endif //_H_Entities_H_

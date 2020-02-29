@@ -14,8 +14,11 @@ void Scene::init()
 	// Lights
 	// Textures
 
-	Texture* baldP = new Texture(), * baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture(),
-		* fotoTxt = new Texture(), * windowC = new Texture();
+	textFoto = new Texture();
+	textFoto->loadColorBuffer();
+
+	Texture* baldP = new Texture(), * baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture()
+		, * windowC = new Texture();
 	baldP->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(baldP);
 	baldC->load("../Bmps/baldosaC.bmp");
@@ -24,17 +27,15 @@ void Scene::init()
 	gTextures.push_back(containertxt);
 	papelC->load("../Bmps/papelC.bmp");
 	gTextures.push_back(papelC);
-	fotoTxt->loadColorBuffer();
-	gTextures.push_back(fotoTxt);
-	windowC->load("../Bmps/windowC.bmp");
-	gTextures.push_back(windowC);	//5
+	windowC->load("../Bmps/windowC.bmp", 150);
+	gTextures.push_back(windowC);	//4
 
 	// Graphics objects (entities) of the scene
 
 	gObjects.push_back(new EjesRGB(400.0));
 
-	if (mId == 0 ) {
-	
+	if (mId == 0) {
+
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
 		gObjects.push_back(triangulo);
@@ -55,7 +56,7 @@ void Scene::init()
 
 		TrianguloRGB* triRGB = new TrianguloRGB(100.0);
 		gObjects.push_back(triRGB);
-		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));		
+		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
 
 	}
 	else if (mId == 1) {
@@ -68,27 +69,34 @@ void Scene::init()
 		gObjects.push_back(caja);
 
 	}
-	else if(mId == 2)
-	{		
+	else if (mId == 2)
+	{
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
 		estrellaText->setModelMat(translate(estrellaText->modelMat(), dvec3(100.0, 300.0, 100.0)));
 		gObjects.push_back(estrellaText);
-		
+
 		CajaText* cajaTxt = new CajaText(200);
 		cajaTxt->setTexture(gTextures[2]);
 		cajaTxt->setTextureInside(gTextures[3]);
-		gObjects.push_back(cajaTxt);		
+		gObjects.push_back(cajaTxt);
 
 		Suelo* suelo = new Suelo(600, 600, 4, 4);
 		suelo->setTexture(gTextures[1]);
 		gObjects.push_back(suelo);
-		
-		Foto* foton = new Foto(400,600);
-		foton->setModelMat(rotate(foton->modelMat(), radians(-90.0), dvec3(1.0,0.0,0.0)));
-		foton->setModelMat(translate(foton->modelMat(), dvec3(0.0, 0.0, 1.0)));
-		foton->setTexture(gTextures[4]);
+
+		Cristalera* cristalera = new Cristalera(600);
+		cristalera->setModelMat(translate(cristalera->modelMat(), dvec3(-300.0, 0.0, -300.0)));
+		cristalera->setTexture(gTextures[4]);
+		gObjects.push_back(cristalera);
+
+		Foto* foton = new Foto(200, 300);
+		foton->setTexture(textFoto);
+		foton->setModelMat(rotate(foton->modelMat(), radians(-90.0), dvec3(1.0, 0.0, 0.0)));
+		foton->setModelMat(translate(foton->modelMat(), dvec3(-130.0, 0.0, 1.0)));
 		gObjects.push_back(foton);
+
+
 
 	}
 
@@ -97,6 +105,8 @@ void Scene::init()
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
+
+	delete textFoto;
 
 	for (Abs_Entity* el : gObjects)
 	{
@@ -135,7 +145,7 @@ void Scene::update()
 {
 	for (Abs_Entity* e : gObjects)
 	{
-	  e->update();
+		e->update();
 	}
 }
 //-------------------------------------------------------------------------
