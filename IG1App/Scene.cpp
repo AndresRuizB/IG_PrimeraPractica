@@ -85,19 +85,16 @@ void Scene::init()
 		suelo->setTexture(gTextures[1]);
 		gObjects.push_back(suelo);
 
-		Cristalera* cristalera = new Cristalera(600);
-		cristalera->setModelMat(translate(cristalera->modelMat(), dvec3(-300.0, 0.0, -300.0)));
-		cristalera->setTexture(gTextures[4]);
-		gObjects.push_back(cristalera);
-
 		Foto* foton = new Foto(200, 300);
 		foton->setTexture(textFoto);
 		foton->setModelMat(rotate(foton->modelMat(), radians(-90.0), dvec3(1.0, 0.0, 0.0)));
 		foton->setModelMat(translate(foton->modelMat(), dvec3(-130.0, 0.0, 1.0)));
 		gObjects.push_back(foton);
 
-
-
+		Cristalera* cristalera = new Cristalera(600);
+		cristalera->setModelMat(translate(cristalera->modelMat(), dvec3(-300.0, 0.0, -300.0)));
+		cristalera->setTexture(gTextures[4]);
+		gObjects.push_back(cristalera);
 	}
 
 }
