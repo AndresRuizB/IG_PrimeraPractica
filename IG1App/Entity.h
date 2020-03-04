@@ -144,6 +144,7 @@ public:
 	void setTextureInside(Texture* tex) { mTextureInside = tex; };
 private:
 	Texture* mTextureInside = nullptr;
+	Mesh* suelo_ = nullptr;
 };
 
 //-------------------------------------------------------------------------

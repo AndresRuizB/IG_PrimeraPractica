@@ -29,6 +29,8 @@ public:
   
   void setWrap(GLuint wp);  // GL_REPEAT, GL_CLAMP 
 
+  void save(const std::string & BMP_Name);
+
 protected:
 
   void init();

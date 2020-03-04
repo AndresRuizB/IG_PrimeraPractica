@@ -83,4 +83,21 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wp);  
   glBindTexture(GL_TEXTURE_2D, 0); 
 }
+
+//-------------------------------------------------------------------------
+
+void Texture::save(const std::string& BMP_Name)
+{
+    PixMap32RGBA pixMap;
+
+    int mWidth = IG1App::s_ig1app.winWidth();
+    int mHeight = IG1App::s_ig1app.winHeight();
+
+    pixMap.reserve(mWidth, mHeight);
+
+    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, mWidth, mHeight, 0);
+    pixMap.save_bmp24BGR(BMP_Name);
+}
+
+
 //-------------------------------------------------------------------------

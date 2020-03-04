@@ -146,7 +146,13 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->set2D();
 		break;
 	case 'u':
+	case 'U':
 		updating = !updating;
+		break;
+	case 'f':
+	case 'F':
+		cout << "Foto guardada\n";
+		
 		break;
 	case '1':
 		delete mScene;

@@ -320,12 +320,14 @@ void Suelo::render(dmat4 const& modelViewMat) const
 CajaText::CajaText(GLdouble ld) : Abs_Entity()
 {
 	mMesh = Mesh::generaCajaTextCor(ld);
+	suelo_ = Mesh::generaRectanguloTextCor(ld,ld,1,1);
 }
 //-------------------------------------------------------------------------
 
 CajaText::~CajaText()
 {
 	delete mMesh; mMesh = nullptr;
+	delete suelo_; suelo_ = nullptr;
 };
 //-------------------------------------------------------------------------
 
@@ -345,6 +347,12 @@ void CajaText::render(dmat4 const& modelViewMat) const
 		mTextureInside->bind(GL_REPLACE);
 		mMesh->render();
 
+		dmat4 mI = dmat4(1);
+		dmat4 rMat = rotate(mI, radians(90.0), dvec3(1.0, 0.0, 0.0));
+		dmat4 tMat = translate(mI, dvec3(100.0, 100.0, -0.1));
+		aMat = modelViewMat * mModelMat * rMat * tMat;
+		upload(aMat);
+		suelo_->render();
 
 		glCullFace(GL_FRONT / GL_BACK);
 		glDisable(GL_CULL_FACE);
