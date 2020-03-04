@@ -95,8 +95,9 @@ void Texture::save(const std::string& BMP_Name)
 
     pixMap.reserve(mWidth, mHeight);
 
-    glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, mWidth, mHeight, 0);
+    glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap.data());
     pixMap.save_bmp24BGR(BMP_Name);
+    pixMap.free();
 }
 
 

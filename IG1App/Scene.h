@@ -27,6 +27,8 @@ public:
 	void update();
 	void setState(int id);
 	
+	void saveCapture();
+
 protected: 
 	void free();
 	void setGL();

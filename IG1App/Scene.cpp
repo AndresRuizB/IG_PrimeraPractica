@@ -136,6 +136,15 @@ void Scene::setState(int id)
 {
 	Scene::mId = id;
 }
+
+//-------------------------------------------------------------------------
+
+void Scene::saveCapture()
+{
+	Texture *temp = new Texture();
+	temp->loadColorBuffer();
+	temp->save("name.bmp");
+}
 //-------------------------------------------------------------------------
 
 void Scene::update()

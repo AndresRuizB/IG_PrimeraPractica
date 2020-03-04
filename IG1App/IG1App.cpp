@@ -152,7 +152,7 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'f':
 	case 'F':
 		cout << "Foto guardada\n";
-		
+		mScene->saveCapture();
 		break;
 	case '1':
 		delete mScene;
