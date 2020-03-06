@@ -4,6 +4,7 @@
 
 #include <GL/freeglut.h>
 #include <glm.hpp>
+#include <gtc/matrix_access.hpp>
 
 #include "Viewport.h"
 
@@ -27,6 +28,16 @@ public:
 	void yaw(GLdouble a);   // rotates a degrees on the Y axis
 	void roll(GLdouble a);  // rotates a degrees on the Z axis
 
+	void moveLR(GLdouble cs); // Left / Right
+	void moveFB(GLdouble cs); // Forward / Backward
+	void moveUD(GLdouble cs); // Up / Down
+
+	void setAxes();
+
+	void setViewMat() { mViewMat = lookAt(mEye, mLook, mUp); setAxes(); };
+
+	void orbit(GLdouble incAng, GLdouble incY);
+	
 	// projection matrix
 	glm::dmat4 const& projMat() const { return mProjMat; };
 	
@@ -43,6 +54,13 @@ protected:
 	glm::dvec3 mEye = { 0.0, 0.0, 500.0 };  // camera's position
 	glm::dvec3 mLook = { 0.0, 0.0, 0.0 };   // target's position
 	glm::dvec3 mUp = { 0.0, 1.0, 0.0 };     // the up vector 
+
+	dvec3 mRight_;
+	dvec3 mUpward_;
+	dvec3 mFront_;
+
+	GLdouble mAng;
+	GLdouble mRadius;
 
 	glm::dmat4 mViewMat;    // view matrix = inverse of modeling matrix 
 	void uploadVM() const;  // transfers viewMat to the GPU

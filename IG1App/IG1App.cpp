@@ -73,6 +73,9 @@ void IG1App::iniWinOpenGL()
 	glutSpecialFunc(s_specialKey);
 	glutDisplayFunc(s_display);
 	glutIdleFunc(s_update);
+	glutMouseFunc(s_mouse);
+	glutMotionFunc(s_motion);
+	glutMouseWheelFunc(s_mouseWheel);
 
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
@@ -213,6 +216,32 @@ void IG1App::specialKey(int key, int x, int y)
 
 	if (need_redisplay)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to display()
+}
+//-------------------------------------------------------------------------
+
+void IG1App::mouse(int button, int state, int x, int y)
+{
+	mMouseButt = button;
+	mMouseCoord = glm::dvec2(x, winHeight() - y);
+}
+//-------------------------------------------------------------------------
+
+void IG1App::motion(int x, int y)
+{
+	if (mMouseButt == GLUT_LEFT_BUTTON) {
+		// guardamos la anterior posición en var. temp.
+		glm::dvec2 mp = mMouseCoord;
+		// Guardamos la posición actual
+		mMouseCoord = glm::dvec2(x, winHeight() - y);
+		mp = (mMouseCoord - mp); // calculamos el desplazamiento realizado
+
+	}
+	else if (mMouseButt == GLUT_RIGHT_BUTTON) {}
+}
+//-------------------------------------------------------------------------
+
+void IG1App::mouseWheel()
+{
 }
 //-------------------------------------------------------------------------
 
