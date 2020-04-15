@@ -24,9 +24,9 @@ public:
 	void set2D();
 	void set3D();
 	
-	void pitch(GLdouble a); // rotates a degrees on the X axis
-	void yaw(GLdouble a);   // rotates a degrees on the Y axis
-	void roll(GLdouble a);  // rotates a degrees on the Z axis
+	//void pitch(GLdouble a); // rotates a degrees on the X axis
+	//void yaw(GLdouble a);   // rotates a degrees on the Y axis
+	//void roll(GLdouble a);  // rotates a degrees on the Z axis
 
 	void moveLR(GLdouble cs); // Left / Right
 	void moveFB(GLdouble cs); // Forward / Backward
@@ -34,10 +34,13 @@ public:
 
 	void setAxes();
 
-	void setViewMat() { mViewMat = lookAt(mEye, mLook, mUp); setAxes(); };
+	bool isCenital() { return isCenital_; };
+	void setCenital();
 
 	void orbit(GLdouble incAng, GLdouble incY);
+	void  changePrj() { bOrto = !bOrto; setPM(); uploadPM(); };
 	
+
 	// projection matrix
 	glm::dmat4 const& projMat() const { return mProjMat; };
 	
@@ -54,13 +57,14 @@ protected:
 	glm::dvec3 mEye = { 0.0, 0.0, 500.0 };  // camera's position
 	glm::dvec3 mLook = { 0.0, 0.0, 0.0 };   // target's position
 	glm::dvec3 mUp = { 0.0, 1.0, 0.0 };     // the up vector 
+	glm::dvec3 mRight, mUpward, mFront;
 
-	dvec3 mRight_;
-	dvec3 mUpward_;
-	dvec3 mFront_;
+	glm::dvec3 mRight_;
+	glm::dvec3 mUpward_;
+	glm::dvec3 mFront_;
 
-	GLdouble mAng;
-	GLdouble mRadius;
+	GLdouble mAng = 90;
+	GLdouble mRadio = 1000;
 
 	glm::dmat4 mViewMat;    // view matrix = inverse of modeling matrix 
 	void uploadVM() const;  // transfers viewMat to the GPU
@@ -72,6 +76,7 @@ protected:
 	GLdouble mNearVal = 1, mFarVal = 10000;  // view volume
 	GLdouble mScaleFact = 1;   // scale factor
 	bool bOrto = true;   // orthogonal or perspective projection
+	bool isCenital_ = false;
 
 	Viewport* mViewPort;   // the viewport
 

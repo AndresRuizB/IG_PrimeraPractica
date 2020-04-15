@@ -41,6 +41,7 @@ void IG1App::init()
 	// allocate memory and resources
 	mViewPort = new Viewport(mWinW, mWinH); //glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
+	mCamera2 = new Camera(mViewPort);
 	mScene = new Scene;
 
 	mCamera->set2D();
@@ -86,6 +87,7 @@ void IG1App::free()
 {  // release memory and resources
 	delete mScene; mScene = nullptr;
 	delete mCamera; mCamera = nullptr;
+	delete mCamera2; mCamera2 = nullptr;
 	delete mViewPort; mViewPort = nullptr;
 }
 //-------------------------------------------------------------------------
@@ -111,10 +113,39 @@ void IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
-	mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+	if (splitViewport) {
+
+		splitDisplay();
+	}
+	else {
+
+		mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+	}
 
 	glutSwapBuffers();	// swaps the front and back buffer
 }
+
+//-------------------------------------------------------------------------
+
+void IG1App::splitDisplay() const
+{
+	Viewport viewTemp = *mViewPort;
+	mViewPort->setSize(mWinW / 2, mWinH);
+	mViewPort->setPos(0, 0);
+	mCamera->setSize(mWinW / 2, mWinH);
+	mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
+
+	mViewPort->setPos(mWinW / 2, 0);
+	mCamera2->setCenital();
+	mCamera2->setSize(mWinW / 2, mWinH);
+	mScene->render(*mCamera2);  // uploads the viewport and camera to the GPU
+
+	mCamera->setSize(mWinW, mWinH);
+	
+	*mViewPort = viewTemp;
+}
+
+
 //-------------------------------------------------------------------------
 
 void IG1App::resize(int newWidth, int newHeight)
@@ -152,11 +183,21 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'U':
 		updating = !updating;
 		break;
+	case 'P':
+	case 'p':
+		mCamera->changePrj();
+		mCamera2->changePrj();
+		break;
 	case 'f':
 	case 'F':
 		cout << "Foto guardada\n";
 		mScene->saveCapture();
 		break;
+	case 'k':
+	case 'K':
+		splitViewport = !splitViewport;
+		break;
+
 	case '1':
 		delete mScene;
 		mScene = new Scene;
@@ -192,23 +233,15 @@ void IG1App::specialKey(int key, int x, int y)
 
 	switch (key) {
 	case GLUT_KEY_RIGHT:
-		if (mdf == GLUT_ACTIVE_CTRL)
-			mCamera->pitch(-1);   // rotates -1 on the X axis
-		else
-			mCamera->pitch(1);    // rotates 1 on the X axis
+		mCamera->moveLR(1);
 		break;
 	case GLUT_KEY_LEFT:
-		if (mdf == GLUT_ACTIVE_CTRL)
-			mCamera->yaw(1);      // rotates 1 on the Y axis 
-		else
-			mCamera->yaw(-1);     // rotate -1 on the Y axis 
+		mCamera->moveLR(-1);
 		break;
 	case GLUT_KEY_UP:
-		mCamera->roll(1);    // rotates 1 on the Z axis
-		break;
+		mCamera->moveUD(1);
 	case GLUT_KEY_DOWN:
-		mCamera->roll(-1);   // rotates -1 on the Z axis
-		break;
+		mCamera->moveUD(-1);
 	default:
 		need_redisplay = false;
 		break;
@@ -228,20 +261,42 @@ void IG1App::mouse(int button, int state, int x, int y)
 
 void IG1App::motion(int x, int y)
 {
-	if (mMouseButt == GLUT_LEFT_BUTTON) {
-		// guardamos la anterior posición en var. temp.
-		glm::dvec2 mp = mMouseCoord;
-		// Guardamos la posición actual
-		mMouseCoord = glm::dvec2(x, winHeight() - y);
-		mp = (mMouseCoord - mp); // calculamos el desplazamiento realizado
+	if (mCamera->isCenital()) mCamera->set2D();
+	// guardamos la anterior posición en var. temp.
+	glm::dvec2 mp = mMouseCoord;
+	// Guardamos la posición actual
+	mMouseCoord = glm::dvec2(x, winHeight() - y);
+	mp = (mMouseCoord - mp); // calculamos el desplazamiento realizado
 
+	if (mMouseButt == GLUT_LEFT_BUTTON) {
+		mCamera->orbit(-mp.x * 0.05, -mp.y); // sensitivity = 0.05
 	}
-	else if (mMouseButt == GLUT_RIGHT_BUTTON) {}
+	else if (mMouseButt == GLUT_RIGHT_BUTTON) {
+		mCamera->moveLR(-mp.x);
+		mCamera->moveUD(-mp.y);
+	}
+
+	glutPostRedisplay();
 }
 //-------------------------------------------------------------------------
 
-void IG1App::mouseWheel()
+void IG1App::mouseWheel(int wheelNumber, int direction, int x, int y)
 {
+	glutPostRedisplay();
+
+	//GLUT_ACTIVE_CTRL / _ALT / _SHIFT
+	int m = glutGetModifiers();
+	if (m == 0) // ninguna está presionada
+	{
+		mCamera->moveFB(direction * 10);
+	}
+	else if (m == GLUT_ACTIVE_CTRL)
+	{
+		if (direction == 1) mCamera->setScale(+0.01);
+		else mCamera->setScale(-0.01);
+	}
+
+	glutPostRedisplay();
 }
 //-------------------------------------------------------------------------
 
