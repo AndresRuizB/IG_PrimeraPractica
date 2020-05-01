@@ -13,7 +13,7 @@
 class Abs_Entity  // abstract class
 {
 public:
-	Abs_Entity(): mModelMat(1.0), mColor(0) {};  // 4x4 identity matrix
+	Abs_Entity() : mModelMat(1.0), mColor(0) {};  // 4x4 identity matrix
 	virtual ~Abs_Entity() {};
 
 	Abs_Entity(const Abs_Entity& e) = delete;  // no copy constructor
@@ -25,8 +25,8 @@ public:
 	// modeling matrix
 	glm::dmat4 const& modelMat() const { return mModelMat; };
 	void setModelMat(glm::dmat4 const& aMat) { mModelMat = aMat; };
-	
-	void changeColor(glm::dvec4 const& color) {mColor = color; };
+
+	void changeColor(glm::dvec4 const& color) { mColor = color; };
 
 	void setTexture(Texture* tex) { mTexture = tex; };
 protected:
@@ -38,11 +38,11 @@ protected:
 	int frame = 0;
 
 	// transfers modelViewMat to the GPU
-	virtual void upload(glm::dmat4 const& mModelViewMat) const; 
+	virtual void upload(glm::dmat4 const& mModelViewMat) const;
 };
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Abs_Entity 
+class EjesRGB : public Abs_Entity
 {
 public:
 	explicit EjesRGB(GLdouble l);
@@ -55,7 +55,7 @@ public:
 class Poligono : public Abs_Entity
 {
 public:
-	explicit Poligono(GLuint numL,GLdouble rd);
+	explicit Poligono(GLuint numL, GLdouble rd);
 	~Poligono();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
@@ -151,7 +151,7 @@ private:
 //-------------------------------------------------------------------------
 
 
-class Foto: public Abs_Entity
+class Foto : public Abs_Entity
 {
 public:
 	explicit Foto(GLdouble w, GLdouble h);
@@ -171,5 +171,71 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class QuadraticEntity : public Abs_Entity
+{
+public:
+	explicit QuadraticEntity();
+	virtual~QuadraticEntity() { gluDeleteQuadric(q); };
+	void setQuadricObjColor(glm::fvec3 c) { mColor = c; };
+protected:
+	GLUquadricObj* q;
+	glm::fvec3 mColor = glm::fvec3(1.0, 1.0, 1.0);
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Sphere : public QuadraticEntity
+{
+public:
+	explicit Sphere(GLdouble radius);
+	void render(glm::dmat4 const& modelViewMat) const ;
+protected:
+	GLdouble radius;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Cylinder : public QuadraticEntity
+{
+public:
+	explicit Cylinder(GLdouble bR, GLdouble tR, GLdouble h);
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble baseR, topR;
+	GLdouble height;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Disk : public QuadraticEntity
+{
+public:
+	explicit Disk(GLdouble iR, GLdouble oR);
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble innerR, outerR;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class PartialDisk : public QuadraticEntity
+{
+public:
+	explicit PartialDisk(GLdouble iR, GLdouble oR, GLdouble stA, GLdouble swA );
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble innerR, outerR;
+	GLdouble startAngle, sweepAngle;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

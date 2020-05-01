@@ -211,7 +211,7 @@ void Estrella3D::update()	//la animacion de la estrella
 	dmat4 mI = dmat4(1);	//matriz unidad
 	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.9));
 
-	setModelMat( rMat *  mI);
+	setModelMat(rMat * mI);
 	frame++;
 }
 //-------------------------------------------------------------------------
@@ -320,7 +320,7 @@ void Suelo::render(dmat4 const& modelViewMat) const
 CajaText::CajaText(GLdouble ld) : Abs_Entity()
 {
 	mMesh = Mesh::generaCajaTextCor(ld);
-	suelo_ = Mesh::generaRectanguloTextCor(ld,ld,1,1);
+	suelo_ = Mesh::generaRectanguloTextCor(ld, ld, 1, 1);
 }
 //-------------------------------------------------------------------------
 
@@ -365,7 +365,7 @@ void CajaText::render(dmat4 const& modelViewMat) const
 
 Foto::Foto(GLdouble w, GLdouble h) : Abs_Entity()
 {
-	mMesh = Mesh::generaRectanguloTextCor(w,h,1,1);
+	mMesh = Mesh::generaRectanguloTextCor(w, h, 1, 1);
 }
 //-------------------------------------------------------------------------
 
@@ -417,7 +417,7 @@ void Cristalera::render(dmat4 const& modelViewMat) const
 		glColor4dv(value_ptr(mColor));
 		glEnable(GL_BLEND);
 		glDepthMask(GL_FALSE);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		mMesh->render();
 
 		glColor3d(1, 1, 1);
@@ -428,3 +428,76 @@ void Cristalera::render(dmat4 const& modelViewMat) const
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
+
+QuadraticEntity::QuadraticEntity()
+{
+	q = gluNewQuadric();
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Sphere::Sphere(GLdouble r) { radius = r; }
+
+void Sphere::render(glm::dmat4 const& modelViewMat) const {
+	dmat4 aMat = modelViewMat * mModelMat; 
+	upload(aMat);
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(mColor.r, mColor.g, mColor.b);
+	gluQuadricDrawStyle(q, GLU_FILL);
+
+	gluSphere(q, radius, 50, 50);
+
+	glColor3f(1.0, 1.0, 1.0);
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Cylinder::Cylinder(GLdouble bR, GLdouble tR, GLdouble h) { baseR = bR; topR = tR; height = h; }
+
+void Cylinder::render(glm::dmat4 const& modelViewMat) const {
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(mColor.r, mColor.g, mColor.b);
+	gluQuadricDrawStyle(q, GLU_FILL);
+
+	gluCylinder(q, baseR, topR, height, 50, 50);
+
+	glColor3f(1.0, 1.0, 1.0);
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Disk::Disk(GLdouble iR, GLdouble oR) { innerR = iR; outerR = oR; }
+
+void Disk::render(glm::dmat4 const& modelViewMat) const {
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(mColor.r, mColor.g, mColor.b);
+	gluQuadricDrawStyle(q, GLU_FILL);
+
+	gluDisk(q, innerR, outerR, 50, 50);
+
+	glColor3f(1.0, 1.0, 1.0);
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+PartialDisk::PartialDisk(GLdouble iR, GLdouble oR, GLdouble stA, GLdouble swA) { innerR = iR; outerR = oR; startAngle = stA; sweepAngle = swA; }
+
+void PartialDisk::render(glm::dmat4 const& modelViewMat) const {
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
+	glEnable(GL_COLOR_MATERIAL);
+	glColor3f(mColor.r, mColor.g, mColor.b);
+	gluQuadricDrawStyle(q, GLU_FILL);
+
+	gluPartialDisk(q, innerR, outerR,startAngle, sweepAngle, 50, 50);
+
+	glColor3f(1.0, 1.0, 1.0);
+}

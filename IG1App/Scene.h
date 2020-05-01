@@ -29,12 +29,14 @@ public:
 	
 	void saveCapture();
 
+	void sceneDirLight(Camera const& cam) const;
+
 protected: 
 	void free();
 	void setGL();
 	void resetGL();
 
-	int mId = 2;
+	int mId = 0;
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
 	std::vector<Texture*> gTextures; //Textures
