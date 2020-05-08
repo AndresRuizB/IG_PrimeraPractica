@@ -1,6 +1,1 @@
-﻿  IndexMesh.cpp
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(37,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(87,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(89,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(103,20): warning C4018: '<': no coinciden signed/unsigned
-  IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe
+﻿
