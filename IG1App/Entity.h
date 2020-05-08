@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Mesh.h"
 #include "Texture.h"
+#include "IndexMesh.h"
 
 //-------------------------------------------------------------------------
 
@@ -238,4 +239,25 @@ protected:
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
+class AnilloCuadrado : public Abs_Entity
+{
+public:
+	explicit AnilloCuadrado();
+	~AnilloCuadrado();
+	void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class EntityWithIndexMesh : public Abs_Entity
+{
+public:
+	explicit EntityWithIndexMesh();
+	~EntityWithIndexMesh();
+	void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 #endif //_H_Entities_H_

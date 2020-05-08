@@ -1,3 +1,13 @@
-﻿  Scene.cpp
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Scene.cpp(161,47): warning C4305: 'argumento': truncamiento de 'double' a 'GLclampf'
+﻿  IndexMesh.cpp
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(37,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(87,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(89,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\IndexMesh.cpp(102,20): warning C4018: '<': no coinciden signed/unsigned
+  Mesh.cpp
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(100,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(121,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(193,30): warning C4244: '=': conversión de 'GLdouble' a 'GLuint'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(200,20): warning C4018: '<': no coinciden signed/unsigned
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(242,37): warning C4244: 'argumento': conversión de 'double' a 'const unsigned __int64'; posible pérdida de datos
+  Generando código...
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe

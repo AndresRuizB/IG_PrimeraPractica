@@ -8,7 +8,9 @@ using namespace glm;
 
 void Mesh::draw() const
 {
-	glDrawArrays(mPrimitive, 0, size());   // primitive graphic, first index and number of elements to be rendered
+	/*if (vIndex.data() != nullptr) glDrawElements(mPrimitive, size(), GL_UNSIGNED_INT, vIndex.data());
+	else*/ glDrawArrays(mPrimitive, 0, size());
+
 }
 //-------------------------------------------------------------------------
 
@@ -28,11 +30,23 @@ void Mesh::render() const
 			glTexCoordPointer(2, GL_DOUBLE, 0, vTextCoords.data());
 		}
 
+		/*if (vIndex.size() > 0) {
+			glEnableClientState(GL_INDEX_ARRAY);
+			glIndexPointer(GL_UNSIGNED_INT, 0, vIndex.data());
+		}*/
+
+		if (vNormals.size() > 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
+		}
+
 		draw();
 
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		//glDisableClientState(GL_INDEX_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 }
 //-------------------------------------------------------------------------
@@ -273,6 +287,49 @@ Mesh* Mesh::generaCajaTextCor(GLdouble nl) {
 		mesh->vTextCoords.emplace_back(1.0, 1.0);
 		mesh->vTextCoords.emplace_back(1.0, 0.0);
 	}	
+
+	return mesh;
+}
+
+Mesh* Mesh::generaAnilloCuadrado()
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	mesh->vVertices.emplace_back(30.0, 30.0, 0.0);
+	mesh->vVertices.emplace_back(10.0, 10.0, 0.0);
+	mesh->vVertices.emplace_back(70.0, 30.0, 0.0);
+	mesh->vVertices.emplace_back(90.0, 10.0, 0.0);
+	mesh->vVertices.emplace_back(70.0, 70.0, 0.0);
+	mesh->vVertices.emplace_back(90.0, 90.0, 0.0);
+	mesh->vVertices.emplace_back(30.0, 70.0, 0.0);
+	mesh->vVertices.emplace_back(10.0, 90.0, 0.0);
+	mesh->vVertices.emplace_back(30.0, 30.0, 0.0);
+	mesh->vVertices.emplace_back(10.0, 10.0, 0.0);
+
+	mesh->vColors.reserve(mesh->mNumVertices);
+
+	mesh->vColors.emplace_back(0.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+
+	//mesh->vIndex.reserve(mesh->mNumVertices);
+	//mesh->vIndex = { 0,1,2,3,4,5,6,7,0,1 };
+
+	mesh->vNormals.reserve(mesh->mNumVertices);
+
+	for (glm::dvec3 v : mesh->vNormals) v = { 0,0,0 };
+	for (glm::dvec3 v : mesh->vNormals) v = { 0,0,1 };
 
 	return mesh;
 }

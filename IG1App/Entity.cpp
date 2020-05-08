@@ -449,6 +449,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	gluSphere(q, radius, 50, 50);
 
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 //-------------------------------------------------------------------------
@@ -466,6 +467,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const {
 	gluCylinder(q, baseR, topR, height, 50, 50);
 
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 //-------------------------------------------------------------------------
@@ -483,6 +485,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const {
 	gluDisk(q, innerR, outerR, 50, 50);
 
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 //-------------------------------------------------------------------------
@@ -500,4 +503,57 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const {
 	gluPartialDisk(q, innerR, outerR,startAngle, sweepAngle, 50, 50);
 
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+
+AnilloCuadrado::AnilloCuadrado()
+{
+	mMesh = Mesh::generaAnilloCuadrado();
+}
+
+AnilloCuadrado::~AnilloCuadrado()
+{
+	delete mMesh;
+	mMesh = nullptr;
+}
+
+void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;
+		upload(aMat);
+		glEnable(GL_COLOR_MATERIAL);
+		mMesh->render();
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+EntityWithIndexMesh::EntityWithIndexMesh()
+{
+	mMesh = IndexMesh::generaIndexCuboConTapas(100);
+}
+
+EntityWithIndexMesh::~EntityWithIndexMesh()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		mMesh->render();
+
+		glDisable(GL_COLOR_MATERIAL);
+	}
 }

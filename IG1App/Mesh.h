@@ -24,6 +24,7 @@ public:
 	static Mesh* generaEstrellaTextCor(GLdouble re, GLdouble ri, GLuint np, GLdouble h);
 	static Mesh* generaRectanguloTextCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaCajaTextCor(GLdouble nl);
+	static Mesh* generaAnilloCuadrado();
 
 	Mesh() {};
 	virtual ~Mesh() {};
@@ -44,7 +45,11 @@ protected:
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
 	std::vector<glm::dvec2> vTextCoords;    // texture data array
+
+	//std::vector<GLuint> vIndex;
+	std::vector<glm::dvec3> vNormals;
 	virtual void draw() const;
+
 };
 //-------------------------------------------------------------------------
 

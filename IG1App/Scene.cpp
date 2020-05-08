@@ -34,6 +34,14 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
+		AnilloCuadrado* anilloC = new AnilloCuadrado();
+		gObjects.push_back(anilloC);
+
+		EntityWithIndexMesh* cuboTapas = new EntityWithIndexMesh();
+		gObjects.push_back(cuboTapas);
+
+	}
+	else if (mId == 1) {
 
 		Sphere* cabeza = new Sphere(200);
 		cabeza->setQuadricObjColor({ 1.0, 0.5, 0.0});
@@ -72,7 +80,7 @@ void Scene::init()
 
 
 
-	}else if (mId == 1) {
+	}else if (mId == 2) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -97,7 +105,7 @@ void Scene::init()
 		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
 
 	}
-	else if (mId == 2) {
+	else if (mId == 3) {
 
 		Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
 		gObjects.push_back(estrella);
@@ -107,7 +115,7 @@ void Scene::init()
 		gObjects.push_back(caja);
 
 	}
-	else if (mId == 3)
+	else if (mId == 4)
 	{
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
