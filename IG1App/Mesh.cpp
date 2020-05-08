@@ -8,9 +8,7 @@ using namespace glm;
 
 void Mesh::draw() const
 {
-	/*if (vIndex.data() != nullptr) glDrawElements(mPrimitive, size(), GL_UNSIGNED_INT, vIndex.data());
-	else*/ glDrawArrays(mPrimitive, 0, size());
-
+	glDrawArrays(mPrimitive, 0, size());
 }
 //-------------------------------------------------------------------------
 
@@ -30,11 +28,6 @@ void Mesh::render() const
 			glTexCoordPointer(2, GL_DOUBLE, 0, vTextCoords.data());
 		}
 
-		/*if (vIndex.size() > 0) {
-			glEnableClientState(GL_INDEX_ARRAY);
-			glIndexPointer(GL_UNSIGNED_INT, 0, vIndex.data());
-		}*/
-
 		if (vNormals.size() > 0) {
 			glEnableClientState(GL_NORMAL_ARRAY);
 			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
@@ -45,7 +38,6 @@ void Mesh::render() const
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-		//glDisableClientState(GL_INDEX_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
 	}
 }
@@ -322,10 +314,7 @@ Mesh* Mesh::generaAnilloCuadrado()
 	mesh->vColors.emplace_back(1.0, 0.0, 1.0, 1.0);
 	mesh->vColors.emplace_back(0.0, 1.0, 1.0, 1.0);
 	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
-
-	//mesh->vIndex.reserve(mesh->mNumVertices);
-	//mesh->vIndex = { 0,1,2,3,4,5,6,7,0,1 };
-
+	
 	mesh->vNormals.reserve(mesh->mNumVertices);
 
 	for (glm::dvec3 v : mesh->vNormals) v = { 0,0,0 };

@@ -141,7 +141,7 @@ void IG1App::splitDisplay() const
 	mScene->render(*mCamera2);  // uploads the viewport and camera to the GPU
 
 	mCamera->setSize(mWinW, mWinH);
-	
+
 	*mViewPort = viewTemp;
 }
 
@@ -219,6 +219,18 @@ void IG1App::key(unsigned char key, int x, int y)
 		delete mScene;
 		mScene = new Scene;
 		mScene->setState(3);
+		mScene->init();
+
+	break;	case '4':
+		delete mScene;
+		mScene = new Scene;
+		mScene->setState(4);
+		mScene->init();
+
+	break;	case '5':
+		delete mScene;
+		mScene = new Scene;
+		mScene->setState(5);
 		mScene->init();
 		break;
 	default:

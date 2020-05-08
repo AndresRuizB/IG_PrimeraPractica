@@ -38,10 +38,13 @@ void EjesRGB::render(dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glEnable(GL_COLOR_MATERIAL);
 		upload(aMat);
 		glLineWidth(2);
 		mMesh->render();
 		glLineWidth(1);
+
+		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 //-------------------------------------------------------------------------
@@ -537,22 +540,23 @@ void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 
 EntityWithIndexMesh::EntityWithIndexMesh()
 {
-	mMesh = IndexMesh::generaIndexCuboConTapas(100);
+	iMesh = IndexMesh::generaIndexCuboConTapas(100);
+	iMesh->buildNormals();
 }
 
 EntityWithIndexMesh::~EntityWithIndexMesh()
 {
-	delete mMesh; mMesh = nullptr;
+	delete iMesh; iMesh = nullptr;
 }
 
 void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 {
-	if (mMesh != nullptr) {
+	if (iMesh != nullptr) {
 		glEnable(GL_COLOR_MATERIAL);
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 
-		mMesh->render();
+		iMesh->render();
 
 		glDisable(GL_COLOR_MATERIAL);
 	}

@@ -16,7 +16,7 @@ public:
 
     IndexMesh() { mPrimitive = GL_TRIANGLES; }
     ~IndexMesh() { delete[] vIndices; }
-    virtual void render() const;
+    virtual void render() const override;
     virtual void draw() const;
 
     void buildNormals();

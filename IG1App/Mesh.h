@@ -46,7 +46,6 @@ protected:
 	std::vector<glm::dvec4> vColors;    // color array
 	std::vector<glm::dvec2> vTextCoords;    // texture data array
 
-	//std::vector<GLuint> vIndex;
 	std::vector<glm::dvec3> vNormals;
 	virtual void draw() const;
 

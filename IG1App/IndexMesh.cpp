@@ -12,14 +12,14 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	iMesh->mNumVertices = 10;
 
 	iMesh->vVertices.reserve(iMesh->mNumVertices);
-	iMesh->vVertices.emplace_back(l / 2, l / 2, -l / 2);
-	iMesh->vVertices.emplace_back(l / 2, -l / 2, -l / 2);
 	iMesh->vVertices.emplace_back(l / 2, l / 2, l / 2);
 	iMesh->vVertices.emplace_back(l / 2, -l / 2, l / 2);
-	iMesh->vVertices.emplace_back(-l / 2, l / 2, l / 2);
-	iMesh->vVertices.emplace_back(-l / 2, -l / 2, l / 2);
+	iMesh->vVertices.emplace_back(l / 2, l / 2, -l / 2);
+	iMesh->vVertices.emplace_back(l / 2, -l / 2, -l / 2);
 	iMesh->vVertices.emplace_back(-l / 2, l / 2, -l / 2);
 	iMesh->vVertices.emplace_back(-l / 2, -l / 2, -l / 2);
+	iMesh->vVertices.emplace_back(-l / 2, l / 2, l / 2);
+	iMesh->vVertices.emplace_back(-l / 2, -l / 2, l / 2);
 
 	iMesh->nNumIndices = 36;
 	iMesh->vIndices = new GLuint[iMesh->nNumIndices]{
@@ -60,6 +60,7 @@ void IndexMesh::render() const
 			glEnableClientState(GL_INDEX_ARRAY);
 			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 		}
+
 		if (vNormals.size() > 0) {
 			glEnableClientState(GL_NORMAL_ARRAY);
 			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
@@ -77,16 +78,16 @@ void IndexMesh::render() const
 
 void IndexMesh::draw() const
 {
-	glDrawElements(mPrimitive, nNumIndices,
-		GL_UNSIGNED_INT, vIndices);
+	glDrawElements(mPrimitive, nNumIndices, GL_UNSIGNED_INT, vIndices);
 }
 
 void IndexMesh::buildNormals()
 {
 	vNormals.reserve(mNumVertices);
-	for (int x = 0; x < mNumVertices; x++) vNormals.emplace_back(0, 0, 0);
+	for (int i = 0; i < mNumVertices; i++) vNormals.emplace_back(0, 0, 0);
 
 	for (int i = 0; i < nNumIndices; i += 3) {
+
 		std::vector<glm::dvec3> faceTemp;
 		faceTemp.push_back(vVertices[vIndices[i]]);
 		faceTemp.push_back(vVertices[vIndices[i + 1]]);
@@ -95,11 +96,11 @@ void IndexMesh::buildNormals()
 		glm::dvec3 normal = getNormal(faceTemp);
 
 		for (int z = 0; z < 3; z++) {
-			vNormals[vIndices[i + z]] += normal;
+			vNormals[vIndices[(i + z)%nNumIndices]] += normal;
 		}
 	}
 
-	for (int y = 0; y < mNumVertices; y++) {
-		vNormals[y] = glm::normalize(vNormals[y]);
+	for (int i = 0; i < mNumVertices; i++) {
+		vNormals[i] = glm::normalize(vNormals[i]);
 	}
 }

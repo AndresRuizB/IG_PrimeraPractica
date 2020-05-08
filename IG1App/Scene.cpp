@@ -34,8 +34,8 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
-		AnilloCuadrado* anilloC = new AnilloCuadrado();
-		gObjects.push_back(anilloC);
+		//AnilloCuadrado* anilloC = new AnilloCuadrado();
+		//gObjects.push_back(anilloC);
 
 		EntityWithIndexMesh* cuboTapas = new EntityWithIndexMesh();
 		gObjects.push_back(cuboTapas);

@@ -254,8 +254,10 @@ class EntityWithIndexMesh : public Abs_Entity
 {
 public:
 	explicit EntityWithIndexMesh();
-	~EntityWithIndexMesh();
+	virtual ~EntityWithIndexMesh();
 	void render(glm::dmat4 const& modelViewMat) const;
+private:
+	IndexMesh* iMesh = nullptr;
 };
 
 //-------------------------------------------------------------------------
