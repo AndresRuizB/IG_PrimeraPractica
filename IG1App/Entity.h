@@ -174,66 +174,53 @@ public:
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
-
-class QuadraticEntity : public Abs_Entity
+class QuadricEntity : public Abs_Entity
 {
 public:
-	explicit QuadraticEntity();
-	virtual~QuadraticEntity() { gluDeleteQuadric(q); };
-	void setQuadricObjColor(glm::fvec3 c) { mColor = c; };
+	explicit QuadricEntity();
+	~QuadricEntity() { gluDeleteQuadric(q); };
+	void setQuadricObjColor(glm::fvec3 c) { color = c; };
 protected:
 	GLUquadricObj* q;
-	glm::fvec3 mColor = glm::fvec3(1.0, 1.0, 1.0);
+	glm::fvec3 color = glm::fvec3(-1, -1, -1);
 };
-
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-class Sphere : public QuadraticEntity
-{
+class Sphere : public QuadricEntity {
 public:
-	explicit Sphere(GLdouble radius);
-	void render(glm::dmat4 const& modelViewMat) const ;
-protected:
-	GLdouble radius;
-};
-
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-class Cylinder : public QuadraticEntity
-{
-public:
-	explicit Cylinder(GLdouble bR, GLdouble tR, GLdouble h);
+	Sphere(GLdouble r); // r es el radio de la esfera
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
-	GLdouble baseR, topR;
-	GLdouble height;
+	GLdouble r;
 };
-
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-class Disk : public QuadraticEntity
-{
+class Cylinder : public QuadricEntity {
 public:
-	explicit Disk(GLdouble iR, GLdouble oR);
+	Cylinder(GLdouble baseR, GLdouble topR, GLdouble height);
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
-	GLdouble innerR, outerR;
+	GLdouble bR;
+	GLdouble tR;
+	GLdouble h;
 };
-
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-class PartialDisk : public QuadraticEntity
-{
+class Disk : public QuadricEntity {
 public:
-	explicit PartialDisk(GLdouble iR, GLdouble oR, GLdouble stA, GLdouble swA );
+	Disk(GLdouble innerR, GLdouble outerR);
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
-	GLdouble innerR, outerR;
-	GLdouble startAngle, sweepAngle;
+	GLdouble iR;
+	GLdouble oR;
+};
+//-------------------------------------------------------------------------
+class PartialDisk : public QuadricEntity {
+public:
+	PartialDisk(GLdouble innerR, GLdouble outerR, GLdouble startAngle, GLdouble sweepAngle);
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble iR;
+	GLdouble oR;
+	GLdouble stAngle;
+	GLdouble swAngle;
 };
 
 //-------------------------------------------------------------------------
@@ -255,9 +242,35 @@ class EntityWithIndexMesh : public Abs_Entity
 public:
 	explicit EntityWithIndexMesh();
 	virtual ~EntityWithIndexMesh();
-	void render(glm::dmat4 const& modelViewMat) const;
-private:
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+protected:
 	IndexMesh* iMesh = nullptr;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Cubo : public EntityWithIndexMesh 
+{
+public:
+	explicit Cubo(GLdouble l);
+	virtual ~Cubo();
+	void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class CompoundEntity : public Abs_Entity 
+{
+public:
+	std::vector<Abs_Entity*> gObjects;
+
+	CompoundEntity();
+	~CompoundEntity();
+
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void addEntity(Abs_Entity* ae);
 };
 
 //-------------------------------------------------------------------------

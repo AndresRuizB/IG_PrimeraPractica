@@ -31,12 +31,12 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	1,7,3, 3,7,5
 	};
 
-	iMesh->vColors.reserve(iMesh->mNumVertices);
-	glm::dvec4 red = {1.0, 0.0, 0.0, 1.0};
+	//iMesh->vColors.reserve(iMesh->mNumVertices);
+	//glm::dvec4 red = {1.0, 0.0, 0.0, 1.0};
 
-	for (int i = 0; i < iMesh->mNumVertices; i++) {
-		iMesh->vColors.emplace_back(red);
-	}
+	//for (int i = 0; i < iMesh->mNumVertices; i++) {
+	//	iMesh->vColors.emplace_back(red);
+	//}
 
 	return iMesh;
 }

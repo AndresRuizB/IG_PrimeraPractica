@@ -432,81 +432,93 @@ void Cristalera::render(dmat4 const& modelViewMat) const
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
-QuadraticEntity::QuadraticEntity()
+QuadricEntity::QuadricEntity()
 {
 	q = gluNewQuadric();
 }
 
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-Sphere::Sphere(GLdouble r) { radius = r; }
+Sphere::Sphere(GLdouble rr) { r = rr; }
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
-	dmat4 aMat = modelViewMat * mModelMat; 
+	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(mColor.r, mColor.g, mColor.b);
-	gluQuadricDrawStyle(q, GLU_FILL);
-
-	gluSphere(q, radius, 50, 50);
-
+	if (color != glm::fvec3(-1, -1, -1)) {
+		// Aquí se puede fijar el color de la esfera así:
+		glEnable(GL_COLOR_MATERIAL);
+		glColor3f(color.r, color.g, color.b);
+		// Aquí se puede fijar el modo de dibujar la esfera:
+		gluQuadricDrawStyle(q, GLU_FILL);
+	}
+	gluSphere(q, r, 50, 50);
+	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
-	glDisable(GL_COLOR_MATERIAL);
 }
 
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-Cylinder::Cylinder(GLdouble bR, GLdouble tR, GLdouble h) { baseR = bR; topR = tR; height = h; }
+Cylinder::Cylinder(GLdouble baseR, GLdouble topR, GLdouble height) {
+	bR = baseR;
+	tR = topR;
+	h = height;
+}
 
 void Cylinder::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(mColor.r, mColor.g, mColor.b);
-	gluQuadricDrawStyle(q, GLU_FILL);
-
-	gluCylinder(q, baseR, topR, height, 50, 50);
-
+	if (color != glm::fvec3(-1, -1, -1)) {
+		// Aquí se puede fijar el color de la esfera así:
+		glEnable(GL_COLOR_MATERIAL);
+		glColor3f(color.r, color.g, color.b);
+		// Aquí se puede fijar el modo de dibujar la esfera:
+		gluQuadricDrawStyle(q, GLU_FILL);
+	}
+	gluCylinder(q, bR, tR, h, 50, 50);
+	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
-	glDisable(GL_COLOR_MATERIAL);
 }
 
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-Disk::Disk(GLdouble iR, GLdouble oR) { innerR = iR; outerR = oR; }
-
-void Disk::render(glm::dmat4 const& modelViewMat) const {
-	dmat4 aMat = modelViewMat * mModelMat;
-	upload(aMat);
-	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(mColor.r, mColor.g, mColor.b);
-	gluQuadricDrawStyle(q, GLU_FILL);
-
-	gluDisk(q, innerR, outerR, 50, 50);
-
-	glColor3f(1.0, 1.0, 1.0);
-	glDisable(GL_COLOR_MATERIAL);
+Disk::Disk(GLdouble innerR, GLdouble outerR)
+{
+	iR = innerR;
+	oR = outerR;
 }
 
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
-PartialDisk::PartialDisk(GLdouble iR, GLdouble oR, GLdouble stA, GLdouble swA) { innerR = iR; outerR = oR; startAngle = stA; sweepAngle = swA; }
-
-void PartialDisk::render(glm::dmat4 const& modelViewMat) const {
+void Disk::render(glm::dmat4 const& modelViewMat) const
+{
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
-	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(mColor.r, mColor.g, mColor.b);
-	gluQuadricDrawStyle(q, GLU_FILL);
-
-	gluPartialDisk(q, innerR, outerR, 50, 50, startAngle, sweepAngle);
-
+	if (color != glm::fvec3(-1, -1, -1)) {
+		// Aquí se puede fijar el color de la esfera así:
+		glEnable(GL_COLOR_MATERIAL);
+		glColor3f(color.r, color.g, color.b);
+		// Aquí se puede fijar el modo de dibujar la esfera:
+		gluQuadricDrawStyle(q, GLU_FILL);
+	}
+	gluDisk(q, iR, oR, 50, 40);
+	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
-	glDisable(GL_COLOR_MATERIAL);
+}
+
+PartialDisk::PartialDisk(GLdouble innerR, GLdouble outerR, GLdouble startAngle, GLdouble sweepAngle)
+{
+	iR = innerR;
+	oR = outerR;
+	stAngle = startAngle;
+	swAngle = sweepAngle;
+}
+
+void PartialDisk::render(glm::dmat4 const& modelViewMat) const
+{
+	dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);
+	if (color != glm::fvec3(-1, -1, -1)) {
+		// Aquí se puede fijar el color de la esfera así:
+		glEnable(GL_COLOR_MATERIAL);
+		glColor3f(color.r, color.g, color.b);
+		// Aquí se puede fijar el modo de dibujar la esfera:
+		gluQuadricDrawStyle(q, GLU_FILL);
+	}
+	gluPartialDisk(q, iR, oR, 50, 50, stAngle, swAngle);
+	// Aquí se debe recuperar el color:
+	glColor3f(1.0, 1.0, 1.0);
 }
 
 //-------------------------------------------------------------------------
@@ -540,8 +552,7 @@ void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 
 EntityWithIndexMesh::EntityWithIndexMesh()
 {
-	iMesh = IndexMesh::generaIndexCuboConTapas(100);
-	iMesh->buildNormals();
+
 }
 
 EntityWithIndexMesh::~EntityWithIndexMesh()
@@ -556,8 +567,60 @@ void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 
+		glColor3f(mColor.r, mColor.g, mColor.b);
+		// Aquí se puede fijar el modo de dibujar la esfera:
+
 		iMesh->render();
 
 		glDisable(GL_COLOR_MATERIAL);
+		// Aquí se debe recuperar el color:
+		glColor3f(1.0, 1.0, 1.0);
 	}
+}
+
+Cubo::Cubo(GLdouble l)
+{
+	iMesh = IndexMesh::generaIndexCuboConTapas(l);
+	iMesh->buildNormals();
+}
+
+Cubo::~Cubo()
+{
+}
+
+void Cubo::render(glm::dmat4 const& modelViewMat) const
+{
+	EntityWithIndexMesh::render(modelViewMat);
+}
+
+CompoundEntity::CompoundEntity()
+{
+}
+
+CompoundEntity::~CompoundEntity()
+{
+	for (Abs_Entity* el : gObjects)
+	{
+		delete el;  el = nullptr;
+	}
+}
+
+void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
+{
+
+	glEnable(GL_COLOR_MATERIAL);
+	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
+
+	for (Abs_Entity* ob : gObjects) {
+		ob->render(aMat);
+	}
+
+	glDisable(GL_COLOR_MATERIAL);
+	
+}
+
+void CompoundEntity::addEntity(Abs_Entity* ae)
+{
+	gObjects.push_back(ae);
 }

@@ -34,11 +34,44 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
+		glm::dmat4 mAux;
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
 
-		EntityWithIndexMesh* cuboTapas = new EntityWithIndexMesh();
-		gObjects.push_back(cuboTapas);
+		//Cubo* cuboTapas = new Cubo(100);
+		//gObjects.push_back(cuboTapas);
+
+		CompoundEntity* helices = new CompoundEntity();
+		Cylinder* c1 = new Cylinder(20,10,60);
+		c1->setQuadricObjColor(fvec3(0, 0, 1));
+		mAux = c1->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 110));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+		c1->setModelMat(mAux);
+		helices->addEntity(c1);
+		Cylinder* c2 = new Cylinder(20, 10, 60);
+		c2->setQuadricObjColor(fvec3(0,0,1));
+		mAux = c2->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 110));
+		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+		c2->setModelMat(mAux);
+		helices->addEntity(c2);
+
+		CompoundEntity* chasis = new CompoundEntity();
+		chasis->addEntity(helices);
+		Sphere* bola = new Sphere(100.0);
+		bola->setQuadricObjColor({ 1, 0, 0 });
+		chasis->addEntity(bola);
+
+		CompoundEntity* avion = new CompoundEntity();
+		gObjects.push_back(avion);
+		avion->addEntity(chasis);
+		Cubo* alas = new Cubo(100);
+		alas->changeColor(dvec4(0,1,0,1));
+		mAux = alas->modelMat();
+		mAux = scale(mAux, dvec3(4,0.3, 1.5));
+		alas->setModelMat(mAux);
+		avion->addEntity(alas);
 
 	}
 	else if (mId == 1) {
