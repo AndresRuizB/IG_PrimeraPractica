@@ -43,42 +43,41 @@ void Scene::init()
 	}
 	else if (mId == 1) {
 
-		Sphere* cabeza = new Sphere(200);
-		cabeza->setQuadricObjColor({ 1.0, 0.5, 0.0});
-		gObjects.push_back(cabeza);
+		Disk* disco = new Disk(150, 250);
+		disco->setQuadricObjColor({ 0.776, 0, 0.003 });
+		glm::dmat4 mAux = disco->modelMat();
+		mAux = translate(mAux, dvec3(0, 200, 0));
+		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+		disco->setModelMat(mAux);
+		gObjects.push_back(disco);
 
-		Disk* halo = new Disk(130, 200);
-		halo->setQuadricObjColor({ 0.0, 0.5, 1.0 });
-		glm::dmat4 mAux = halo->modelMat(); 
-		mAux = translate(mAux, dvec3(0, 150, 0)); 
-		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0)); 
-		halo->setModelMat(mAux);
-		gObjects.push_back(halo);
+		Sphere* esfera = new Sphere(250.0);
+		esfera->setQuadricObjColor({ 1, 0.6, 0.125 });
+		gObjects.push_back(esfera);
 
-		Cylinder* ojo1 = new Cylinder(20,0,40);
-		ojo1->setQuadricObjColor({ 1.0, 0.0, 1.0 });
-		mAux = ojo1->modelMat();
-		mAux = translate(mAux, dvec3(-80, 80, 170));
-		ojo1->setModelMat(mAux);
-		gObjects.push_back(ojo1);
+		Cylinder* cono1 = new Cylinder(25.0, 0, 40.0);
+		cono1->setQuadricObjColor({ 0.011, 0.756, 0.768 });
+		mAux = cono1->modelMat();
+		mAux = translate(mAux, dvec3(90, 100, 210));
+		mAux = rotate(mAux, radians(25.0), dvec3(0, 1.0, 0));
+		cono1->setModelMat(mAux);
+		gObjects.push_back(cono1);
 
-		Cylinder* ojo2 = new Cylinder(20, 0, 40);
-		ojo2->setQuadricObjColor({ 0.5, 0.2, 1.0 });
-		mAux = ojo2->modelMat();
-		mAux = translate(mAux, dvec3(80, 80, 170));
-		ojo2->setModelMat(mAux);
-		gObjects.push_back(ojo2);
+		Cylinder* cono2 = new Cylinder(25.0, 0, 40.0);
+		cono2->setQuadricObjColor({ 0, 0, 0.996 });
+		mAux = cono2->modelMat();
+		mAux = translate(mAux, dvec3(210, 100, 90));
+		mAux = rotate(mAux, radians(65.0), dvec3(0, 1.0, 0));
+		cono2->setModelMat(mAux);
+		gObjects.push_back(cono2);
 
-		
-		PartialDisk* barba = new PartialDisk(300, 320, 90, 100);
-		barba->setQuadricObjColor({ 0.1, 0.9, 0.6 });
-		mAux = barba->modelMat();
-		mAux = translate(mAux, dvec3(-50, 200, 185));
-		mAux = rotate(mAux, radians(-90.0), dvec3(0, 0.0, 1.0));
-		barba->setModelMat(mAux);
-		gObjects.push_back(barba);
-
-
+		PartialDisk* discoPar = new PartialDisk(150, 230, 90, 180);
+		discoPar->setQuadricObjColor({ 0, 0.996, 0 });
+		mAux = discoPar->modelMat();
+		mAux = translate(mAux, dvec3(100, 0, 100));
+		mAux = rotate(mAux, radians(45.0), dvec3(0, 1.0, 0));
+		discoPar->setModelMat(mAux);
+		gObjects.push_back(discoPar);
 
 	}else if (mId == 2) {
 

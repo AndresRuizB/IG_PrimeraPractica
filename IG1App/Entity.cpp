@@ -503,7 +503,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const {
 	glColor3f(mColor.r, mColor.g, mColor.b);
 	gluQuadricDrawStyle(q, GLU_FILL);
 
-	gluPartialDisk(q, innerR, outerR,startAngle, sweepAngle, 50, 50);
+	gluPartialDisk(q, innerR, outerR, 50, 50, startAngle, sweepAngle);
 
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
