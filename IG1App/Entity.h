@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Mesh.h"
 #include "Texture.h"
-#include "IndexMesh.h"
+#include "MbR.h"
 
 //-------------------------------------------------------------------------
 
@@ -255,7 +255,7 @@ class Cubo : public EntityWithIndexMesh
 public:
 	explicit Cubo(GLdouble l);
 	virtual ~Cubo();
-	void render(glm::dmat4 const& modelViewMat) const;
+	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
 //-------------------------------------------------------------------------
@@ -274,5 +274,14 @@ public:
 };
 
 //-------------------------------------------------------------------------
+
 //-------------------------------------------------------------------------
+
+class Cono : public EntityWithIndexMesh 
+{
+public:
+	explicit Cono(GLdouble h, GLdouble r, GLuint n);
+	virtual ~Cono() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 #endif //_H_Entities_H_
