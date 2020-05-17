@@ -41,41 +41,51 @@ void Scene::init()
 		//Cubo* cuboTapas = new Cubo(100);
 		//gObjects.push_back(cuboTapas);
 
-		//CompoundEntity* helices = new CompoundEntity();
-		//Cylinder* c1 = new Cylinder(20,10,60);
-		//c1->setQuadricObjColor(fvec3(0, 0, 1));
-		//mAux = c1->modelMat();
-		//mAux = translate(mAux, dvec3(0, 0, 110));
-		//mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
-		//c1->setModelMat(mAux);
-		//helices->addEntity(c1);
-		//Cylinder* c2 = new Cylinder(20, 10, 60);
-		//c2->setQuadricObjColor(fvec3(0,0,1));
-		//mAux = c2->modelMat();
-		//mAux = translate(mAux, dvec3(0, 0, 110));
-		//mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
-		//c2->setModelMat(mAux);
-		//helices->addEntity(c2);
+		CompoundEntity* helices = new CompoundEntity();
+		Cylinder* c1 = new Cylinder(20,10,60);
+		c1->setQuadricObjColor(fvec3(0, 0, 1));
+		mAux = c1->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 110));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+		c1->setModelMat(mAux);
+		helices->addEntity(c1);
+		Cylinder* c2 = new Cylinder(20, 10, 60);
+		c2->setQuadricObjColor(fvec3(0,0,1));
+		mAux = c2->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 110));
+		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+		c2->setModelMat(mAux);
+		helices->addEntity(c2);
 
-		//CompoundEntity* chasis = new CompoundEntity();
-		//chasis->addEntity(helices);
-		//Sphere* bola = new Sphere(100.0);
-		//bola->setQuadricObjColor({ 1, 0, 0 });
-		//chasis->addEntity(bola);
+		CompoundEntity* chasis = new CompoundEntity();
+		chasis->addEntity(helices);
+		Sphere* bola = new Sphere(100.0);
+		bola->setQuadricObjColor({ 1, 0, 0 });
+		chasis->addEntity(bola);
 
-		//CompoundEntity* avion = new CompoundEntity();
-		//gObjects.push_back(avion);
-		//avion->addEntity(chasis);
-		//Cubo* alas = new Cubo(100);
-		//alas->changeColor(dvec4(0,1,0,1));
-		//mAux = alas->modelMat();
-		//mAux = scale(mAux, dvec3(4,0.3, 1.5));
-		//alas->setModelMat(mAux);
-		//avion->addEntity(alas);
+		CompoundEntity* avion = new CompoundEntity();
+		gObjects.push_back(avion);
+		avion->addEntity(chasis);
+		Cubo* alas = new Cubo(100);
+		alas->changeColor(dvec4(0,1,0,1));
+		mAux = alas->modelMat();
+		mAux = scale(mAux, dvec3(4,0.3, 1.5));
+		alas->setModelMat(mAux);
+		avion->addEntity(alas);
 
-		Cono* c = new Cono(200,100,30);
-		c->changeColor(dvec4(0, 0, 1, 1));
-		gObjects.push_back(c);
+		mAux = avion->modelMat();
+
+		mAux = translate(mAux, dvec3(0, 220, 0));
+		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
+		avion->setModelMat(mAux);
+
+		//Cono* c = new Cono(200,100,30);
+		//c->changeColor(dvec4(0, 0, 1, 1));
+		//gObjects.push_back(c);
+
+		Esfera* es = new Esfera(200, 10, 10);
+		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		gObjects.push_back(es);
 
 	}
 	else if (mId == 1) {

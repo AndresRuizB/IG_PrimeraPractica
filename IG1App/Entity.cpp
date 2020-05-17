@@ -639,7 +639,15 @@ Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 
 }
 
-void Cono::render(glm::dmat4 const& modelViewMat) const
+Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 {
-	EntityWithIndexMesh::render(modelViewMat);
+// m=número de muestras, p=número de puntos del perfil
+	dvec3* perfil = new dvec3[p];
+	float anglePerSegment = 180/p;
+	float currentAngle = -90;
+	for (int i = 0; i < p; i++) {
+		perfil[i] = dvec3(cos(radians(currentAngle)) * r, sin(radians(currentAngle)) * r, 0.0);
+		currentAngle += anglePerSegment;
+	}
+	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
 }

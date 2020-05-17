@@ -274,7 +274,6 @@ public:
 };
 
 //-------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------
 
 class Cono : public EntityWithIndexMesh 
@@ -282,6 +281,14 @@ class Cono : public EntityWithIndexMesh
 public:
 	explicit Cono(GLdouble h, GLdouble r, GLuint n);
 	virtual ~Cono() {};
-	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+
+class Esfera : public EntityWithIndexMesh
+{
+public:
+	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
+	virtual ~Esfera() {};
 };
 #endif //_H_Entities_H_
