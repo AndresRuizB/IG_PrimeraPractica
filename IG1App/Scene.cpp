@@ -38,8 +38,8 @@ void Scene::init()
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
 
-		Cubo* cuboTapas = new Cubo(100);
-		gObjects.push_back(cuboTapas);
+		//Cubo* cuboTapas = new Cubo(100);
+		//gObjects.push_back(cuboTapas);
 
 		//CompoundEntity* helices = new CompoundEntity();
 		//Cylinder* c1 = new Cylinder(20,10,60);
@@ -73,8 +73,9 @@ void Scene::init()
 		//alas->setModelMat(mAux);
 		//avion->addEntity(alas);
 
-		//Cono* c = new Cono(200,100,10);
-		//gObjects.push_back(c);
+		Cono* c = new Cono(200,100,30);
+		c->changeColor(dvec4(0, 0, 1, 1));
+		gObjects.push_back(c);
 
 	}
 	else if (mId == 1) {

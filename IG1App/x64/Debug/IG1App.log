@@ -15,7 +15,4 @@ D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(570,19): warning C4244:
           [
               T=glm::f64
           ]
-  Scene.cpp
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Scene.cpp(204,47): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
-  Generating Code...
   IG1App.vcxproj -> D:\VisualStudio\C++\IG_PrimeraPractica\bin\IG1AppDebug.exe
