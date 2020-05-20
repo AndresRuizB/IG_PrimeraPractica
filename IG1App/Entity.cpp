@@ -642,12 +642,14 @@ Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 {
 // m=número de muestras, p=número de puntos del perfil
-	dvec3* perfil = new dvec3[p];
-	float anglePerSegment = 180/p;
+	dvec3* perfil = new dvec3[p+1];
+	float anglePerSegment = 180/(p-1);
 	float currentAngle = -90;
 	for (int i = 0; i < p; i++) {
 		perfil[i] = dvec3(cos(radians(currentAngle)) * r, sin(radians(currentAngle)) * r, 0.0);
 		currentAngle += anglePerSegment;
 	}
+	perfil[int(p)] = glm::dvec3(0,-r,0);
+
 	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
 }

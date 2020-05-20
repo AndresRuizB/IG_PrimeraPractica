@@ -75,7 +75,7 @@ void Scene::init()
 
 		mAux = avion->modelMat();
 
-		mAux = translate(mAux, dvec3(0, 220, 0));
+		mAux = translate(mAux, dvec3(0, 230, 0));
 		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
 		avion->setModelMat(mAux);
 
@@ -83,7 +83,7 @@ void Scene::init()
 		//c->changeColor(dvec4(0, 0, 1, 1));
 		//gObjects.push_back(c);
 
-		Esfera* es = new Esfera(200, 20, 20);
+		Esfera* es = new Esfera(200, 70, 70);
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
 		gObjects.push_back(es);
 

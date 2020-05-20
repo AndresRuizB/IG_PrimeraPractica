@@ -2,7 +2,7 @@
 
 glm::dvec3 IndexMesh::getNormal(const std::vector<glm::dvec3>& vFace)
 {
-	return glm::normalize(glm::cross((vFace[2] - vFace[1]), (vFace[0] - vFace[1])));
+	return glm::cross((vFace[2] - vFace[1]), (vFace[0] - vFace[1]));
 }
 
 IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
