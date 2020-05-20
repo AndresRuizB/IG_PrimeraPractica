@@ -443,7 +443,7 @@ QuadraticEntity::QuadraticEntity()
 Sphere::Sphere(GLdouble r) { radius = r; }
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const {
-	dmat4 aMat = modelViewMat * mModelMat; 
+	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	glEnable(GL_COLOR_MATERIAL);
 	glColor3f(mColor.r, mColor.g, mColor.b);
@@ -503,7 +503,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const {
 	glColor3f(mColor.r, mColor.g, mColor.b);
 	gluQuadricDrawStyle(q, GLU_FILL);
 
-	gluPartialDisk(q, innerR, outerR,startAngle, sweepAngle, 50, 50);
+	gluPartialDisk(q, innerR, outerR, startAngle, sweepAngle, 50, 50);
 
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
@@ -540,8 +540,7 @@ void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 
 EntityWithIndexMesh::EntityWithIndexMesh()
 {
-	iMesh = IndexMesh::generaIndexCuboConTapas(100);
-	iMesh->buildNormals();
+	iMesh = nullptr;
 }
 
 EntityWithIndexMesh::~EntityWithIndexMesh()
@@ -550,6 +549,136 @@ EntityWithIndexMesh::~EntityWithIndexMesh()
 }
 
 void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		iMesh->render();
+
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+
+
+Cubo::Cubo(int l)
+{
+	iMesh = IndexMesh::generaIndexCuboConTapas(l);
+	iMesh->buildNormals();
+}
+
+Cubo::~Cubo()
+{
+}
+
+void Cubo::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		iMesh->render();
+
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+CompoundEntity::CompoundEntity()
+{
+}
+
+
+CompoundEntity::~CompoundEntity()
+{
+	for (Abs_Entity* obj : gObjects)
+	{
+		delete obj;  obj = nullptr;
+	}
+}
+
+void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
+{
+	for (Abs_Entity* obj : gObjects)
+	{
+		obj->render(modelViewMat * mModelMat);
+	}
+}
+
+void CompoundEntity::addEntity(Abs_Entity* ae)
+{
+	gObjects.push_back(ae);
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Cone::Cone(GLdouble h, GLdouble r, GLuint n)
+{
+	int m = 3;
+	dvec3* perfil = new dvec3[m];
+	perfil[0] = dvec3(0.5, 0.0, 0.0);
+	perfil[1] = dvec3(r, 0.0, 0.0);
+	perfil[2] = dvec3(0.5, h, 0.0);
+	iMesh = MbR::generaIndexMeshByRevolution(m, n, perfil);
+	iMesh->buildNormals();
+}
+
+Cone::~Cone()
+{
+}
+
+void Cone::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		iMesh->render();
+
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+Esfera::Esfera(GLdouble r, GLuint p, GLuint m)
+{
+	dvec3* perfil = new dvec3[p + 1];
+	GLdouble auxAng = 0;
+	GLdouble incAng = 180 / (p-1) ;
+	GLdouble y = 0;
+	GLdouble x = 0;
+	for (int i = 0; i < p; i++) {
+
+		y = cos(radians(auxAng)) * r;
+		x = sin(radians(auxAng)) * r;
+		perfil[i] = dvec3(x, y, 0.0);
+
+		auxAng += incAng;
+	}
+	perfil[int(p)] = glm::dvec3(0, -r, 0);
+	iMesh = MbR::generaIndexMeshByRevolution(m, p, perfil);
+	iMesh->buildNormals();
+}
+
+Esfera::~Esfera()
+{
+}
+
+void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	if (iMesh != nullptr) {
 		glEnable(GL_COLOR_MATERIAL);

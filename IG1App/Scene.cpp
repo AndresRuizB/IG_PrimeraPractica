@@ -34,28 +34,64 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
-		//AnilloCuadrado* anilloC = new AnilloCuadrado();
-		//gObjects.push_back(anilloC);
 
-		EntityWithIndexMesh* cuboTapas = new EntityWithIndexMesh();
-		gObjects.push_back(cuboTapas);
+		CompoundEntity* avion = new CompoundEntity();
 
+		CompoundEntity* chasis = new CompoundEntity();
+
+		CompoundEntity* helices = new CompoundEntity();
+		Cylinder* mediaHeliceIzq = new Cylinder(20, 8, 50);
+		mediaHeliceIzq->setQuadricObjColor({ 0.0,0.2, 1.0 });
+		glm:dmat4 mAux = mediaHeliceIzq->modelMat();
+		mAux = rotate(mAux, radians(-90.0), dvec3(0.0, 1.0, 0.0));
+		mediaHeliceIzq->setModelMat(mAux);
+		helices->addEntity(mediaHeliceIzq);
+
+		Cylinder* mediaHeliceDer = new Cylinder(20, 8, 50);
+		mediaHeliceDer->setQuadricObjColor({ 0.0,0.2, 1.0 });
+		mAux = mediaHeliceDer->modelMat();
+		mAux = rotate(mAux, radians(90.0), dvec3(0.0, 1.0, 0.0));
+		mediaHeliceDer->setModelMat(mAux);
+		helices->addEntity(mediaHeliceDer);
+
+		mAux = helices->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 100));
+		helices->setModelMat(mAux);
+
+		Sphere* bola = new Sphere(100);
+		bola->setQuadricObjColor({ 1.0, 0.1, 0.0 });
+		chasis->addEntity(bola);
+		chasis->addEntity(helices);
+
+		avion->addEntity(chasis);
+
+		Cubo* alas = new Cubo(200);
+		mAux = alas->modelMat();
+		mAux = scale(mAux, dvec3(2.0, 0.25, 0.8));
+		alas->setModelMat(mAux);
+
+		avion->addEntity(alas);
+
+		Cone *cono = new Cone(200, 50, 500);
+		Esfera* s = new Esfera(100, 50,50);
+
+		gObjects.push_back(s);
 	}
 	else if (mId == 1) {
 
 		Sphere* cabeza = new Sphere(200);
-		cabeza->setQuadricObjColor({ 1.0, 0.5, 0.0});
+		cabeza->setQuadricObjColor({ 1.0, 0.5, 0.0 });
 		gObjects.push_back(cabeza);
 
 		Disk* halo = new Disk(130, 200);
 		halo->setQuadricObjColor({ 0.0, 0.5, 1.0 });
-		glm::dmat4 mAux = halo->modelMat(); 
-		mAux = translate(mAux, dvec3(0, 150, 0)); 
-		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0)); 
+		glm::dmat4 mAux = halo->modelMat();
+		mAux = translate(mAux, dvec3(0, 150, 0));
+		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
 		halo->setModelMat(mAux);
 		gObjects.push_back(halo);
 
-		Cylinder* ojo1 = new Cylinder(20,0,40);
+		Cylinder* ojo1 = new Cylinder(20, 0, 40);
 		ojo1->setQuadricObjColor({ 1.0, 0.0, 1.0 });
 		mAux = ojo1->modelMat();
 		mAux = translate(mAux, dvec3(-80, 80, 170));
@@ -69,7 +105,7 @@ void Scene::init()
 		ojo2->setModelMat(mAux);
 		gObjects.push_back(ojo2);
 
-		
+
 		PartialDisk* barba = new PartialDisk(300, 320, 90, 100);
 		barba->setQuadricObjColor({ 0.1, 0.9, 0.6 });
 		mAux = barba->modelMat();
@@ -78,9 +114,14 @@ void Scene::init()
 		barba->setModelMat(mAux);
 		gObjects.push_back(barba);
 
+		//AnilloCuadrado* anilloC = new AnilloCuadrado();
+		//gObjects.push_back(anilloC);
 
+		EntityWithIndexMesh* cuboTapas = new EntityWithIndexMesh();
+		gObjects.push_back(cuboTapas);
 
-	}else if (mId == 2) {
+	}
+	else if (mId == 2) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -190,7 +231,7 @@ void Scene::setState(int id)
 
 void Scene::saveCapture()
 {
-	Texture *temp = new Texture();
+	Texture* temp = new Texture();
 	temp->loadColorBuffer();
 	temp->save("name.bmp");
 }

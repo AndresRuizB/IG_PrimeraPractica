@@ -256,8 +256,55 @@ public:
 	explicit EntityWithIndexMesh();
 	virtual ~EntityWithIndexMesh();
 	void render(glm::dmat4 const& modelViewMat) const;
-private:
+protected:
 	IndexMesh* iMesh = nullptr;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Cubo : public EntityWithIndexMesh
+{
+public:
+	explicit Cubo(int l);
+	virtual ~Cubo(); 
+	void render(glm::dmat4 const& modelViewMat) const;
+
+};
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class CompoundEntity : public Abs_Entity
+{
+public:
+	explicit CompoundEntity();
+	virtual ~CompoundEntity();
+	void render(glm::dmat4 const& modelViewMat) const;
+	void addEntity(Abs_Entity* ae);
+private:
+	std::vector<Abs_Entity*> gObjects;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Cone : public EntityWithIndexMesh
+{
+public:
+	explicit Cone(GLdouble h, GLdouble r, GLuint n);
+	virtual ~Cone();
+	void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Esfera : public EntityWithIndexMesh
+{
+public:
+	explicit Esfera(GLdouble r, GLuint p, GLuint m);
+	virtual ~Esfera();
+	void render(glm::dmat4 const& modelViewMat) const;
 };
 
 //-------------------------------------------------------------------------
