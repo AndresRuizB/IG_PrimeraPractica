@@ -56,12 +56,13 @@ MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil)
 			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
 			indiceMayor++;
 
-			mesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
-			indiceMayor++;
 			mesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
 			indiceMayor++;
 			mesh->vIndices[indiceMayor] = indice + 1;
 			indiceMayor++;
+			mesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+
 		}
 
 	mesh->buildNormals();

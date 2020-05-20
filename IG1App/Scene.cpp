@@ -83,7 +83,7 @@ void Scene::init()
 		//c->changeColor(dvec4(0, 0, 1, 1));
 		//gObjects.push_back(c);
 
-		Esfera* es = new Esfera(200, 10, 10);
+		Esfera* es = new Esfera(200, 20, 20);
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
 		gObjects.push_back(es);
 

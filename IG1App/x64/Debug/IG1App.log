@@ -1,3 +1,21 @@
-﻿  Scene.cpp
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Scene.cpp(215,47): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+﻿  Entity.cpp
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(252,46): warning C4244: 'argument': conversion from 'GLdouble' to 'GLuint', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(570,39): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(570,29): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(570,19): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
+          with
+          [
+              T=glm::f64
+          ]
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(645,28): warning C4244: 'initializing': conversion from 'GLdouble' to 'size_t', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(646,24): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(652,49): warning C4244: 'argument': conversion from 'GLdouble' to 'int', possible loss of data
   IG1App.vcxproj -> D:\VisualStudio\C++\IG_PrimeraPractica\bin\IG1AppDebug.exe
