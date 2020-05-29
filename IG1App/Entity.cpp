@@ -452,6 +452,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	gluSphere(q, r, 50, 50);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 Cylinder::Cylinder(GLdouble baseR, GLdouble topR, GLdouble height) {
@@ -473,6 +474,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const {
 	gluCylinder(q, bR, tR, h, 50, 50);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 Disk::Disk(GLdouble innerR, GLdouble outerR)
@@ -495,6 +497,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 	gluDisk(q, iR, oR, 50, 40);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 PartialDisk::PartialDisk(GLdouble innerR, GLdouble outerR, GLdouble startAngle, GLdouble sweepAngle)
@@ -519,6 +522,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	gluPartialDisk(q, iR, oR, 50, 50, stAngle, swAngle);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 //-------------------------------------------------------------------------

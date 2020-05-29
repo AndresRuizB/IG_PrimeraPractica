@@ -30,9 +30,13 @@ public:
 	void saveCapture();
 
 	void sceneDirLight(Camera const& cam) const;
-	void setActiveLight(bool b) { activeLight = b; };
+	void scenePosLight(Camera const& cam) const;
+
+	void setActiveLight0(bool b) { activeLight0 = b; };
+	void setActiveLight1(bool b) { activeLight1 = b; };
 private:
-	bool activeLight = true;
+	bool activeLight0 = true;
+	bool activeLight1 = true;
 protected: 
 	void free();
 	void setGL();
