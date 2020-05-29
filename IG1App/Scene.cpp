@@ -244,7 +244,8 @@ void Scene::saveCapture()
 
 void Scene::sceneDirLight(Camera const& cam) const {
 	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	if(activeLight)	glEnable(GL_LIGHT0);
+	else glDisable(GL_LIGHT0);
 	glm::fvec4 posDir = { 1, 1, 1, 0 };
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(cam.viewMat()));

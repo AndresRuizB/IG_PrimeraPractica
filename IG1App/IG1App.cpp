@@ -193,6 +193,12 @@ void IG1App::key(unsigned char key, int x, int y)
 		cout << "Foto guardada\n";
 		mScene->saveCapture();
 		break;
+	case 'q':
+		mScene->setActiveLight(true);
+		break;
+	case 'w':
+		mScene->setActiveLight(false);
+		break;
 	case 'k':
 	case 'K':
 		splitViewport = !splitViewport;
