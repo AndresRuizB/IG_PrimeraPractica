@@ -666,7 +666,10 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 
-		//glColor3f(mColor.r, mColor.g, mColor.b);
+		glColor3f(mColor.r, mColor.g, mColor.b);
+		if (material != nullptr) {
+			material->upload();
+		}
 
 		iMesh->render();
 

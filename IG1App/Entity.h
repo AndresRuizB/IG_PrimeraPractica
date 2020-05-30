@@ -286,17 +286,6 @@ public:
 
 //-------------------------------------------------------------------------
 
-class Esfera : public EntityWithIndexMesh
-{
-public:
-	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
-	virtual ~Esfera() {};
-	virtual void render(glm::dmat4 const& modelViewMat) const;
-};
-
-//-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
-
 class EntityWithMaterial : public Abs_Entity {
 public:
 	EntityWithMaterial() : Abs_Entity() { };
@@ -305,5 +294,19 @@ public:
 	void setMaterial(Material* matl) { material = matl; };
 protected:
 	Material* material = nullptr;
+	IndexMesh* iMesh = nullptr;
 };
+
+//-------------------------------------------------------------------------
+
+class Esfera : public EntityWithMaterial
+{
+public:
+	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
+	virtual ~Esfera() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+//-------------------------------------------------------------------------
+
 #endif //_H_Entities_H_

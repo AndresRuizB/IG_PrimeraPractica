@@ -86,6 +86,9 @@ void Scene::init()
 
 		Esfera* es = new Esfera(200, 200, 200);
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		Material* mat = new Material();
+		mat->setGold();
+		es->setMaterial(mat);
 		gObjects.push_back(es);
 
 	}
@@ -218,6 +221,7 @@ void Scene::setGL()
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
+	glEnable(GL_NORMALIZE);
 
 }
 //-------------------------------------------------------------------------
