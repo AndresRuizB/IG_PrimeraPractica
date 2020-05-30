@@ -9,7 +9,7 @@
 #include "Texture.h"
 #include "MbR.h"
 #include "Material.h"
-
+#include "Light.h"
 //-------------------------------------------------------------------------
 
 class Abs_Entity  // abstract class
@@ -271,7 +271,7 @@ public:
 	~CompoundEntity();
 
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-	void addEntity(Abs_Entity* ae);
+	virtual void addEntity(Abs_Entity* ae);
 };
 
 //-------------------------------------------------------------------------
@@ -306,7 +306,17 @@ public:
 	virtual ~Esfera() {};
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
+class Avion : public CompoundEntity
+{
+public:
+	Avion();
+	virtual ~Avion() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	SpotLight* getLight() { return spotLight; };
+private:
+	SpotLight* spotLight = nullptr;
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

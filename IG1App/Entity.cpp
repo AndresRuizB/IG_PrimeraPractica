@@ -678,3 +678,18 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 		glDisable(GL_COLOR_MATERIAL);
 	}
 }
+
+Avion::Avion()
+{
+	spotLight = new SpotLight();
+	spotLight->setPosDir({0,230,0});
+	spotLight->setSpot({.0,-1.0,.0}, 15.0, 0.0);
+	spotLight->setAmb({0,0,0,1});
+}
+
+void Avion::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+	dmat4 aMat = modelViewMat * mModelMat;
+	spotLight->upload(aMat);
+}

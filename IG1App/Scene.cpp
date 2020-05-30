@@ -64,7 +64,7 @@ void Scene::init()
 		bola->setQuadricObjColor({ 1, 0, 0 });
 		chasis->addEntity(bola);
 
-		CompoundEntity* avion = new CompoundEntity();
+		Avion* avion = new Avion();
 		gObjects.push_back(avion);
 		avion->addEntity(chasis);
 		Cubo* alas = new Cubo(100);
@@ -79,13 +79,17 @@ void Scene::init()
 		mAux = translate(mAux, dvec3(0, 260, 0));
 		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
 		avion->setModelMat(mAux);
+		sceneLights.push_back(avion->getLight());
 
 		//Cono* c = new Cono(200,100,30);
 		//c->changeColor(dvec4(0, 0, 1, 1));
 		//gObjects.push_back(c);
 
 		Esfera* es = new Esfera(200, 200, 200);
+		//color AZUL
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		//color ORO
+		//es->changeColor(dvec4(0.854, 0.647, 0.125, 1));
 		Material* mat = new Material();
 		mat->setGold();
 		es->setMaterial(mat);

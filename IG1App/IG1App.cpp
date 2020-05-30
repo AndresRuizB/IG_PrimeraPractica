@@ -216,6 +216,12 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'f':
 		mScene->setActiveLight(3, false);
 		break;
+	case 't':
+		mScene->setActiveLight(4, true);
+		break;
+	case 'g':
+		mScene->setActiveLight(4, false);
+		break;
 	case 'e':
 		mScene->setLightOff();
 		break;
