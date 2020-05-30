@@ -52,6 +52,7 @@ private:
 	DirLight* directionalLight;
 	PosLight* positionalLight;
 	SpotLight* spotSceneLight;
+	DirLight* mineroLight;
 protected: 
 	void free();
 	void setGL();

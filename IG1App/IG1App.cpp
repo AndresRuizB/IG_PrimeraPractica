@@ -188,8 +188,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->changePrj();
 		mCamera2->changePrj();
 		break;
-	case 'f':
-	case 'F':
+	case 'v':
 		cout << "Foto guardada\n";
 		mScene->saveCapture();
 		break;
@@ -210,6 +209,12 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'x':
 		mScene->setActiveLight(2, false);
+		break;
+	case 'd':
+		mScene->setActiveLight(3, true);
+		break;
+	case 'f':
+		mScene->setActiveLight(3, false);
 		break;
 	case 'e':
 		mScene->setLightOff();

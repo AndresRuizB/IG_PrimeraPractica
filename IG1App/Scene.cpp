@@ -76,7 +76,7 @@ void Scene::init()
 
 		mAux = avion->modelMat();
 
-		mAux = translate(mAux, dvec3(0, 230, 0));
+		mAux = translate(mAux, dvec3(0, 260, 0));
 		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
 		avion->setModelMat(mAux);
 
@@ -336,9 +336,15 @@ void Scene::setLights()
 	spotSceneLight->setSpot({ .0,.0,-1.0 }, 90.0, 0.0);
 	spotSceneLight->setDiff({ 0,1,0,1 });
 
+	mineroLight = new DirLight();
+	mineroLight->setPosDir({ 0, 0, 1 });
+	mineroLight->setAmb({0,0,0,1});
+	mineroLight->setDiff({0.8,0.8,0.8,1});
+
 	sceneLights.push_back(directionalLight);
 	sceneLights.push_back(positionalLight);
 	sceneLights.push_back(spotSceneLight);
+	sceneLights.push_back(mineroLight);
 }
 //-------------------------------------------------------------------------
 
@@ -356,8 +362,10 @@ void Scene::render(Camera const& cam) const
 	//sceneDirLight(cam);
 	//scenePosLight(cam);
 	//sceneSpotLight(cam);
-
-	for (Light* l : sceneLights) l->upload(cam.viewMat());
+	for (int i = 0; i < 3; i++) {
+		sceneLights[i]->upload(cam.viewMat());
+	}
+	mineroLight->upload(dmat4(1.0));
 
 	cam.upload();
 
