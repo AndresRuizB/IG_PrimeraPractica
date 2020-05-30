@@ -12,6 +12,7 @@ void Scene::init()
 
 	// allocate memory and load resources
 	// Lights
+	setLights();
 	// Textures
 
 	textFoto = new Texture();
@@ -242,68 +243,98 @@ void Scene::saveCapture()
 }
 //-------------------------------------------------------------------------
 
-void Scene::sceneDirLight(Camera const& cam) const {
-	glEnable(GL_LIGHTING);
-	if(activeLight0) glEnable(GL_LIGHT0);
-	else glDisable(GL_LIGHT0);
-	glm::fvec4 posDir = { 1, 1, 1, 0 };
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(value_ptr(cam.viewMat()));
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 };
-	glm::fvec4 diffuse = { 1, 1, 1, 1 };
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
-}
-void Scene::scenePosLight(Camera const& cam) const
+void Scene::setActiveLight(int index, bool active)
 {
-	glEnable(GL_LIGHTING);
-	if (activeLight1) glEnable(GL_LIGHT1);
-	else glDisable(GL_LIGHT1);
-	glm::fvec4 posDir = { 700, 700, 0, 1 };
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(value_ptr(cam.viewMat()));
-	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
-	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 }; //reflexion
-	glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+	if (active) sceneLights[index]->enable();
+	else sceneLights[index]->disable();
 }
-void Scene::sceneSpotLight(Camera const& cam) const
-{
-	glEnable(GL_LIGHTING);
-	if (activeLight2) glEnable(GL_LIGHT2);
-	else glDisable(GL_LIGHT2);
-	glm::fvec4 posDir = { 0, 0, 300, 1 };
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(value_ptr(cam.viewMat()));
-	glLightfv(GL_LIGHT2, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
-	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 }; //reflexion
-	glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
 
-	float semiAplitud = 45.0;
-	int epsilon = 4;
-	glm::fvec3 dir = { 0,0,-1 };
-
-	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, semiAplitud);
-	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, epsilon);
-	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, value_ptr(dir));
-}
+//void Scene::sceneDirLight(Camera const& cam) const {
+//	glEnable(GL_LIGHTING);
+//	if(activeLight0) glEnable(GL_LIGHT0);
+//	else glDisable(GL_LIGHT0);
+//	glm::fvec4 posDir = { 1, 1, 1, 0 };
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadMatrixd(value_ptr(cam.viewMat()));
+//	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+//	glm::fvec4 ambient = { 0, 0, 0, 1 };
+//	glm::fvec4 diffuse = { 1, 1, 1, 1 };
+//	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+//	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+//	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+//	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+//}
+//void Scene::scenePosLight(Camera const& cam) const
+//{
+//	glEnable(GL_LIGHTING);
+//	if (activeLight1) glEnable(GL_LIGHT1);
+//	else glDisable(GL_LIGHT1);
+//	glm::fvec4 posDir = { 700, 700, 0, 1 };
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadMatrixd(value_ptr(cam.viewMat()));
+//	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(posDir));
+//	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
+//	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
+//	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 }; //reflexion
+//	glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
+//	glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
+//	glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+//}
+//void Scene::sceneSpotLight(Camera const& cam) const
+//{
+//	glEnable(GL_LIGHTING);
+//	if (activeLight2) glEnable(GL_LIGHT2);
+//	else glDisable(GL_LIGHT2);
+//	glm::fvec4 posDir = { 0, 0, 300, 1 };
+//	glMatrixMode(GL_MODELVIEW);
+//	glLoadMatrixd(value_ptr(cam.viewMat()));
+//	glLightfv(GL_LIGHT2, GL_POSITION, value_ptr(posDir));
+//	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
+//	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
+//	glm::fvec4 specular = { 0, 0, 0, 1 }; //reflexion
+//	glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
+//	glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
+//	glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+//
+//	float semiAplitud = 90.0;
+//	float epsilon = 0.0;
+//	glm::fvec3 dir = { .0,.0,-1.0 };
+//	dir = normalize(dir);
+//
+//	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, semiAplitud);
+//	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, epsilon);
+//	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, value_ptr(dir));
+//}
 void Scene::setLightOff()
 {
-	activeLight0 = false;
-	activeLight1 = false;
-	activeLight2 = false;
+	//activeLight0 = false;
+	//activeLight1 = false;
+	//activeLight2 = false;
+
+	for (Light* l : sceneLights) l->disable();
+
 	GLfloat amb[] = { 0, 0, 0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+}
+void Scene::setLights()
+{
+	glEnable(GL_LIGHTING);
+
+	directionalLight = new DirLight();
+	directionalLight->setPosDir({1,1,1});
+
+	positionalLight = new PosLight();
+	positionalLight->setPosDir({300,300,0});
+	positionalLight->setDiff({0,1,0,1});
+
+	spotSceneLight = new SpotLight();
+	spotSceneLight->setPosDir({ 0, 0, 300 });
+	spotSceneLight->setSpot({ .0,.0,-1.0 }, 90.0, 0.0);
+	spotSceneLight->setDiff({ 0,1,0,1 });
+
+	sceneLights.push_back(directionalLight);
+	sceneLights.push_back(positionalLight);
+	sceneLights.push_back(spotSceneLight);
 }
 //-------------------------------------------------------------------------
 
@@ -318,9 +349,12 @@ void Scene::update()
 
 void Scene::render(Camera const& cam) const
 {
-	sceneDirLight(cam);
-	scenePosLight(cam);
-	sceneSpotLight(cam);
+	//sceneDirLight(cam);
+	//scenePosLight(cam);
+	//sceneSpotLight(cam);
+
+	for (Light* l : sceneLights) l->upload(cam.viewMat());
+
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

@@ -10,6 +10,8 @@
 
 #include <vector>
 
+#include "Light.h"
+
 //-------------------------------------------------------------------------
 
 class Scene	
@@ -29,18 +31,27 @@ public:
 	
 	void saveCapture();
 
-	void sceneDirLight(Camera const& cam) const;
-	void scenePosLight(Camera const& cam) const;
-	void sceneSpotLight(Camera const& cam) const;
+	//void sceneDirLight(Camera const& cam) const;
+	//void scenePosLight(Camera const& cam) const;
+	//void sceneSpotLight(Camera const& cam) const;
 
-	void setActiveLight0(bool b) { activeLight0 = b; };
-	void setActiveLight1(bool b) { activeLight1 = b; };
-	void setActiveLight2(bool b) { activeLight2 = b; };
+	//void setActiveLight0(bool b) { activeLight0 = b; };
+	//void setActiveLight1(bool b) { activeLight1 = b; };
+	//void setActiveLight2(bool b) { activeLight2 = b; };
+
+	void setActiveLight(int index, bool active);
 	void setLightOff();
+	void setLights();
 private:
-	bool activeLight0 = true;
-	bool activeLight1 = true;
-	bool activeLight2 = true;
+	//bool activeLight0 = true;
+	//bool activeLight1 = true;
+	//bool activeLight2 = true;
+
+	std::vector<Light*> sceneLights;
+
+	DirLight* directionalLight;
+	PosLight* positionalLight;
+	SpotLight* spotSceneLight;
 protected: 
 	void free();
 	void setGL();

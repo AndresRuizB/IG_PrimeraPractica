@@ -194,22 +194,22 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->saveCapture();
 		break;
 	case 'q':
-		mScene->setActiveLight0(true);
+		mScene->setActiveLight(0,true);
 		break;
 	case 'w':
-		mScene->setActiveLight0(false);
+		mScene->setActiveLight(0, false);
 		break;
 	case 'a':
-		mScene->setActiveLight1(true);
+		mScene->setActiveLight(1, true);
 		break;
 	case 's':
-		mScene->setActiveLight1(false);
+		mScene->setActiveLight(1, false);
 		break;
 	case 'z':
-		mScene->setActiveLight2(true);
+		mScene->setActiveLight(2, true);
 		break;
 	case 'x':
-		mScene->setActiveLight2(false);
+		mScene->setActiveLight(2, false);
 		break;
 	case 'e':
 		mScene->setLightOff();

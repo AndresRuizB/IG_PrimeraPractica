@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MbR.h"
+#include "Material.h"
 
 //-------------------------------------------------------------------------
 
@@ -291,7 +292,18 @@ public:
 	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
 	virtual ~Esfera() {};
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 
-	void setGold();
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() : Abs_Entity() { };
+	virtual ~EntityWithMaterial() { };
+
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
 };
 #endif //_H_Entities_H_
