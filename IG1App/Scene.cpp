@@ -83,7 +83,7 @@ void Scene::init()
 		//c->changeColor(dvec4(0, 0, 1, 1));
 		//gObjects.push_back(c);
 
-		Esfera* es = new Esfera(200, 70, 70);
+		Esfera* es = new Esfera(200, 200, 200);
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
 		gObjects.push_back(es);
 
@@ -262,16 +262,48 @@ void Scene::scenePosLight(Camera const& cam) const
 	glEnable(GL_LIGHTING);
 	if (activeLight1) glEnable(GL_LIGHT1);
 	else glDisable(GL_LIGHT1);
-	glm::fvec4 posDir = { 400, 400, 0, 1 };
+	glm::fvec4 posDir = { 700, 700, 0, 1 };
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(cam.viewMat()));
 	glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 };
-	glm::fvec4 diffuse = { 0, 1, 0, 1 };
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
+	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
+	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 }; //reflexion
 	glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
 	glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+}
+void Scene::sceneSpotLight(Camera const& cam) const
+{
+	glEnable(GL_LIGHTING);
+	if (activeLight2) glEnable(GL_LIGHT2);
+	else glDisable(GL_LIGHT2);
+	glm::fvec4 posDir = { 0, 0, 300, 1 };
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(value_ptr(cam.viewMat()));
+	glLightfv(GL_LIGHT2, GL_POSITION, value_ptr(posDir));
+	glm::fvec4 ambient = { 0, 0, 0, 1 }; //
+	glm::fvec4 diffuse = { 0, 1, 0, 1 }; //color
+	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 }; //reflexion
+	glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
+	glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+
+	float semiAplitud = 45.0;
+	int epsilon = 4;
+	glm::fvec3 dir = { 0,0,-1 };
+
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, semiAplitud);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, epsilon);
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, value_ptr(dir));
+}
+void Scene::setLightOff()
+{
+	activeLight0 = false;
+	activeLight1 = false;
+	activeLight2 = false;
+	GLfloat amb[] = { 0, 0, 0, 1.0 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
 //-------------------------------------------------------------------------
 
@@ -288,6 +320,7 @@ void Scene::render(Camera const& cam) const
 {
 	sceneDirLight(cam);
 	scenePosLight(cam);
+	sceneSpotLight(cam);
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

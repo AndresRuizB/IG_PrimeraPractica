@@ -290,5 +290,8 @@ class Esfera : public EntityWithIndexMesh
 public:
 	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
 	virtual ~Esfera() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	void setGold();
 };
 #endif //_H_Entities_H_

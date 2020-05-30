@@ -656,4 +656,35 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 	perfil[int(p)] = glm::dvec3(0,-r,0);
 
 	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+
+	setGold();
+}
+
+void Esfera::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		//glColor3f(mColor.r, mColor.g, mColor.b);
+
+		iMesh->render();
+
+		// Aquí se debe recuperar el color:
+		glColor3f(1.0, 1.0, 1.0);
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+
+void Esfera::setGold()
+{
+	glm::fvec4 ambient = { 0.24725, 0.1995, 0.0745, 1 }; //
+	glm::fvec4 diffuse = { 0.75164, 0.60648, 0.22648, 1 }; //color
+	glm::fvec4 specular = { 0.628281, 0.555802, 0.366065, 1 }; //reflexion
+	float exponent = 51.2 ; //reflexion
+	glMaterialfv(GL_FRONT, GL_AMBIENT, value_ptr(ambient));
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, value_ptr(diffuse));
+	glMaterialfv(GL_FRONT, GL_SPECULAR, value_ptr(specular));
+	glMaterialf(GL_FRONT, GL_SHININESS, exponent);
 }

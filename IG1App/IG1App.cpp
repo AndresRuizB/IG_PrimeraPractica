@@ -205,6 +205,15 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 's':
 		mScene->setActiveLight1(false);
 		break;
+	case 'z':
+		mScene->setActiveLight2(true);
+		break;
+	case 'x':
+		mScene->setActiveLight2(false);
+		break;
+	case 'e':
+		mScene->setLightOff();
+		break;
 	case 'k':
 	case 'K':
 		splitViewport = !splitViewport;
