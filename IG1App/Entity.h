@@ -249,15 +249,7 @@ protected:
 };
 
 //-------------------------------------------------------------------------
-//-------------------------------------------------------------------------
 
-class Cubo : public EntityWithIndexMesh 
-{
-public:
-	explicit Cubo(GLdouble l);
-	virtual ~Cubo();
-	virtual void render(glm::dmat4 const& modelViewMat) const;
-};
 
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
@@ -271,6 +263,7 @@ public:
 	~CompoundEntity();
 
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update() {};
 	virtual void addEntity(Abs_Entity* ae);
 };
 
@@ -296,7 +289,15 @@ protected:
 	Material* material = nullptr;
 	IndexMesh* iMesh = nullptr;
 };
+//-------------------------------------------------------------------------
 
+class Cubo : public EntityWithMaterial
+{
+public:
+	explicit Cubo(GLdouble l);
+	virtual ~Cubo();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 //-------------------------------------------------------------------------
 
 class Esfera : public EntityWithMaterial
@@ -307,15 +308,20 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 //-------------------------------------------------------------------------
-class Avion : public CompoundEntity
+class Plane : public CompoundEntity
 {
 public:
-	Avion();
-	virtual ~Avion() {};
+	Plane();
+	virtual ~Plane() {};
+	virtual void update();  // abstract method
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	SpotLight* getLight() { return spotLight; };
+	void setHelices(CompoundEntity* h) { helices = h; };
 private:
 	SpotLight* spotLight = nullptr;
+	CompoundEntity* helices = nullptr;
+	double currentAngle = 180;
+	float orbitRadius = 15;
 };
 //-------------------------------------------------------------------------
 

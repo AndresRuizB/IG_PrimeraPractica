@@ -225,6 +225,9 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'e':
 		mScene->setLightOff();
 		break;
+	case 'y':
+		mScene->move();
+		break;
 	case 'k':
 	case 'K':
 		splitViewport = !splitViewport;

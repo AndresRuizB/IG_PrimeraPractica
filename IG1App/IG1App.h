@@ -82,7 +82,7 @@ protected:
 	int mWinW = 1200;    // window's width 
 	int mWinH = 800;    // window's height
 	GLuint mLastUpdateTime = 0;
-	bool updating = false;
+	bool updating = true;
 
 	int mMouseButt;
 	glm::dvec2 mMouseCoord;

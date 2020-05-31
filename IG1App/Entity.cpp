@@ -594,7 +594,22 @@ Cubo::~Cubo()
 
 void Cubo::render(glm::dmat4 const& modelViewMat) const
 {
-	EntityWithIndexMesh::render(modelViewMat);
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		glColor3f(mColor.r, mColor.g, mColor.b);
+		if (material != nullptr) {
+			material->upload();
+		}
+
+		iMesh->render();
+
+		// Aquí se debe recuperar el color:
+		glColor3f(1.0, 1.0, 1.0);
+		glDisable(GL_COLOR_MATERIAL);
+	}
 }
 
 CompoundEntity::CompoundEntity()
@@ -679,15 +694,27 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 
-Avion::Avion()
+Plane::Plane()
 {
 	spotLight = new SpotLight();
-	spotLight->setPosDir({0,230,0});
-	spotLight->setSpot({.0,-1.0,.0}, 15.0, 0.0);
+	spotLight->setPosDir({0,50,0});
+	spotLight->setSpot({.0,-1.0,.0}, 25.0, 0.0);
 	spotLight->setAmb({0,0,0,1});
 }
 
-void Avion::render(glm::dmat4 const& modelViewMat) const
+void Plane::update()
+{
+	dmat4 mI = dmat4(1);	//matriz unidad
+
+	GLdouble speedRotation = 10.0;
+
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 0.0, 1.0));
+	dmat4 tMat = translate(mI, dvec3(0.0, 0.0, 0.0));
+	helices->setModelMat(tMat * rMat * mI);
+	frame++;
+}
+
+void Plane::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
 	dmat4 aMat = modelViewMat * mModelMat;

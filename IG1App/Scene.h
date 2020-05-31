@@ -42,6 +42,7 @@ public:
 	void setActiveLight(int index, bool active);
 	void setLightOff();
 	void setLights();
+	void move();
 private:
 	//bool activeLight0 = true;
 	//bool activeLight1 = true;
@@ -49,10 +50,13 @@ private:
 
 	std::vector<Light*> sceneLights;
 
-	DirLight* directionalLight;
-	PosLight* positionalLight;
-	SpotLight* spotSceneLight;
-	DirLight* mineroLight;
+	DirLight* directionalLight = nullptr;
+	PosLight* positionalLight = nullptr;
+	SpotLight* spotSceneLight = nullptr;
+	DirLight* mineroLight = nullptr;
+	Plane* scenePlane = nullptr;
+	double currentAngle = 180;
+	int frame = 0;
 protected: 
 	void free();
 	void setGL();

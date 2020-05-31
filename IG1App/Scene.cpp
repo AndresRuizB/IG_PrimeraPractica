@@ -64,22 +64,27 @@ void Scene::init()
 		bola->setQuadricObjColor({ 1, 0, 0 });
 		chasis->addEntity(bola);
 
-		Avion* avion = new Avion();
+		Plane* avion = new Plane();
 		gObjects.push_back(avion);
 		avion->addEntity(chasis);
 		Cubo* alas = new Cubo(100);
-		alas->changeColor(dvec4(0,1,0,1));
+		//color COBRE
+		alas->changeColor(dvec4(0.462, 0.235, 0.156,1));
+		Material* coppMat = new Material();
+		coppMat->setCopper();
+		alas->setMaterial(coppMat);
 		mAux = alas->modelMat();
 		mAux = scale(mAux, dvec3(4,0.3, 1.5));
 		alas->setModelMat(mAux);
 		avion->addEntity(alas);
 
 		mAux = avion->modelMat();
-
 		mAux = translate(mAux, dvec3(0, 260, 0));
 		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
 		avion->setModelMat(mAux);
 		sceneLights.push_back(avion->getLight());
+		avion->setHelices(helices);
+		scenePlane = avion;
 
 		//Cono* c = new Cono(200,100,30);
 		//c->changeColor(dvec4(0, 0, 1, 1));
@@ -90,9 +95,9 @@ void Scene::init()
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
 		//color ORO
 		//es->changeColor(dvec4(0.854, 0.647, 0.125, 1));
-		Material* mat = new Material();
-		mat->setGold();
-		es->setMaterial(mat);
+		Material* goldMat = new Material();
+		goldMat->setGold();
+		es->setMaterial(goldMat);
 		gObjects.push_back(es);
 
 	}
@@ -349,6 +354,26 @@ void Scene::setLights()
 	sceneLights.push_back(positionalLight);
 	sceneLights.push_back(spotSceneLight);
 	sceneLights.push_back(mineroLight);
+}
+void Scene::move()
+{
+	if (scenePlane != nullptr) {
+
+		GLdouble radiusTranslation = 260, speedRotation = -4.0, speedTranslation = 4.0;
+
+		dmat4 mI = dmat4(1);	//matriz unidad
+		dmat4 rMat = rotate(mI, radians((speedRotation * frame)), dvec3(1.0, 0.0, 0.0));
+		dmat4 tMat = translate(mI, dvec3(0.0,
+			-sin(radians((speedTranslation * frame)-90)) * radiusTranslation,
+			-cos(radians((speedTranslation * frame)-90)) * radiusTranslation));
+		dmat4 sMat = scale(mI, dvec3(0.3, 0.3, 0.3));
+		scenePlane->setModelMat(tMat * rMat * sMat * mI);
+		frame++;
+		//dmat4 mAux = scenePlane->modelMat();
+		////mAux = translate(mAux,dvec3(0,0,0));
+		//mAux = translate(mAux, dvec3(0.0, (sin(radians(currentAngle)) * 15), cos(radians(currentAngle)) * 15));
+		//currentAngle++;
+	}
 }
 //-------------------------------------------------------------------------
 
