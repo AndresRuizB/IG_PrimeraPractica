@@ -359,13 +359,13 @@ void Scene::move()
 {
 	if (scenePlane != nullptr) {
 
-		GLdouble radiusTranslation = 260, speedRotation = -4.0, speedTranslation = 4.0;
+		GLdouble radiusTranslation = 260, speedRotation = 4.0, speedTranslation = 4.0;
 
 		dmat4 mI = dmat4(1);	//matriz unidad
 		dmat4 rMat = rotate(mI, radians((speedRotation * frame)), dvec3(1.0, 0.0, 0.0));
 		dmat4 tMat = translate(mI, dvec3(0.0,
-			-sin(radians((speedTranslation * frame)-90)) * radiusTranslation,
-			-cos(radians((speedTranslation * frame)-90)) * radiusTranslation));
+			-cos(radians((speedTranslation * frame) - 180)) * radiusTranslation,
+			-sin(radians((speedTranslation * frame) - 180)) * radiusTranslation));
 		dmat4 sMat = scale(mI, dvec3(0.3, 0.3, 0.3));
 		scenePlane->setModelMat(tMat * rMat * sMat * mI);
 		frame++;
