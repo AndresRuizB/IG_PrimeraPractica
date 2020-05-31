@@ -30,6 +30,8 @@ void Scene::init()
 	windowC->load("../Bmps/windowC.bmp", 150);
 	gTextures.push_back(windowC);	//4
 
+	glEnable(GL_LIGHTING);
+
 	// Graphics objects (entities) of the scene
 
 	gObjects.push_back(new EjesRGB(400.0));
@@ -41,8 +43,8 @@ void Scene::init()
 		//Cubo* cuboTapas = new Cubo(100);
 		//gObjects.push_back(cuboTapas);
 
-		CompoundEntity* helices = new CompoundEntity();
-		Cylinder* c1 = new Cylinder(20,10,60);
+		helices = new CompoundEntity();
+		Cylinder* c1 = new Cylinder(20, 10, 60);
 		c1->setQuadricObjColor(fvec3(0, 0, 1));
 		mAux = c1->modelMat();
 		mAux = translate(mAux, dvec3(0, 0, 110));
@@ -50,7 +52,7 @@ void Scene::init()
 		c1->setModelMat(mAux);
 		helices->addEntity(c1);
 		Cylinder* c2 = new Cylinder(20, 10, 60);
-		c2->setQuadricObjColor(fvec3(0,0,1));
+		c2->setQuadricObjColor(fvec3(0, 0, 1));
 		mAux = c2->modelMat();
 		mAux = translate(mAux, dvec3(0, 0, 110));
 		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
@@ -63,29 +65,33 @@ void Scene::init()
 		bola->setQuadricObjColor({ 1, 0, 0 });
 		chasis->addEntity(bola);
 
-		CompoundEntity* avion = new CompoundEntity();
+		avion = new CompoundEntity();
 		gObjects.push_back(avion);
 		avion->addEntity(chasis);
 		Cubo* alas = new Cubo(100);
-		alas->changeColor(dvec4(0,1,0,1));
 		mAux = alas->modelMat();
-		mAux = scale(mAux, dvec3(4,0.3, 1.5));
+		mAux = scale(mAux, dvec3(4, 0.3, 1.5));
 		alas->setModelMat(mAux);
 		avion->addEntity(alas);
 
 		mAux = avion->modelMat();
 
-		mAux = translate(mAux, dvec3(0, 230, 0));
+		mAux = translate(mAux, dvec3(0, 300, 0));
 		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
 		avion->setModelMat(mAux);
 
-		//Cono* c = new Cono(200,100,30);
-		//c->changeColor(dvec4(0, 0, 1, 1));
-		//gObjects.push_back(c);
+		Cono* c = new Cono(200, 100, 30);
+		c->changeColor(dvec4(0, 0, 1, 1));
+		gObjects.push_back(c);
 
-		Esfera* es = new Esfera(200, 70, 70);
+		Esfera* es = new Esfera(200, 500, 500);
 		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		Material* m = new Material;
+		m->setCopper();
+		//es->setMaterial(m);
 		gObjects.push_back(es);
+
+		setLights();
 
 	}
 	else if (mId == 1) {
@@ -126,7 +132,8 @@ void Scene::init()
 		discoPar->setModelMat(mAux);
 		gObjects.push_back(discoPar);
 
-	}else if (mId == 2) {
+	}
+	else if (mId == 2) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -192,6 +199,35 @@ void Scene::init()
 }
 
 //-------------------------------------------------------------------------
+
+
+void Scene::move()
+{
+	GLdouble radiusTranslation = 300, speedRotation = 4.0, speedTranslation = 4.0;
+
+	dmat4 mI = dmat4(1);	//matriz unidad
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame ), dvec3(1.0, 0.0, 0.0));
+	dmat4 tMat = translate(mI, dvec3(0.0,
+		cos(radians(speedTranslation * frame)) * radiusTranslation, 
+		sin(radians(speedTranslation * frame)) * radiusTranslation));
+	dmat4 sMat = scale(mI, dvec3(0.3, 0.3, 0.3));
+	avion->setModelMat(tMat * rMat * sMat * mI);
+
+	rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 0.0, 1.0));
+	helices->setModelMat(rMat * mI);
+
+	planeSpotLight->setPosDir(fvec3{ 0.0,
+		cos(radians(speedTranslation * frame)) * radiusTranslation,
+		sin(radians(speedTranslation * frame)) * radiusTranslation	
+		});
+	planeSpotLight->setSpot(fvec3{ 0.0,
+		-cos(radians(speedTranslation * frame)) * radiusTranslation,
+		-sin(radians(speedTranslation * frame)) * radiusTranslation
+		}, 15, 1);
+	frame++;
+}
+
+//-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
 
@@ -206,6 +242,7 @@ void Scene::free()
 	{
 		delete el;  el = nullptr;
 	}
+
 }
 //-------------------------------------------------------------------------
 void Scene::setGL()
@@ -216,7 +253,9 @@ void Scene::setGL()
 	else glClearColor(1.0, 1.0, 1.0, 1.0);// background color (alpha=1 -> opaque)
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
-	glEnable(GL_TEXTURE_2D);  // disable textures
+	glDisable(GL_TEXTURE_2D);  // disable textures
+	//glEnable(GL_LIGHTING);
+	glEnable(GL_NORMALIZE);
 
 }
 //-------------------------------------------------------------------------
@@ -227,6 +266,77 @@ void Scene::resetGL()
 	glDisable(GL_TEXTURE_2D);  // disable textures
 }
 //-------------------------------------------------------------------------
+
+void Scene::setLights()
+{
+	directionalLight = new DirLight();
+	directionalLight->setPosDir(glm::fvec3{ 1, 1, 1 });
+	directionalLight->setAmb(glm::fvec4{ 0, 0, 0, 1 });
+	directionalLight->setDiff(glm::fvec4{ 1, 1, 1, 1 });
+	directionalLight->setSpecularf(glm::fvec4{ 0.5, 0.5, 0.5, 1 });
+
+	positionalLight = new PosLight();
+	positionalLight->setPosDir({ 300, 300, 0 });
+	positionalLight->setAmb(glm::fvec4{ 0, 0, 0, 1 });
+	positionalLight->setDiff(glm::fvec4{ 0.4, 1, 0.1, 1 });
+	positionalLight->setSpecularf(glm::fvec4{ 0.5, 0.5, 0.5, 1 });
+
+	spotSceneLight = new SpotLight();
+	spotSceneLight->setPosDir({ 0, 50, 300 });
+	spotSceneLight->setAmb(glm::fvec4{ 0, 0, 0, 1 });
+	spotSceneLight->setDiff(glm::fvec4{ 0.4, 1, 0.1, 1 });
+	spotSceneLight->setSpecularf(glm::fvec4{ 0.5, 0.5, 0.5, 1 });
+	spotSceneLight->setSpot(glm::fvec3{ 0, 1, -1 }, 45, 4);
+
+	planeSpotLight = new SpotLight();
+	planeSpotLight->setPosDir({ 0, 300, 0 });
+	planeSpotLight->setAmb(glm::fvec4{ 0, 0, 0, 1 });
+	planeSpotLight->setDiff(glm::fvec4{ 1, 0.1, 0.1, 1 });
+	planeSpotLight->setSpecularf(glm::fvec4{ 0.5, 0.5, 0.5, 1 });
+	planeSpotLight->setSpot(glm::fvec3{ 0, -1, 0 }, 15, 1);
+
+	mineroLight = new DirLight();
+	mineroLight->setPosDir({ 0, 0, 1 });
+	mineroLight->setAmb({ 0,0,0,1 });
+	mineroLight->setDiff({ 0.8,0.8,0.8,1 });
+}
+
+//-------------------------------------------------------------------------
+
+void Scene::updateLights(Camera const& cam) const
+{
+	if (!dirLightOn) directionalLight->disable();
+	else {
+		directionalLight->enable();
+		directionalLight->upload(cam.viewMat());
+	}
+
+	if (!posLightOn) positionalLight->disable();
+	else {
+		positionalLight->enable();
+		positionalLight->upload(cam.viewMat());
+	}
+
+	if (!spotLightOn) spotSceneLight->disable();
+	else {
+		spotSceneLight->enable();
+		spotSceneLight->upload(cam.viewMat());
+	}
+
+	if (!planeSpotLightOn) planeSpotLight->disable();
+	else {
+		planeSpotLight->enable();
+		planeSpotLight->upload(cam.viewMat());
+	}
+
+	if (!mineroLightOn) mineroLight->disable();
+	else {
+		mineroLight->enable();
+	}
+
+}
+
+//-------------------------------------------------------------------------
 void Scene::setState(int id)
 {
 	Scene::mId = id;
@@ -236,25 +346,71 @@ void Scene::setState(int id)
 
 void Scene::saveCapture()
 {
-	Texture *temp = new Texture();
+	Texture* temp = new Texture();
 	temp->loadColorBuffer();
 	temp->save("name.bmp");
 }
 //-------------------------------------------------------------------------
 
 void Scene::sceneDirLight(Camera const& cam) const {
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glm::fvec4 posDir = { 1, 1, 1, 0 };
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixd(value_ptr(cam.viewMat()));
-	glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
-	glm::fvec4 ambient = { 0, 0, 0, 1 };
-	glm::fvec4 diffuse = { 1, 1, 1, 1 };
-	glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+	if (!dirLightOn) glDisable(GL_LIGHT0);
+	else {
+		glEnable(GL_LIGHTING);
+		//glEnable(GL_LIGHT0);
+		glm::fvec4 posDir = { 1, 1, 1, 0 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		glLightfv(GL_LIGHT0, GL_POSITION, value_ptr(posDir));
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 1, 1, 1, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
+	}
+}
+
+//-------------------------------------------------------------------------
+
+void Scene::scenePosLight(Camera const& cam) const
+{
+	if (!posLightOn) glDisable(GL_LIGHT1);
+	else {
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT1);
+		glm::fvec4 posDir = { 300, 300, 0, 1 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		glLightfv(GL_LIGHT1, GL_POSITION, value_ptr(posDir));
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 0.4, 1, 0.1, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT1, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT1, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT1, GL_SPECULAR, value_ptr(specular));
+	}
+}
+//-------------------------------------------------------------------------
+
+void Scene::sceneSpotLight(Camera const& cam) const
+{
+	if (!spotLightOn) glDisable(GL_LIGHT2);
+	else {
+		glEnable(GL_LIGHTING);
+		glEnable(GL_LIGHT2);
+		glm::fvec4 posDir = { 0, 100, 300, 1 };
+		glMatrixMode(GL_MODELVIEW);
+		glLoadMatrixd(value_ptr(cam.viewMat()));
+		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 45.0);
+		glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 4.0);
+		glLightfv(GL_LIGHT2, GL_POSITION, value_ptr(posDir));
+		glm::fvec4 ambient = { 0, 0, 0, 1 };
+		glm::fvec4 diffuse = { 0.2, 1, 0.2, 1 };
+		glm::fvec4 specular = { 0.5, 0.5, 0.5, 1 };
+		glLightfv(GL_LIGHT2, GL_AMBIENT, value_ptr(ambient));
+		glLightfv(GL_LIGHT2, GL_DIFFUSE, value_ptr(diffuse));
+		glLightfv(GL_LIGHT2, GL_SPECULAR, value_ptr(specular));
+	}
 }
 //-------------------------------------------------------------------------
 
@@ -269,7 +425,22 @@ void Scene::update()
 
 void Scene::render(Camera const& cam) const
 {
-	sceneDirLight(cam);
+	if (!allLightOn) {
+		float p[4] = { 0,0,0,0 };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, p);
+	}
+	else {
+
+		float p[4] = { 0.2,0.2,0.2,0 };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, p);
+	}
+	glShadeModel(GL_SMOOTH);
+
+	mineroLight->upload(dmat4(1.0));
+
+	updateLights(cam);
+
+	//setLights()
 	cam.upload();
 
 	for (Abs_Entity* el : gObjects)

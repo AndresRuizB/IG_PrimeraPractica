@@ -188,14 +188,64 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->changePrj();
 		mCamera2->changePrj();
 		break;
-	case 'f':
-	case 'F':
+	case 'h':
+	case 'H':
 		cout << "Foto guardada\n";
 		mScene->saveCapture();
 		break;
 	case 'k':
 	case 'K':
 		splitViewport = !splitViewport;
+		break;
+
+	case 'q':
+	case 'Q':
+		mScene->switchDirLight(true);
+		break;
+
+	case 'w':
+	case 'W':
+		mScene->switchDirLight(false);
+		break;
+	case 'a':
+	case 'A':
+		mScene->switchPosLight(true);
+		break;
+	case 's':
+	case 'S':
+		mScene->switchPosLight(false);
+		break;
+	case 'z':
+	case 'Z':
+		mScene->switchSpotLight(true);
+		break;
+	case 'x':
+	case 'X':
+		mScene->switchSpotLight(false);
+		break;
+	case 'e':
+	case 'E':
+		mScene->switchAllLights();
+		break;
+	case 't':
+	case 'T':
+		mScene->switchPlaneLight(true);
+		break;
+	case 'g':
+	case 'G':
+		mScene->switchPlaneLight(false);
+		break;
+	case 'y':
+	case 'Y':
+		mScene->move();
+		break;
+	case 'd':
+	case 'D':
+		mScene->switchMinerLight(true);
+		break;
+	case 'f':
+	case 'F':
+		mScene->switchMinerLight(false);
 		break;
 	case '0':
 		delete mScene;

@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MbR.h"
+#include "Material.h"
 
 //-------------------------------------------------------------------------
 
@@ -256,6 +257,7 @@ public:
 	explicit Cubo(GLdouble l);
 	virtual ~Cubo();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void setCopper() const;
 };
 
 //-------------------------------------------------------------------------
@@ -284,11 +286,29 @@ public:
 };
 
 //-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
 
-class Esfera : public EntityWithIndexMesh
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() { };
+	virtual ~EntityWithMaterial() { };
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
+};
+
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+class Esfera : public EntityWithMaterial
 {
 public:
 	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
 	virtual ~Esfera() {};
+
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	IndexMesh* iMesh;
 };
 #endif //_H_Entities_H_

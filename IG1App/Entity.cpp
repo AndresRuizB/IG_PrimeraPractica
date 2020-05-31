@@ -578,6 +578,10 @@ void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+
 Cubo::Cubo(GLdouble l)
 {
 	iMesh = IndexMesh::generaIndexCuboConTapas(l);
@@ -590,8 +594,27 @@ Cubo::~Cubo()
 
 void Cubo::render(glm::dmat4 const& modelViewMat) const
 {
+	setCopper();
 	EntityWithIndexMesh::render(modelViewMat);
 }
+
+void Cubo::setCopper() const
+{
+	fvec4 ambient = { 0.19125, 0.0735, 0.0225, 1 };
+	fvec4 diffuse = { 0.7038, 0.27048, 0.0828, 1 };
+	fvec4 specular = { 0.256777, 0.137622, 0.086014, 1 };
+	float expF = 12.8;
+	glMaterialfv(GL_FRONT, GL_AMBIENT, value_ptr(ambient));
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, value_ptr(diffuse));
+	glMaterialfv(GL_FRONT, GL_SPECULAR, value_ptr(specular));
+	glMaterialfv(GL_FRONT, GL_AMBIENT, &expF);
+	glShadeModel(GL_SMOOTH);
+
+}
+
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 
 CompoundEntity::CompoundEntity()
 {
@@ -652,4 +675,17 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 	perfil[int(p)] = glm::dvec3(0,-r,0);
 
 	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+}
+
+void Esfera::render(glm::dmat4 const& modelViewMat) const
+{
+	glEnable(GL_COLOR_MATERIAL);
+	if (material != nullptr) {
+		material->upload();		
+	}
+	else {
+		glColor3f(mColor.r, mColor.g, mColor.b);
+	}
+
+	iMesh->render();
 }
