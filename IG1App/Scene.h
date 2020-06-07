@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "Texture.h"
 
 #include <vector>
 
@@ -25,6 +26,8 @@ public:
 
     void render(Camera const& cam) const;
 	void update();
+	void setState(int id) { mId = id; free(); resetGL(); init(); };
+	void makeBmp(const std::string& BMP_Name);
 	
 protected:
 	void free();
@@ -32,6 +35,9 @@ protected:
 	void resetGL();
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
+private:
+	int mId = 1;
+	std::vector<Texture*> gTextures;
 };
 //-------------------------------------------------------------------------
 

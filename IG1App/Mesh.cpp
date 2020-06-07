@@ -22,9 +22,14 @@ void Mesh::render() const
 			glEnableClientState(GL_COLOR_ARRAY);
 			glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
 		}
+		if (vTexCoords.size() > 0) { // transfer colors
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());  // components number (rgba=4), type of each component, stride, pointer  
+		}
 
 		draw();
 
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
@@ -157,6 +162,127 @@ Mesh* Mesh::generaRectanguloRGB(GLdouble w, GLdouble h)
 	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 0.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 0.0);
 	mesh->vColors.emplace_back(0.0, 0.0, 0.0, 0.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+
+	mesh->mNumVertices = 2*np+2;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	GLdouble tempAng = 90.0;
+	GLdouble increment = 360.0 / (np*2);
+
+	mesh->vVertices.emplace_back(0.0,0.0,0.0);
+
+	for (int i = 0; i < mesh->mNumVertices-1; i++) {
+		mesh->vVertices.emplace_back(re/(1+(i%2)) * cos(radians(tempAng)), re/ (1 + (i % 2)) * sin(radians(tempAng)), h);
+		tempAng += increment;
+	}
+
+	return mesh;
+}
+
+Mesh* Mesh::generaContCubo(GLdouble ld)
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+
+	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vVertices.emplace_back(-ld / 2, ld / 2, ld / 2);
+	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, ld / 2);
+	mesh->vVertices.emplace_back(ld / 2, ld / 2, ld / 2);
+	mesh->vVertices.emplace_back(ld / 2, -ld / 2, ld / 2);
+	mesh->vVertices.emplace_back(ld / 2, ld / 2, -ld / 2);
+	mesh->vVertices.emplace_back(ld / 2, -ld / 2, -ld / 2);
+	mesh->vVertices.emplace_back(-ld / 2, ld / 2, -ld / 2);
+	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, -ld / 2);
+	mesh->vVertices.emplace_back(-ld / 2, ld / 2, ld / 2);
+	mesh->vVertices.emplace_back(-ld / 2, -ld / 2, ld / 2);
+
+
+	return mesh;
+}
+
+Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLdouble np, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+
+	mesh->mNumVertices = 2 * np + 2;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	GLdouble tempAng = 90.0;
+	GLdouble increment = 360.0 / (np * 2);
+
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+
+	for (int i = 0; i < mesh->mNumVertices - 1; i++) {
+		mesh->vVertices.emplace_back(re / (1 + (i % 2)) * cos(radians(tempAng)), re / (1 + (i % 2)) * sin(radians(tempAng)), h);
+		tempAng -= increment;
+	}
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+	mesh->vTexCoords.emplace_back(0.5, 0.5);
+
+	double x = 0, y = 0;
+	for (int i = 0; i < mesh->mNumVertices - 1; i++) {
+		mesh->vTexCoords.emplace_back(x, y);
+		
+		if (x == 1 && y < 1) y += 0.5;
+		else if (x < 1 && y == 0) x += 0.5;
+		else if (x > 0 && y == 1) x -= 0.5;
+		else if (x == 0 && y > 0) y -= 0.5;
+
+	}
+	return mesh;
+}
+
+Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	Mesh* mesh = generaRectangulo(w, h);
+
+	GLdouble wR = 1;
+	GLdouble hR = 1;
+
+	//Descomentar para tilear la textura
+	//if(w / h>1)
+	// wR = w / h;
+	//if(h / w>1)
+	//hR = h / w;
+
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	mesh->vTexCoords.emplace_back(dvec2(0,rh*hR));
+	mesh->vTexCoords.emplace_back(dvec2(0, 0));
+	mesh->vTexCoords.emplace_back(dvec2(rw*wR, rh*hR));
+	mesh->vTexCoords.emplace_back(dvec2(rw*wR, 0));
+
+
+	return mesh;
+}
+
+Mesh* Mesh::generaCajaTexCor(GLdouble nl)
+{
+	Mesh* mesh = generaContCubo(nl);
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+	for (int i = 0; i < 4; i++) {
+		mesh->vTexCoords.emplace_back(0.0, 1.0);
+		mesh->vTexCoords.emplace_back(0.0, 0.0);
+		mesh->vTexCoords.emplace_back(1.0, 1.0);
+		mesh->vTexCoords.emplace_back(1.0, 0.0);
+	}
 
 	return mesh;
 }

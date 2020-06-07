@@ -19,6 +19,11 @@ public:
 	static Mesh* generaTrianguloRGB(GLdouble rd);
 	static Mesh* generaRectangulo(GLdouble w, GLdouble h);
 	static Mesh* generaRectanguloRGB(GLdouble w, GLdouble h);
+	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
+	static Mesh* generaContCubo(GLdouble ld);
+	static Mesh* generaEstrellaTexCor(GLdouble re, GLdouble np, GLdouble h);
+	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	static Mesh* generaCajaTexCor(GLdouble nl);
 
 	Mesh() {};
 	virtual ~Mesh() {};
@@ -36,6 +41,7 @@ protected:
 	
 	GLuint mPrimitive = GL_TRIANGLES;   // graphic primitive: GL_POINTS, GL_LINES, GL_TRIANGLES, ...
 	GLuint mNumVertices = 0;  // number of elements ( = vVertices.size())
+	std::vector<glm::dvec2> vTexCoords; // texture coords vector
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
 	virtual void draw() const;
