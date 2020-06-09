@@ -91,7 +91,7 @@ void Sierpinsky::render(dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
-		glPointSize(1);
+		glPointSize(0.1);
 		glColor4dv(value_ptr(mColor));
 		mMesh->render();
 		glColor3d(1, 1, 1);

@@ -11,6 +11,7 @@
 
 #include <vector>
 
+
 //-------------------------------------------------------------------------
 
 class Scene	
@@ -36,8 +37,9 @@ protected:
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
 private:
-	int mId = 1;
+	int mId = 0;
 	std::vector<Texture*> gTextures;
+
 };
 //-------------------------------------------------------------------------
 

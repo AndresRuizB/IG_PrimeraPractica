@@ -3,7 +3,6 @@
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 
-
 using namespace glm;
 //-------------------------------------------------------------------------
 
@@ -52,6 +51,7 @@ void Scene::init()
 		gTextures[3]->load("../Bmps/papelE.bmp");
 		gTextures[4]->load("../Bmps/windowV.bmp",127);
 		gTextures[5]->load("../Bmps/grass.bmp",glm::u8vec3(0,0,0),0);
+
 		GLdouble l = 70;
 
 		Estrella3D* estr3D = new Estrella3D(l/2, 6, -l/2);

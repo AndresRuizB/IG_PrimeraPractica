@@ -46,6 +46,9 @@ void IG1App::init()
 	
 	mCamera->set2D();
 	mScene->init();
+
+	mFondo = new Fondo(); // EXTRA 1
+	mFondo->setSizeVP(mWinW, mWinH); // EXTRA 1
 }
 //-------------------------------------------------------------------------
 
@@ -89,6 +92,7 @@ void IG1App::free()
 	delete mCamera; mCamera = nullptr;
 	delete mAuxCamera; mAuxCamera = nullptr;
 	delete mViewPort; mViewPort = nullptr;
+	delete mFondo; mFondo = nullptr; // EXTRA 1
 }
 //-------------------------------------------------------------------------
 
@@ -116,6 +120,8 @@ void IG1App::display() const
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
+	mFondo->render(); // EXTRA 1
+
 	if (m2Vistas) {
 		display2Vistas();
 	}
@@ -136,6 +142,8 @@ void IG1App::resize(int newWidth, int newHeight)
 
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height()); 
+
+	mFondo->setSizeVP(mWinW, mWinH);
 }
 //-------------------------------------------------------------------------
 

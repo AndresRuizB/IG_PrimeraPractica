@@ -36,6 +36,7 @@ void Camera::set2D()
 	mAng = 270;
 	isCenital_ = false;
 	mEye = dvec3(mLook.x + cos(radians(mAng)) * mRadio, 0, mLook.z - sin(radians(mAng)) * mRadio);
+	//mEye = dvec3(0, 0, mRadio);
 	mLook = dvec3(0, 0, 0);
 	mUp = dvec3(0, 1, 0);
 	setVM();

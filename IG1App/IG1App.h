@@ -14,6 +14,8 @@
 #include "Camera.h"
 #include "Scene.h"
 
+#include "Fondo.h"// EXTRA 1
+
 //-------------------------------------------------------------------------
 
 class IG1App
@@ -84,6 +86,8 @@ protected:
 	glm::dvec2 mMouseCoord;
 	int mMouseButt;
 	bool m2Vistas = false;
+
+	Fondo* mFondo = nullptr; // EXTRA 1
 };
 //-------------------------------------------------------------------------
 

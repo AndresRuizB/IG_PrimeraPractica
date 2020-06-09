@@ -1,18 +1,4 @@
-﻿  Camera.cpp
-  Entity.cpp
+﻿  Fondo.cpp
   IG1App.cpp
-  main.cpp
-  Mesh.cpp
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(85,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(106,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(175,27): warning C4244: '=': conversión de 'GLdouble' a 'GLuint'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(183,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(221,30): warning C4244: '=': conversión de 'GLdouble' a 'GLuint'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(229,20): warning C4018: '<': no coinciden signed/unsigned
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\Mesh.cpp(238,20): warning C4018: '<': no coinciden signed/unsigned
-  Pixmap32RGBA.cpp
-  Scene.cpp
-  Texture.cpp
-  Viewport.cpp
   Generando código...
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe
