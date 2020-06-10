@@ -1,8 +1,6 @@
 #pragma once
 
-
-#include <GL/freeglut.h>
-#include <glm.hpp>
+#include "GLinclude.h"
 #include <iostream>
 #include "Mesh.h"
 #include "Texture.h"
@@ -24,5 +22,7 @@ private:
 	Texture* text = nullptr;
 	Viewport* mViewPort = nullptr;
 	Camera* mCamera = nullptr;
+
+	bool twoUnits = false; // EXTRA 2
 };
 

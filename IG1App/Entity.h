@@ -1,9 +1,7 @@
-//#pragma once
+#pragma once
 #ifndef _H_Entities_H_
 #define _H_Entities_H_
-
-#include <GL/freeglut.h>
-#include <glm.hpp>
+#include "GLinclude.h"
 #include <iostream>
 #include "Mesh.h"
 #include "Texture.h"

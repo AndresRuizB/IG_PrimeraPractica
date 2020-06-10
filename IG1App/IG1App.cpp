@@ -81,6 +81,9 @@ void IG1App::iniWinOpenGL()
 	glutMotionFunc(s_motion); // cuando se mueve con un botón presionado
 	glutMouseWheelFunc(s_mouseWheel); // cuando se gira una rueda
 	
+
+	if (!gladLoadGL()) { printf("GLAD: Something went wrong!\n"); } // EXTRA 2
+
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
