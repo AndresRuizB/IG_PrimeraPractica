@@ -143,7 +143,7 @@ void IG1App::resize(int newWidth, int newHeight)
 	// Resize Scene Visible Area such that the scale is not modified
 	mCamera->setSize(mViewPort->width(), mViewPort->height()); 
 
-	mFondo->setSizeVP(mWinW, mWinH);
+	mFondo->setSizeVP(mWinW, mWinH); // EXTRA 1
 }
 //-------------------------------------------------------------------------
 
