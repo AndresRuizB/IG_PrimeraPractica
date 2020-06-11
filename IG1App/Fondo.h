@@ -20,6 +20,7 @@ class Fondo
 private:
 	Mesh* rectMesh = nullptr;
 	Texture* text = nullptr;
+	Texture* text2 = nullptr;
 	Viewport* mViewPort = nullptr;
 	Camera* mCamera = nullptr;
 

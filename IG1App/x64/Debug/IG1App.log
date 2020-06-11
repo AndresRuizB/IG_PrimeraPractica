@@ -1,4 +1,4 @@
-﻿  IG1App.cpp
+﻿  Scene.cpp
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': redefinición de macro
 C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG1App\glad.h(32): message : vea la definición anterior de 'APIENTRY'
   IG1App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG1AppDebug.exe

@@ -29,7 +29,7 @@ void Scene::init()
 		circunferencia->changeColor({ 1,0,0.85,0 });
 		gObjects.push_back(circunferencia);
 
-		Sierpinsky* s = new Sierpinsky(100000, 300);
+		Sierpinsky* s = new Sierpinsky(67500, 300);
 		gObjects.push_back(s);
 		s->changeColor({ 1.0, 1.0, 0.0, 1.0 });
 

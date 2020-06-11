@@ -6,5 +6,4 @@
 #include "glad.h"
 #include <GL/freeglut.h> // OpenGL Utility Toolkit
 #include <glm.hpp> // OpenGL Mathematics
-
 //#include "GLinclude.h"

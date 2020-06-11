@@ -169,7 +169,7 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'o':
 		mCamera->set2D();
 		break;
-	case 'u':
+	case 'u':	case 'U':
 		mAnimation = !mAnimation;
 		break;
 	case 'p':

@@ -23,8 +23,14 @@ void Mesh::render() const
 			glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
 		}
 		if (vTexCoords.size() > 0) { // transfer colors
+
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());  // components number (rgba=4), type of each component, stride, pointer  
+			glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());  // components number (rgba=4), type of each component, stride, pointer 
+			
+			if (twoUnits) {	// EXTRA 2
+				glClientActiveTexture(GL_TEXTURE0); // EXTRA 2			
+				glClientActiveTexture(GL_TEXTURE1); // EXTRA 2		
+			}
 		}
 
 		draw();
@@ -32,6 +38,7 @@ void Mesh::render() const
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
+
 	}
 }
 //-------------------------------------------------------------------------
@@ -172,16 +179,16 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
 
 	mesh->mPrimitive = GL_TRIANGLE_FAN;
 
-	mesh->mNumVertices = 2*np+2;
+	mesh->mNumVertices = 2 * np + 2;
 	mesh->vVertices.reserve(mesh->mNumVertices);
 
 	GLdouble tempAng = 90.0;
-	GLdouble increment = 360.0 / (np*2);
+	GLdouble increment = 360.0 / (np * 2);
 
-	mesh->vVertices.emplace_back(0.0,0.0,0.0);
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
 
-	for (int i = 0; i < mesh->mNumVertices-1; i++) {
-		mesh->vVertices.emplace_back(re/(1+(i%2)) * cos(radians(tempAng)), re/ (1 + (i % 2)) * sin(radians(tempAng)), h);
+	for (int i = 0; i < mesh->mNumVertices - 1; i++) {
+		mesh->vVertices.emplace_back(re / (1 + (i % 2)) * cos(radians(tempAng)), re / (1 + (i % 2)) * sin(radians(tempAng)), h);
 		tempAng += increment;
 	}
 
@@ -237,7 +244,7 @@ Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLdouble np, GLdouble h)
 	double x = 0, y = 0;
 	for (int i = 0; i < mesh->mNumVertices - 1; i++) {
 		mesh->vTexCoords.emplace_back(x, y);
-		
+
 		if (x == 1 && y < 1) y += 0.5;
 		else if (x < 1 && y == 0) x += 0.5;
 		else if (x > 0 && y == 1) x -= 0.5;
@@ -263,10 +270,10 @@ Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
 
 	mesh->vTexCoords.reserve(mesh->mNumVertices);
 
-	mesh->vTexCoords.emplace_back(dvec2(0,rh*hR));
+	mesh->vTexCoords.emplace_back(dvec2(0, rh * hR));
 	mesh->vTexCoords.emplace_back(dvec2(0, 0));
-	mesh->vTexCoords.emplace_back(dvec2(rw*wR, rh*hR));
-	mesh->vTexCoords.emplace_back(dvec2(rw*wR, 0));
+	mesh->vTexCoords.emplace_back(dvec2(rw * wR, rh * hR));
+	mesh->vTexCoords.emplace_back(dvec2(rw * wR, 0));
 
 
 	return mesh;
