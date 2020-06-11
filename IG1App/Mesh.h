@@ -32,7 +32,7 @@ public:
 			
 	virtual void render() const;
 	
-	void setTwoUnits() { twoUnits = true; };
+	void setTwoUnits() { twoUnits = true; }; // EXTRA 2
 
 	GLuint size() const { return mNumVertices; };   // number of elements
 	std::vector<glm::dvec3> const& vertices() const { return vVertices; };

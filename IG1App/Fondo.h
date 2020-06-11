@@ -20,10 +20,9 @@ class Fondo
 private:
 	Mesh* rectMesh = nullptr;
 	Texture* text = nullptr;
-	Texture* text2 = nullptr;
+	Texture* text2 = nullptr; // EXTRA 2
 	Viewport* mViewPort = nullptr;
 	Camera* mCamera = nullptr;
 
-	bool twoUnits = false; // EXTRA 2
 };
 

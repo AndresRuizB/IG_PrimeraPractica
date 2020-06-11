@@ -26,10 +26,10 @@ public:
   void unbind() const { glBindTexture(GL_TEXTURE_2D, 0); };
 
   void bind(GLenum textureUnit, GLuint mixMode);   // GL_REPLACE, GL_MODULATE, GL_ADD, ... // EXTRA 2
-  void unbind(GLenum textureUnit) const { 
-      glActiveTexture(textureUnit);
-      glBindTexture(GL_TEXTURE_2D, 0); 
-  }; // EXTRA 2
+  void unbind(GLenum textureUnit) const {  // EXTRA 2
+      glActiveTexture(textureUnit); // EXTRA 2
+      glBindTexture(GL_TEXTURE_2D, 0); // EXTRA 2
+  };
 
   GLuint width() const { return mWidth; };
   GLuint height() const { return mHeight; };

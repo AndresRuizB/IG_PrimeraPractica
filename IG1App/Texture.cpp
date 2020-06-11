@@ -32,7 +32,7 @@ void Texture::bind( GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD
 }
 //-------------------------------------------------------------------------
 
-void Texture::bind(GLenum textureUnit, GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD
+void Texture::bind(GLenum textureUnit, GLuint mixMode) // GL_REPLACE, GL_MODULATE, GL_ADD // EXTRA 2
 {
   glEnable(GL_TEXTURE_2D); // EXTRA 2
   glActiveTexture(textureUnit); // EXTRA 2
