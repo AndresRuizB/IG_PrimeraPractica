@@ -19,7 +19,7 @@ void Scene::init()
 	textFoto->loadColorBuffer();
 
 	Texture* baldP = new Texture(), * baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture()
-		, * windowC = new Texture();
+		, * windowC = new Texture(), * stone = new Texture(), * checkers = new Texture();
 	baldP->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(baldP);
 	baldC->load("../Bmps/baldosaC.bmp");
@@ -29,18 +29,29 @@ void Scene::init()
 	papelC->load("../Bmps/papelC.bmp");
 	gTextures.push_back(papelC);
 	windowC->load("../Bmps/windowC.bmp", 150);
-	gTextures.push_back(windowC);	//4
+	gTextures.push_back(windowC);	
+	stone->load("../Bmps/stones.bmp");
+	gTextures.push_back(stone);
+	checkers->load("../Bmps/checker.bmp");
+	gTextures.push_back(checkers);	//6
 
 	// Graphics objects (entities) of the scene
 
 	gObjects.push_back(new EjesRGB(400.0));
-	if (mId == 0) {
+
+	if (mId == 1) {
+
+		GridCube* gCube = new GridCube(&gTextures);
+		gObjects.push_back(gCube);
+	}
+	else if (mId == 0) {
 		glm::dmat4 mAux;
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
 
 		//Cubo* cuboTapas = new Cubo(100);
 		//gObjects.push_back(cuboTapas);
+
 
 		CompoundEntity* helices = new CompoundEntity();
 		Cylinder* c1 = new Cylinder(20,10,60);
@@ -101,7 +112,7 @@ void Scene::init()
 		gObjects.push_back(es);
 
 	}
-	else if (mId == 1) {
+	else if (mId == 2) {
 
 		Disk* disco = new Disk(150, 250);
 		disco->setQuadricObjColor({ 0.776, 0, 0.003 });
@@ -139,7 +150,8 @@ void Scene::init()
 		discoPar->setModelMat(mAux);
 		gObjects.push_back(discoPar);
 
-	}else if (mId == 2) {
+	}
+	else if (mId == 3) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -164,7 +176,7 @@ void Scene::init()
 		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
 
 	}
-	else if (mId == 3) {
+	else if (mId == 4) {
 
 		Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
 		gObjects.push_back(estrella);
@@ -174,7 +186,7 @@ void Scene::init()
 		gObjects.push_back(caja);
 
 	}
-	else if (mId == 4)
+	else if (mId == 5)
 	{
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
@@ -225,7 +237,7 @@ void Scene::setGL()
 {
 	// OpenGL basic setting
 
-	if (mId == 0) glClearColor(0.7, 0.8, 0.9, 1.0);
+	if (mId <2) glClearColor(0.7, 0.8, 0.9, 1.0);
 	else glClearColor(1.0, 1.0, 1.0, 1.0);// background color (alpha=1 -> opaque)
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 

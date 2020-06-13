@@ -41,6 +41,89 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	return iMesh;
 }
 
+IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv)
+{
+	std::vector<glm::dvec3> perfil;
+
+	glm::dvec3 punto(-lado / 2, -lado / 2, 0);
+	glm::dvec3 intervaloX(lado / nDiv, 0, 0);
+
+	for (int i = 0; i < nDiv + 1; i++) {
+		perfil.push_back(punto + intervaloX * glm::dvec3(i));
+	}
+
+	IndexMesh* iMesh = new IndexMesh();
+
+	iMesh->mPrimitive = GL_TRIANGLES;
+
+	iMesh->mNumVertices = (nDiv + 1) * (nDiv + 1);
+
+	iMesh->vVertices.reserve(iMesh->mNumVertices);
+
+	glm::dvec3 intervaloY(0, lado / nDiv, 0);
+
+	for (int i = 0; i < nDiv + 1; i++) {
+
+		for (int j = 0; j < nDiv + 1; j++) {
+			iMesh->vVertices.emplace_back(perfil[j] + intervaloY * glm::dvec3(i));
+		}
+	}
+
+	int nn = nDiv + 1, mm = nDiv + 1;
+
+	int indiceMayor = 0;
+	iMesh->nNumIndices = (nn - 1) * (mm - 1) * 6;
+	iMesh->vIndices = new GLuint[iMesh->nNumIndices];
+	// El contador i recorre las muestras alrededor del eje Y
+	for (int i = 0; i < nn - 1; i++)
+		// El contador j recorre los vértices del perfil,
+		// de abajo arriba. Las caras cuadrangulares resultan
+		// al unir la muestra i-ésima con la (i+1)%nn-ésima
+		for (int j = 0; j < mm - 1; j++) {
+			// El contador indice sirve para llevar cuenta
+			// de los índices generados hasta ahora. Se recorre
+			// la cara desde la esquina inferior izquierda
+			int indice = i * mm + j;
+			// Los cuatro índices son entonces:
+			//indice, (indice + mm) % (nn * mm), (indice + mm + 1) % (nn * mm), indice + 1
+
+			iMesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+
+			iMesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = indice + 1;
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+
+		}
+
+	iMesh->buildNormals();
+
+	return iMesh;
+}
+
+IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint nDiv)
+{
+	IndexMesh* iMesh = generateGrid(lado, nDiv);
+
+	iMesh->vTextCoords.reserve(iMesh->mNumVertices);
+
+	for (int i = 0; i < nDiv + 1; i++) {
+
+		for (int j = 0; j < nDiv + 1; j++) {
+			iMesh->vTextCoords.emplace_back((float)j / (nDiv), (float)i / (nDiv));
+		}
+	}
+
+	return iMesh;
+}
+
 void IndexMesh::render() const
 {
 	if (vVertices.size() > 0) {  // transfer data
@@ -96,7 +179,7 @@ void IndexMesh::buildNormals()
 		glm::dvec3 normal = getNormal(faceTemp);
 
 		for (int z = 0; z < 3; z++) {
-			vNormals[vIndices[(i + z)%nNumIndices]] += normal;
+			vNormals[vIndices[(i + z) % nNumIndices]] += normal;
 		}
 	}
 

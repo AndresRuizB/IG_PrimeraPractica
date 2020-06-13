@@ -720,3 +720,95 @@ void Plane::render(glm::dmat4 const& modelViewMat) const
 	dmat4 aMat = modelViewMat * mModelMat;
 	spotLight->upload(aMat);
 }
+
+Grid::Grid(GLdouble lado, GLuint nDiv)
+{
+	iMesh = IndexMesh::generateGridTex(lado, nDiv);
+}
+
+void Grid::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_FILL);
+		glPolygonMode(GL_FRONT, GL_FILL);
+
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT); 
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		mTexture->bind(GL_REPLACE);
+		glColor3f(mColor.r, mColor.g, mColor.b);
+		if (material != nullptr) {
+			material->upload();
+		}
+
+		iMesh->render();
+
+		// Aquí se debe recuperar el color:
+		glColor3f(1.0, 1.0, 1.0);
+		glDisable(GL_FILL);
+
+		glCullFace(GL_FRONT / GL_BACK);
+		glDisable(GL_CULL_FACE);
+	}
+}
+
+GridCube::GridCube(std::vector<Texture*>* text)
+{
+	int lado = 600, nDiv = 10;
+
+	gTextures = text;
+
+	Grid* g = new Grid(lado, nDiv);		//primera pared
+	g->setTexture((*gTextures)[5]);
+	glm::dmat4 mAux = g->modelMat();
+	mAux = translate(mAux, dvec3(0, 0,lado/2));
+	g->setModelMat(mAux);
+	addEntity(g);
+
+	g = new Grid(lado, nDiv);
+	g->setTexture((*gTextures)[5]);
+	mAux = g->modelMat();
+	mAux = translate(mAux, dvec3(lado/2, 0, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+	g->setModelMat(mAux);
+	addEntity(g);
+
+	g = new Grid(lado, nDiv);
+	g->setTexture((*gTextures)[5]);
+	mAux = g->modelMat();
+	mAux = rotate(mAux, radians(180.0), dvec3(0, 1.0, 0));
+	mAux = translate(mAux, dvec3(0, 0, lado / 2));
+	g->setModelMat(mAux);
+	addEntity(g);
+
+	g = new Grid(lado, nDiv);	//ultima pared
+	g->setTexture((*gTextures)[5]);
+	mAux = g->modelMat();
+	mAux = translate(mAux, dvec3(-lado / 2, 0, 0));
+	mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+	g->setModelMat(mAux);
+	addEntity(g);
+
+	g = new Grid(lado, nDiv);	//suelo
+	g->setTexture((*gTextures)[6]);
+	mAux = g->modelMat();
+	mAux = translate(mAux, dvec3(0, -lado / 2, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(1, 0, 0));
+	g->setModelMat(mAux);
+	addEntity(g);
+
+	//g = new Grid(lado, nDiv);	//tapa
+	//g->setTexture((*gTextures)[6]);
+	//mAux = g->modelMat();
+	//mAux = translate(mAux, dvec3(0, lado / 2, 0));
+	//mAux = rotate(mAux, radians(-90.0), dvec3(1, 0, 0));
+	//g->setModelMat(mAux);
+	//addEntity(g);
+}
+
+void GridCube::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+}

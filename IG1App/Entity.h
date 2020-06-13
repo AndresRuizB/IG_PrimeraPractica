@@ -324,5 +324,24 @@ private:
 	float orbitRadius = 15;
 };
 //-------------------------------------------------------------------------
+class Grid : public EntityWithMaterial
+{
+public:
+	Grid(GLdouble lado, GLuint nDiv);
+	virtual ~Grid() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+private:
+};
+//-------------------------------------------------------------------------
+class GridCube : public CompoundEntity
+{
+public:
+	GridCube(std::vector<Texture*>* text);
+	virtual ~GridCube() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+private:
+	std::vector<Texture*>* gTextures;
+};
+//-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_
