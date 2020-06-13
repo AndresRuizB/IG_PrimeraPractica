@@ -19,7 +19,7 @@ void Scene::init()
 	textFoto->loadColorBuffer();
 
 	Texture* baldP = new Texture(), * baldC = new Texture(), * containertxt = new Texture(), * papelC = new Texture()
-		, * windowC = new Texture();
+		, * windowC = new Texture(), * stones = new Texture(), * checker = new Texture();
 	baldP->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(baldP);
 	baldC->load("../Bmps/baldosaC.bmp");
@@ -30,15 +30,68 @@ void Scene::init()
 	gTextures.push_back(papelC);
 	windowC->load("../Bmps/windowC.bmp", 150);
 	gTextures.push_back(windowC);	//4
+	stones->load("../Bmps/stones.bmp");
+	gTextures.push_back(stones);
+	checker->load("../Bmps/checker.bmp");
+	gTextures.push_back(checker);
 
 	// Graphics objects (entities) of the scene
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
-		Grid* g = new Grid(200, 10);
-		g->changeColor(dvec4(0, 0, 1, 1));
-		g->setTexture(gTextures[0]);
-		gObjects.push_back(g);
+		glm::dmat4 mAux;
+
+		GridCube* gC = new GridCube();
+		gObjects.push_back(gC);
+		Grid* g1 = new Grid(200, 10);
+		g1->setTexture(gTextures[5]);
+		mAux = g1->modelMat();
+		mAux = translate(mAux, dvec3(100, 0, 0));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+		g1->setModelMat(mAux);
+		gC->addEntity(g1);
+
+		Grid* g2 = new Grid(200, 10);
+		g2->setTexture(gTextures[5]);
+		mAux = g2->modelMat();
+		mAux = translate(mAux, dvec3(-100, 0, 0));
+		mAux = rotate(mAux, radians(-90.0), dvec3(0, 0, 1));
+		g2->setModelMat(mAux);
+		gC->addEntity(g2);
+
+		Grid* g3 = new Grid(200, 10);
+		g3->setTexture(gTextures[5]);
+		mAux = g3->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, -100));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+		g3->setModelMat(mAux);
+		gC->addEntity(g3);
+
+		Grid* g4 = new Grid(200, 10);
+		g4->setTexture(gTextures[5]);
+		mAux = g4->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 100));
+		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+		g4->setModelMat(mAux);
+		gC->addEntity(g4);
+
+		Grid* g5 = new Grid(200, 10);
+		g5->setTexture(gTextures[6]);
+		mAux = g5->modelMat();
+		mAux = translate(mAux, dvec3(0, 100, 0));
+		mAux = rotate(mAux, radians(180.0), dvec3(0, 0, 1));
+		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+		g5->setModelMat(mAux);
+		gC->addEntity(g5);
+
+		Grid* g6 = new Grid(200, 10);
+		g6->setTexture(gTextures[6]);
+		mAux = g6->modelMat();
+		mAux = translate(mAux, dvec3(0, -100, 0));
+		g6->setModelMat(mAux);
+		gC->addEntity(g6);
 	}
 	if (mId == 1) {
 		glm::dmat4 mAux;

@@ -735,7 +735,8 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 
 		glColor3f(mColor.r, mColor.g, mColor.b);
 		// Aqu� se puede fijar el modo de dibujar la esfera:
-
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
 		if (mTexture != nullptr) {
 			mTexture->bind(GL_REPLACE);
 			iMesh->render();
@@ -749,6 +750,8 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 
+		glCullFace(GL_FRONT / GL_BACK);
+		glDisable(GL_CULL_FACE);
 		glDisable(GL_COLOR_MATERIAL);
 		// Aqu� se debe recuperar el color:
 		glColor3f(1.0, 1.0, 1.0);

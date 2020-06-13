@@ -332,4 +332,16 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 //-------------------------------------------------------------------------
+
+class GridCube : public CompoundEntity
+{
+public:
+	GridCube() {};
+	virtual ~GridCube() {};
+
+
+private:
+
+};
+
 #endif //_H_Entities_H_

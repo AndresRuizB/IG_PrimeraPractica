@@ -111,11 +111,13 @@ IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint nDiv)
 {
 	IndexMesh* im = generateGrid(lado, nDiv);
 
-	im->vTextCoords.reserve(4);
-	im->vTextCoords.emplace_back(0.0, 1.0);
-	im->vTextCoords.emplace_back(0.0, 0.0);
-	im->vTextCoords.emplace_back(1.0, 1.0);
-	im->vTextCoords.emplace_back(1.0, 0.0);
+	im->vTextCoords.reserve((nDiv + 1)* (nDiv + 1));
+
+	for (int i = 0; i < (nDiv + 1); i++) {
+		for (int j = 0; j < (nDiv + 1); j++) {
+			im->vTextCoords.emplace_back((float)j/(nDiv), (float)i / (nDiv));
+		}
+	}
 
 	return im;
 }
