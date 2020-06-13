@@ -1,4 +1,4 @@
-#include "IndexMesh.h"
+﻿#include "IndexMesh.h"
 
 glm::dvec3 IndexMesh::getNormal(const std::vector<glm::dvec3>& vFace)
 {
@@ -39,6 +39,85 @@ IndexMesh* IndexMesh::generaIndexCuboConTapas(GLdouble l)
 	//}
 
 	return iMesh;
+}
+
+IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv)
+{
+	IndexMesh* iMesh = new IndexMesh();
+	// h=altura del cono, r=radio de la base
+// n=n�mero de muestras, m=n�mero de puntos del perfil
+	int m = 3;
+	glm::dvec3* perfil = new glm::dvec3[nDiv + 1];
+	float startDist = -lado / 2;
+	float squareLength = lado / nDiv;
+	for (int i = 0; i < nDiv + 1; i++) {
+		perfil[i] = glm::dvec3(startDist + squareLength * i, 0.0, 0.0);
+	}
+	int vertN = (nDiv + 1) * (nDiv + 1);
+	iMesh->mNumVertices = vertN;
+
+	glm::dvec3* vertices = new glm::dvec3[/*iMesh->mNumVertices*/vertN];
+	int indice = 0;
+	for (int i = 0; i < (nDiv + 1); i++) {
+		for (int j = 0; j < (nDiv + 1); j++) {
+			vertices[indice] = glm::dvec3(perfil[j].x, perfil[j].y, startDist + squareLength * i);
+			indice++;
+		}
+	}
+
+	for (int i = 0; i < iMesh->mNumVertices; i++) {
+		iMesh->vVertices.emplace_back(vertices[i]);
+	}
+
+	int nn = (nDiv + 1);
+	int mm = nn;
+	int indiceMayor = 0;
+	iMesh->nNumIndices = (nn - 1) * (mm - 1) * 6;
+	iMesh->vIndices = new GLuint[iMesh->nNumIndices];
+	// El contador i recorre las muestras alrededor del eje Y
+	for (int i = 0; i < nn - 1; i++)
+		// El contador j recorre los v�rtices del perfil,
+		// de abajo arriba. Las caras cuadrangulares resultan
+		// al unir la muestra i-�sima con la (i+1)%nn-�sima
+		for (int j = 0; j < mm - 1; j++) {
+			// El contador indice sirve para llevar cuenta
+			// de los �ndices generados hasta ahora. Se recorre
+			// la cara desde la esquina inferior izquierda
+			int indice = i * mm + j;
+			// Los cuatro �ndices son entonces:
+			//indice, (indice + mm) % (nn * mm), (indice + mm + 1) % (nn * mm), indice + 1
+
+			iMesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = (indice + mm) % (nn * mm);
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+
+			iMesh->vIndices[indiceMayor] = (indice + mm + 1) % (nn * mm);
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = indice + 1;
+			indiceMayor++;
+			iMesh->vIndices[indiceMayor] = indice;
+			indiceMayor++;
+
+		}
+	iMesh->buildNormals();
+
+	return iMesh;
+}
+
+IndexMesh* IndexMesh::generateGridTex(GLdouble lado, GLuint nDiv)
+{
+	IndexMesh* im = generateGrid(lado, nDiv);
+
+	im->vTextCoords.reserve(4);
+	im->vTextCoords.emplace_back(0.0, 1.0);
+	im->vTextCoords.emplace_back(0.0, 0.0);
+	im->vTextCoords.emplace_back(1.0, 1.0);
+	im->vTextCoords.emplace_back(1.0, 0.0);
+
+	return im;
 }
 
 void IndexMesh::render() const

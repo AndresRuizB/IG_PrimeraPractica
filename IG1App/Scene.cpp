@@ -35,6 +35,12 @@ void Scene::init()
 
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
+		Grid* g = new Grid(200, 10);
+		g->changeColor(dvec4(0, 0, 1, 1));
+		g->setTexture(gTextures[0]);
+		gObjects.push_back(g);
+	}
+	if (mId == 1) {
 		glm::dmat4 mAux;
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
@@ -101,7 +107,7 @@ void Scene::init()
 		gObjects.push_back(es);
 
 	}
-	else if (mId == 1) {
+	else if (mId == 2) {
 
 		Disk* disco = new Disk(150, 250);
 		disco->setQuadricObjColor({ 0.776, 0, 0.003 });
@@ -139,7 +145,7 @@ void Scene::init()
 		discoPar->setModelMat(mAux);
 		gObjects.push_back(discoPar);
 
-	}else if (mId == 2) {
+	}else if (mId == 3) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -164,7 +170,7 @@ void Scene::init()
 		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
 
 	}
-	else if (mId == 3) {
+	else if (mId == 4) {
 
 		Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
 		gObjects.push_back(estrella);
@@ -174,7 +180,7 @@ void Scene::init()
 		gObjects.push_back(caja);
 
 	}
-	else if (mId == 4)
+	else if (mId == 5)
 	{
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);

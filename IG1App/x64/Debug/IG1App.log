@@ -1,1 +1,11 @@
-﻿
+﻿  IndexMesh.cpp
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(51,18): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(52,21): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(53,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(62,21): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(68,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(166,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(168,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(182,20): warning C4018: '<': signed/unsigned mismatch
+  IG1App.vcxproj -> D:\VisualStudio\C++\IG_PrimeraPractica\bin\IG1AppDebug.exe

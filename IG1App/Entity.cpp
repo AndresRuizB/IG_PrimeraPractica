@@ -1,4 +1,4 @@
-#include "Entity.h"
+ï»¿#include "Entity.h"
 
 
 #include <gtc/matrix_transform.hpp>  
@@ -443,14 +443,14 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	if (color != glm::fvec3(-1, -1, -1)) {
-		// Aquí se puede fijar el color de la esfera así:
+		// AquÃ­ se puede fijar el color de la esfera asÃ­:
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3f(color.r, color.g, color.b);
-		// Aquí se puede fijar el modo de dibujar la esfera:
+		// AquÃ­ se puede fijar el modo de dibujar la esfera:
 		gluQuadricDrawStyle(q, GLU_FILL);
 	}
 	gluSphere(q, r, 50, 50);
-	// Aquí se debe recuperar el color:
+	// AquÃ­ se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
 }
@@ -465,14 +465,14 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	if (color != glm::fvec3(-1, -1, -1)) {
-		// Aquí se puede fijar el color de la esfera así:
+		// AquÃ­ se puede fijar el color de la esfera asÃ­:
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3f(color.r, color.g, color.b);
-		// Aquí se puede fijar el modo de dibujar la esfera:
+		// AquÃ­ se puede fijar el modo de dibujar la esfera:
 		gluQuadricDrawStyle(q, GLU_FILL);
 	}
 	gluCylinder(q, bR, tR, h, 50, 50);
-	// Aquí se debe recuperar el color:
+	// AquÃ­ se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
 }
@@ -488,14 +488,14 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	if (color != glm::fvec3(-1, -1, -1)) {
-		// Aquí se puede fijar el color de la esfera así:
+		// AquÃ­ se puede fijar el color de la esfera asÃ­:
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3f(color.r, color.g, color.b);
-		// Aquí se puede fijar el modo de dibujar la esfera:
+		// AquÃ­ se puede fijar el modo de dibujar la esfera:
 		gluQuadricDrawStyle(q, GLU_FILL);
 	}
 	gluDisk(q, iR, oR, 50, 40);
-	// Aquí se debe recuperar el color:
+	// AquÃ­ se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
 }
@@ -513,14 +513,14 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	if (color != glm::fvec3(-1, -1, -1)) {
-		// Aquí se puede fijar el color de la esfera así:
+		// AquÃ­ se puede fijar el color de la esfera asÃ­:
 		glEnable(GL_COLOR_MATERIAL);
 		glColor3f(color.r, color.g, color.b);
-		// Aquí se puede fijar el modo de dibujar la esfera:
+		// AquÃ­ se puede fijar el modo de dibujar la esfera:
 		gluQuadricDrawStyle(q, GLU_FILL);
 	}
 	gluPartialDisk(q, iR, oR, 50, 50, stAngle, swAngle);
-	// Aquí se debe recuperar el color:
+	// AquÃ­ se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
 	glDisable(GL_COLOR_MATERIAL);
 }
@@ -572,12 +572,12 @@ void EntityWithIndexMesh::render(glm::dmat4 const& modelViewMat) const
 		upload(aMat);
 
 		glColor3f(mColor.r, mColor.g, mColor.b);
-		// Aquí se puede fijar el modo de dibujar la esfera:
+		// AquÃ­ se puede fijar el modo de dibujar la esfera:
 
 		iMesh->render();
 
 		glDisable(GL_COLOR_MATERIAL);
-		// Aquí se debe recuperar el color:
+		// AquÃ­ se debe recuperar el color:
 		glColor3f(1.0, 1.0, 1.0);
 	}
 }
@@ -606,7 +606,7 @@ void Cubo::render(glm::dmat4 const& modelViewMat) const
 
 		iMesh->render();
 
-		// Aquí se debe recuperar el color:
+		// AquÃ­ se debe recuperar el color:
 		glColor3f(1.0, 1.0, 1.0);
 		glDisable(GL_COLOR_MATERIAL);
 	}
@@ -648,7 +648,7 @@ void CompoundEntity::addEntity(Abs_Entity* ae)
 Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 {
 	// h=altura del cono, r=radio de la base
-// n=número de muestras, m=número de puntos del perfil
+// n=nÃºmero de muestras, m=nÃºmero de puntos del perfil
 	int m = 3;
 	dvec3* perfil = new dvec3[m];
 	perfil[0] = dvec3(0.5, 0.0, 0.0);
@@ -660,7 +660,7 @@ Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 
 Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 {
-// m=número de muestras, p=número de puntos del perfil
+// m=nÃºmero de muestras, p=nÃºmero de puntos del perfil
 	dvec3* perfil = new dvec3[p+1];
 	float anglePerSegment = 180/(p-1);
 	float currentAngle = -90;
@@ -688,7 +688,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 
 		iMesh->render();
 
-		// Aquí se debe recuperar el color:
+		// AquÃ­ se debe recuperar el color:
 		glColor3f(1.0, 1.0, 1.0);
 		glDisable(GL_COLOR_MATERIAL);
 	}
@@ -719,4 +719,38 @@ void Plane::render(glm::dmat4 const& modelViewMat) const
 	CompoundEntity::render(modelViewMat);
 	dmat4 aMat = modelViewMat * mModelMat;
 	spotLight->upload(aMat);
+}
+
+Grid::Grid(GLdouble l, GLdouble nDiv)
+{
+	iMesh = IndexMesh::generateGridTex(l, nDiv);
+}
+
+void Grid::render(glm::dmat4 const& modelViewMat) const
+{
+	if (iMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		glColor3f(mColor.r, mColor.g, mColor.b);
+		// Aquï¿½ se puede fijar el modo de dibujar la esfera:
+
+		if (mTexture != nullptr) {
+			mTexture->bind(GL_REPLACE);
+			iMesh->render();
+			mTexture->unbind();
+		}
+		else {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			glLineWidth(2);
+			iMesh->render();
+			glLineWidth(1);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+
+		glDisable(GL_COLOR_MATERIAL);
+		// Aquï¿½ se debe recuperar el color:
+		glColor3f(1.0, 1.0, 1.0);
+	}
 }

@@ -324,5 +324,12 @@ private:
 	float orbitRadius = 15;
 };
 //-------------------------------------------------------------------------
-
+class Grid : public EntityWithIndexMesh
+{
+public:
+	explicit Grid(GLdouble l, GLdouble nDiv);
+	virtual ~Grid() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+//-------------------------------------------------------------------------
 #endif //_H_Entities_H_
