@@ -40,10 +40,11 @@ void Scene::init()
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
 		glm::dmat4 mAux;
-
+		int l = 200;
+		int divs = 50;
 		GridCube* gC = new GridCube();
 		gObjects.push_back(gC);
-		Grid* g1 = new Grid(200, 10);
+		Grid* g1 = new Grid(l, divs);
 		g1->setTexture(gTextures[5]);
 		mAux = g1->modelMat();
 		mAux = translate(mAux, dvec3(-100, 0, 0));
@@ -51,7 +52,7 @@ void Scene::init()
 		g1->setModelMat(mAux);
 		gC->addEntity(g1);
 
-		Grid* g2 = new Grid(200, 10);
+		Grid* g2 = new Grid(l, divs);
 		g2->setTexture(gTextures[5]);
 		mAux = g2->modelMat();
 		mAux = translate(mAux, dvec3(100, 0, 0));
@@ -59,7 +60,7 @@ void Scene::init()
 		g2->setModelMat(mAux);
 		gC->addEntity(g2);
 
-		Grid* g3 = new Grid(200, 10);
+		Grid* g3 = new Grid(l, divs);
 		g3->setTexture(gTextures[5]);
 		mAux = g3->modelMat();
 		mAux = translate(mAux, dvec3(0, 0, 100));
@@ -68,7 +69,7 @@ void Scene::init()
 		g3->setModelMat(mAux);
 		gC->addEntity(g3);
 
-		Grid* g4 = new Grid(200, 10);
+		Grid* g4 = new Grid(l, divs);
 		g4->setTexture(gTextures[5]);
 		mAux = g4->modelMat();
 		mAux = translate(mAux, dvec3(0, 0, -100));
@@ -77,7 +78,7 @@ void Scene::init()
 		g4->setModelMat(mAux);
 		gC->addEntity(g4);
 
-		Grid* g5 = new Grid(200, 10);
+		Grid* g5 = new Grid(l, divs);
 		g5->setTexture(gTextures[6]);
 		mAux = g5->modelMat();
 		mAux = translate(mAux, dvec3(0, -100, 0));
@@ -86,7 +87,7 @@ void Scene::init()
 		g5->setModelMat(mAux);
 		gC->addEntity(g5);
 
-		Grid* g6 = new Grid(200, 10);
+		Grid* g6 = new Grid(l, divs);
 		g6->setTexture(gTextures[6]);
 		mAux = g6->modelMat();
 		mAux = translate(mAux, dvec3(0, 100, 0));
@@ -409,10 +410,17 @@ void Scene::setLights()
 	positionalLight->setPosDir({300,300,0});
 	positionalLight->setDiff({0,1,0,1});
 
-	spotSceneLight = new SpotLight();
+	/*spotSceneLight = new SpotLight();
 	spotSceneLight->setPosDir({ 0, 0, 300 });
 	spotSceneLight->setSpot({ .0,.0,-1.0 }, 90.0, 0.0);
 	spotSceneLight->setDiff({ 0,1,0,1 });
+	*/
+	spotSceneLight = new SpotLight();
+	spotSceneLight->setPosDir({ 0, 0, 300 });
+	spotSceneLight->setSpot({ .0,.0,-1.0 }, 20.0, 0.0);
+	spotSceneLight->setDiff({ 1,1,1,1 });
+	spotSceneLight->setAmb({ 0,0,0,1 });
+	spotSceneLight->setSpec({ 0.5,0.5,0.5,1 });
 
 	mineroLight = new DirLight();
 	mineroLight->setPosDir({ 0, 0, 1 });
