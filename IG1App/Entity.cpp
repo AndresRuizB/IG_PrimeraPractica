@@ -759,3 +759,90 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 
 	}
 }
+
+GridCube::GridCube(GLint l, GLint divs, Texture* t1, Texture* t2)
+{
+	glm::dmat4 mAux;
+
+	Grid* g1 = new Grid(l, divs);
+	g1->setTexture(t1);
+	mAux = g1->modelMat();
+	mAux = translate(mAux, dvec3(-l/2, 0, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+	g1->setModelMat(mAux);
+	addEntity(g1);
+
+	Grid* g2 = new Grid(l, divs);
+	g2->setTexture(t1);
+	mAux = g2->modelMat();
+	mAux = translate(mAux, dvec3(l / 2, 0, 0));
+	mAux = rotate(mAux, radians(-90.0), dvec3(0, 0, 1));
+	g2->setModelMat(mAux);
+	addEntity(g2);
+
+	Grid* g3 = new Grid(l, divs);
+	g3->setTexture(t1);
+	mAux = g3->modelMat();
+	mAux = translate(mAux, dvec3(0, 0, l / 2));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+	g3->setModelMat(mAux);
+	addEntity(g3);
+
+	Grid* g4 = new Grid(l, divs);
+	g4->setTexture(t1);
+	mAux = g4->modelMat();
+	mAux = translate(mAux, dvec3(0, 0, -l / 2));
+	mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
+	g4->setModelMat(mAux);
+	addEntity(g4);
+
+	Grid* g5 = new Grid(l, divs);
+	g5->setTexture(t2);
+	mAux = g5->modelMat();
+	mAux = translate(mAux, dvec3(0, -l / 2, 0));
+	mAux = rotate(mAux, radians(180.0), dvec3(0, 0, 1));
+	mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+	g5->setModelMat(mAux);
+	addEntity(g5);
+
+	Grid* g6 = new Grid(l, divs);
+	g6->setTexture(t2);
+	mAux = g6->modelMat();
+	mAux = translate(mAux, dvec3(0, l / 2, 0));
+	g6->setModelMat(mAux);
+	addEntity(g6);
+}
+
+SirenCube::SirenCube()
+{
+	spotLight = new SpotLight();
+	spotLight->setPosDir({ 0,-5,0 });
+	spotLight->setSpot({ .0,-1.0,0.3 }, 45.0, 0.0);
+
+	spotLight->setDiff({ 1,1,1,1 });
+	spotLight->setAmb({ 0,0,0,1 });
+	spotLight->setSpec({ 0.5,0.5,0.5,1 });
+
+}
+
+void SirenCube::update()
+{
+	frame++;
+}
+
+void SirenCube::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+	dmat4 aMat = modelViewMat * mModelMat;
+
+	dmat4 mI = dmat4(1);	//matriz unidad
+
+	GLdouble speedRotation = 5.0;
+
+	dmat4 rMat = rotate(mI, radians(speedRotation * frame), dvec3(0.0, 1.0, 0.0));
+
+	spotLight->upload(aMat * rMat);
+
+}

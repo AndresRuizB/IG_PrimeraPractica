@@ -43,6 +43,7 @@ public:
 	void setLightOff();
 	void setLights();
 	void move();
+	void sirenMove();
 private:
 	//bool activeLight0 = true;
 	//bool activeLight1 = true;
@@ -55,6 +56,7 @@ private:
 	SpotLight* spotSceneLight = nullptr;
 	DirLight* mineroLight = nullptr;
 	Plane* scenePlane = nullptr;
+	SirenCube* sceneSiren = nullptr;
 	double currentAngle = 180;
 	int frame = 0;
 protected: 

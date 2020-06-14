@@ -336,12 +336,21 @@ public:
 class GridCube : public CompoundEntity
 {
 public:
-	GridCube() {};
+	GridCube(GLint l, GLint divs, Texture* t1, Texture* t2);
 	virtual ~GridCube() {};
+};
+//-------------------------------------------------------------------------
 
-
+class SirenCube : public CompoundEntity
+{
+public:
+	SirenCube();
+	virtual ~SirenCube() {};
+	virtual void update();  // abstract method
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	SpotLight* getLight() { return spotLight; };
 private:
-
+	SpotLight* spotLight = nullptr;
 };
 
 #endif //_H_Entities_H_

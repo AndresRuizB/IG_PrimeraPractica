@@ -40,61 +40,49 @@ void Scene::init()
 	gObjects.push_back(new EjesRGB(400.0));
 	if (mId == 0) {
 		glm::dmat4 mAux;
-		int l = 200;
-		int divs = 50;
-		GridCube* gC = new GridCube();
-		gObjects.push_back(gC);
-		Grid* g1 = new Grid(l, divs);
-		g1->setTexture(gTextures[5]);
-		mAux = g1->modelMat();
-		mAux = translate(mAux, dvec3(-100, 0, 0));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
-		g1->setModelMat(mAux);
-		gC->addEntity(g1);
+		GLint l = 50;
+		GLint divs = 30;
 
-		Grid* g2 = new Grid(l, divs);
-		g2->setTexture(gTextures[5]);
-		mAux = g2->modelMat();
-		mAux = translate(mAux, dvec3(100, 0, 0));
-		mAux = rotate(mAux, radians(-90.0), dvec3(0, 0, 1));
-		g2->setModelMat(mAux);
-		gC->addEntity(g2);
+		SirenCube* sC = new SirenCube();
+		sceneLights.push_back(sC->getLight());
+		gObjects.push_back(sC);
 
-		Grid* g3 = new Grid(l, divs);
-		g3->setTexture(gTextures[5]);
-		mAux = g3->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, 100));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
-		g3->setModelMat(mAux);
-		gC->addEntity(g3);
+		GridCube* gC = new GridCube(l, divs, gTextures[5], gTextures[6]);
+		sC->addEntity(gC);
 
-		Grid* g4 = new Grid(l, divs);
-		g4->setTexture(gTextures[5]);
-		mAux = g4->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, -100));
-		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
-		g4->setModelMat(mAux);
-		gC->addEntity(g4);
+		Sphere* siren = new Sphere(l/4);
+		siren->setQuadricObjColor({ 1, 0, 0 });
+		mAux = siren->modelMat();
+		mAux = translate(mAux, dvec3(0, l/2, 0));
+		siren->setModelMat(mAux);
+		sC->addEntity(siren);
 
-		Grid* g5 = new Grid(l, divs);
-		g5->setTexture(gTextures[6]);
-		mAux = g5->modelMat();
-		mAux = translate(mAux, dvec3(0, -100, 0));
-		mAux = rotate(mAux, radians(180.0), dvec3(0, 0, 1));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
-		g5->setModelMat(mAux);
-		gC->addEntity(g5);
+		mAux = sC->modelMat();
+		mAux = translate(mAux, dvec3(0, 230, 0));
+		//mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
+		sC->setModelMat(mAux);
+		sceneSiren = sC;
 
-		Grid* g6 = new Grid(l, divs);
-		g6->setTexture(gTextures[6]);
-		mAux = g6->modelMat();
-		mAux = translate(mAux, dvec3(0, 100, 0));
-		g6->setModelMat(mAux);
-		gC->addEntity(g6);
+		Esfera* es = new Esfera(200, 200, 200);
+		//color AZUL
+		es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		//color ORO
+		//es->changeColor(dvec4(0.854, 0.647, 0.125, 1));
+		Material* goldMat = new Material();
+		goldMat->setGold();
+		es->setMaterial(goldMat);
+		gObjects.push_back(es);
+
 	}
 	else if (mId == 1) {
+
+		GLint l = 200;
+		GLint divs = 50;
+		GridCube* gC = new GridCube(l,divs,gTextures[5],gTextures[6]);
+		gObjects.push_back(gC);
+		
+	}
+	else if (mId == 2) {
 		glm::dmat4 mAux;
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
@@ -161,7 +149,7 @@ void Scene::init()
 		gObjects.push_back(es);
 
 	}
-	else if (mId == 2) {
+	else if (mId == 3) {
 
 		Disk* disco = new Disk(150, 250);
 		disco->setQuadricObjColor({ 0.776, 0, 0.003 });
@@ -199,7 +187,7 @@ void Scene::init()
 		discoPar->setModelMat(mAux);
 		gObjects.push_back(discoPar);
 
-	}else if (mId == 3) {
+	}else if (mId == 4) {
 
 		Poligono* triangulo = new Poligono(3, 600);
 		triangulo->changeColor({ 1,1,0,0 });
@@ -224,7 +212,7 @@ void Scene::init()
 		triRGB->setModelMat(translate(triRGB->modelMat(), dvec3(300.0, 0.0, 0.0)));
 
 	}
-	else if (mId == 4) {
+	else if (mId == 5) {
 
 		Estrella3D* estrella = new Estrella3D(300, 100, 5, 200);
 		gObjects.push_back(estrella);
@@ -234,7 +222,7 @@ void Scene::init()
 		gObjects.push_back(caja);
 
 	}
-	else if (mId == 5)
+	else if (mId == 6)
 	{
 		Estrella3DText* estrellaText = new Estrella3DText(100, 50, 5, 100);
 		estrellaText->setTexture(gTextures[0]);
@@ -291,7 +279,7 @@ void Scene::setGL()
 {
 	// OpenGL basic setting
 
-	if (mId <= 1) glClearColor(0.7, 0.8, 0.9, 1.0);
+	if (mId <= 2) glClearColor(0.7, 0.8, 0.9, 1.0);
 	else glClearColor(1.0, 1.0, 1.0, 1.0);// background color (alpha=1 -> opaque)
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
@@ -445,6 +433,25 @@ void Scene::move()
 			-sin(radians((speedTranslation * frame) - 180)) * radiusTranslation));
 		dmat4 sMat = scale(mI, dvec3(0.3, 0.3, 0.3));
 		scenePlane->setModelMat(tMat * rMat * sMat * mI);
+		frame++;
+		//dmat4 mAux = scenePlane->modelMat();
+		////mAux = translate(mAux,dvec3(0,0,0));
+		//mAux = translate(mAux, dvec3(0.0, (sin(radians(currentAngle)) * 15), cos(radians(currentAngle)) * 15));
+		//currentAngle++;
+	}
+}
+void Scene::sirenMove()
+{
+	if (sceneSiren != nullptr) {
+
+		GLdouble radiusTranslation = 230, speedRotation = 4.0, speedTranslation = 4.0;
+
+		dmat4 mI = dmat4(1);	//matriz unidad
+		dmat4 rMat = rotate(mI, radians((speedRotation * frame)), dvec3(1.0, 0.0, 0.0));
+		dmat4 tMat = translate(mI, dvec3(0.0,
+			-cos(radians((speedTranslation * frame) - 180)) * radiusTranslation,
+			-sin(radians((speedTranslation * frame) - 180)) * radiusTranslation));
+		sceneSiren->setModelMat(tMat * rMat * mI);
 		frame++;
 		//dmat4 mAux = scenePlane->modelMat();
 		////mAux = translate(mAux,dvec3(0,0,0));

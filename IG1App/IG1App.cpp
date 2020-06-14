@@ -228,6 +228,9 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'y':
 		mScene->move();
 		break;
+	case 'j':
+		mScene->sirenMove();
+		break;
 	case 'k':
 	case 'K':
 		splitViewport = !splitViewport;
