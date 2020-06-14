@@ -46,7 +46,7 @@ void Scene::init()
 		Grid* g1 = new Grid(200, 10);
 		g1->setTexture(gTextures[5]);
 		mAux = g1->modelMat();
-		mAux = translate(mAux, dvec3(100, 0, 0));
+		mAux = translate(mAux, dvec3(-100, 0, 0));
 		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
 		g1->setModelMat(mAux);
 		gC->addEntity(g1);
@@ -54,7 +54,7 @@ void Scene::init()
 		Grid* g2 = new Grid(200, 10);
 		g2->setTexture(gTextures[5]);
 		mAux = g2->modelMat();
-		mAux = translate(mAux, dvec3(-100, 0, 0));
+		mAux = translate(mAux, dvec3(100, 0, 0));
 		mAux = rotate(mAux, radians(-90.0), dvec3(0, 0, 1));
 		g2->setModelMat(mAux);
 		gC->addEntity(g2);
@@ -62,7 +62,7 @@ void Scene::init()
 		Grid* g3 = new Grid(200, 10);
 		g3->setTexture(gTextures[5]);
 		mAux = g3->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, -100));
+		mAux = translate(mAux, dvec3(0, 0, 100));
 		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
 		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
 		g3->setModelMat(mAux);
@@ -71,7 +71,7 @@ void Scene::init()
 		Grid* g4 = new Grid(200, 10);
 		g4->setTexture(gTextures[5]);
 		mAux = g4->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, 100));
+		mAux = translate(mAux, dvec3(0, 0, -100));
 		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
 		mAux = rotate(mAux, radians(90.0), dvec3(0, 0, 1));
 		g4->setModelMat(mAux);
@@ -80,7 +80,7 @@ void Scene::init()
 		Grid* g5 = new Grid(200, 10);
 		g5->setTexture(gTextures[6]);
 		mAux = g5->modelMat();
-		mAux = translate(mAux, dvec3(0, 100, 0));
+		mAux = translate(mAux, dvec3(0, -100, 0));
 		mAux = rotate(mAux, radians(180.0), dvec3(0, 0, 1));
 		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
 		g5->setModelMat(mAux);
@@ -89,11 +89,11 @@ void Scene::init()
 		Grid* g6 = new Grid(200, 10);
 		g6->setTexture(gTextures[6]);
 		mAux = g6->modelMat();
-		mAux = translate(mAux, dvec3(0, -100, 0));
+		mAux = translate(mAux, dvec3(0, 100, 0));
 		g6->setModelMat(mAux);
 		gC->addEntity(g6);
 	}
-	if (mId == 1) {
+	else if (mId == 1) {
 		glm::dmat4 mAux;
 		//AnilloCuadrado* anilloC = new AnilloCuadrado();
 		//gObjects.push_back(anilloC);
@@ -278,18 +278,25 @@ void Scene::free()
 	{
 		delete el;  el = nullptr;
 	}
+
+	for (Light* l : sceneLights)
+	{
+		delete l;   l = nullptr;
+	}
+	sceneLights.clear();
 }
 //-------------------------------------------------------------------------
 void Scene::setGL()
 {
 	// OpenGL basic setting
 
-	if (mId == 0) glClearColor(0.7, 0.8, 0.9, 1.0);
+	if (mId <= 1) glClearColor(0.7, 0.8, 0.9, 1.0);
 	else glClearColor(1.0, 1.0, 1.0, 1.0);// background color (alpha=1 -> opaque)
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);  // disable textures
 	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
 
 }
 //-------------------------------------------------------------------------
@@ -298,6 +305,8 @@ void Scene::resetGL()
 	glClearColor(.0, .0, .0, .0);  // background color (alpha=1 -> opaque)
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 	glDisable(GL_TEXTURE_2D);  // disable textures
+	glDisable(GL_NORMALIZE);
+	glDisable(GL_LIGHTING);
 }
 //-------------------------------------------------------------------------
 void Scene::setState(int id)
@@ -317,8 +326,10 @@ void Scene::saveCapture()
 
 void Scene::setActiveLight(int index, bool active)
 {
-	if (active) sceneLights[index]->enable();
-	else sceneLights[index]->disable();
+	if (index < sceneLights.size()) {
+		if (active) sceneLights[index]->enable();
+		else sceneLights[index]->disable();
+	}
 }
 
 //void Scene::sceneDirLight(Camera const& cam) const {
@@ -390,7 +401,6 @@ void Scene::setLightOff()
 }
 void Scene::setLights()
 {
-	glEnable(GL_LIGHTING);
 
 	directionalLight = new DirLight();
 	directionalLight->setPosDir({1,1,1});

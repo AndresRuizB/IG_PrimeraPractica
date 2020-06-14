@@ -1,3 +1,5 @@
-﻿  Scene.cpp
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Scene.cpp(287,47): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+﻿  IG1App.cpp
+  Scene.cpp
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Scene.cpp(293,47): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  Generating Code...
   IG1App.vcxproj -> D:\VisualStudio\C++\IG_PrimeraPractica\bin\IG1AppDebug.exe

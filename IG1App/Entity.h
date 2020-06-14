@@ -324,7 +324,7 @@ private:
 	float orbitRadius = 15;
 };
 //-------------------------------------------------------------------------
-class Grid : public EntityWithIndexMesh
+class Grid : public EntityWithMaterial
 {
 public:
 	explicit Grid(GLdouble l, GLdouble nDiv);

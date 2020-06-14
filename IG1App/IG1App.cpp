@@ -234,36 +234,42 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case '0':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(0);
 		mScene->init();
 		break;
 	case '1':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(1);
 		mScene->init();
 		break;
 	case '2':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(2);
 		mScene->init();
 		break;
 	case '3':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(3);
 		mScene->init();
 
 	break;	case '4':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(4);
 		mScene->init();
 
 	break;	case '5':
 		delete mScene;
+		mScene = nullptr;
 		mScene = new Scene;
 		mScene->setState(5);
 		mScene->init();

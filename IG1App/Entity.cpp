@@ -733,12 +733,15 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 
-		glColor3f(mColor.r, mColor.g, mColor.b);
 		// Aqu� se puede fijar el modo de dibujar la esfera:
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
+		glCullFace(GL_BACK);
+
+		if (material != nullptr) {
+			material->upload();
+		}
 		if (mTexture != nullptr) {
-			mTexture->bind(GL_REPLACE);
+			mTexture->bind(GL_MODULATE);
 			iMesh->render();
 			mTexture->unbind();
 		}
@@ -753,7 +756,6 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 		glCullFace(GL_FRONT / GL_BACK);
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_COLOR_MATERIAL);
-		// Aqu� se debe recuperar el color:
-		glColor3f(1.0, 1.0, 1.0);
+
 	}
 }
