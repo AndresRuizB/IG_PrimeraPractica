@@ -260,7 +260,7 @@ public:
 	std::vector<Abs_Entity*> gObjects;
 
 	CompoundEntity();
-	~CompoundEntity();
+	virtual ~CompoundEntity();
 
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update() {};
@@ -282,7 +282,7 @@ public:
 class EntityWithMaterial : public Abs_Entity {
 public:
 	EntityWithMaterial() : Abs_Entity() { };
-	virtual ~EntityWithMaterial() { };
+	virtual ~EntityWithMaterial();
 
 	void setMaterial(Material* matl) { material = matl; };
 protected:
@@ -295,7 +295,7 @@ class Cubo : public EntityWithMaterial
 {
 public:
 	explicit Cubo(GLdouble l);
-	virtual ~Cubo();
+	virtual ~Cubo() {};
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 //-------------------------------------------------------------------------

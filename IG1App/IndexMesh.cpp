@@ -68,6 +68,8 @@ IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv)
 	for (int i = 0; i < iMesh->mNumVertices; i++) {
 		iMesh->vVertices.emplace_back(vertices[i]);
 	}
+	delete[] perfil;
+	delete[] vertices;
 
 	int nn = (nDiv + 1);
 	int mm = nn;

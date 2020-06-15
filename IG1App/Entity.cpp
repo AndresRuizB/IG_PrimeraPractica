@@ -588,9 +588,6 @@ Cubo::Cubo(GLdouble l)
 	iMesh->buildNormals();
 }
 
-Cubo::~Cubo()
-{
-}
 
 void Cubo::render(glm::dmat4 const& modelViewMat) const
 {
@@ -658,6 +655,14 @@ Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 
 }
 
+EntityWithMaterial::~EntityWithMaterial()
+{
+	delete material;
+	delete iMesh;
+	material = nullptr;
+	iMesh = nullptr;
+}
+
 Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 {
 // m=número de muestras, p=número de puntos del perfil
@@ -670,8 +675,9 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 	}
 	perfil[int(p)] = glm::dvec3(0,-r,0);
 
-	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+	iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
 
+	delete[] perfil;
 }
 
 void Esfera::render(glm::dmat4 const& modelViewMat) const

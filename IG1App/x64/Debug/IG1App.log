@@ -1,52 +1,16 @@
-﻿  Entity.cpp
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(252,46): warning C4244: 'argument': conversion from 'GLdouble' to 'GLuint', possible loss of data
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(574,39): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(574,29): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(574,19): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(602,39): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(602,29): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(602,19): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(664,29): warning C4244: 'initializing': conversion from 'GLdouble' to 'size_t', possible loss of data
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(665,24): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(673,49): warning C4244: 'argument': conversion from 'GLdouble' to 'int', possible loss of data
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(684,39): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(684,29): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(684,19): warning C4244: 'argument': conversion from 'const T' to 'GLfloat', possible loss of data
-          with
-          [
-              T=glm::f64
-          ]
-D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Entity.cpp(726,40): warning C4244: 'argument': conversion from 'GLdouble' to 'GLuint', possible loss of data
+﻿  IndexMesh.cpp
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(51,18): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(52,21): warning C4244: 'initializing': conversion from 'GLdouble' to 'float', possible loss of data
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(53,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(61,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(62,21): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(68,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(118,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(119,21): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(170,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(172,20): warning C4018: '<': signed/unsigned mismatch
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\IndexMesh.cpp(186,20): warning C4018: '<': signed/unsigned mismatch
+  Scene.cpp
+D:\VisualStudio\C++\IG_PrimeraPractica\IG1App\Scene.cpp(282,47): warning C4305: 'argument': truncation from 'double' to 'GLclampf'
+  Generating Code...
   IG1App.vcxproj -> D:\VisualStudio\C++\IG_PrimeraPractica\bin\IG1AppDebug.exe
