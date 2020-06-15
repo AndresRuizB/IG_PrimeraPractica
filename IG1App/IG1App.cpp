@@ -179,10 +179,10 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'k':
 		m2Vistas = !m2Vistas;
 		break;
-	case '0':
+	case '1':
 		mScene->setState(0);
 		break;
-	case '1':
+	case '2':
 		mScene->setState(1);
 		break;
 	case 'f':
