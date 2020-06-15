@@ -342,6 +342,19 @@ public:
 private:
 	std::vector<Texture*>* gTextures;
 };
+
+//-------------------------------------------------------------------------
+class SirenCube : public CompoundEntity
+{
+public:
+	SirenCube();
+	virtual ~SirenCube() {};
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update();
+	SpotLight* getLight() { return light; };
+private:
+	SpotLight* light = nullptr;
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

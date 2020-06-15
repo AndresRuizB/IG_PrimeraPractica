@@ -636,7 +636,7 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const
 	}
 
 	glDisable(GL_COLOR_MATERIAL);
-	
+
 }
 
 void CompoundEntity::addEntity(Abs_Entity* ae)
@@ -654,21 +654,21 @@ Cono::Cono(GLdouble h, GLdouble r, GLuint n)
 	perfil[0] = dvec3(0.5, 0.0, 0.0);
 	perfil[1] = dvec3(r, 0.0, 0.0);
 	perfil[2] = dvec3(0.5, h, 0.0);
-	this->iMesh = MbR::generaIndexMeshByRevolution(m,n,perfil);
+	this->iMesh = MbR::generaIndexMeshByRevolution(m, n, perfil);
 
 }
 
 Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
 {
-// m=número de muestras, p=número de puntos del perfil
-	dvec3* perfil = new dvec3[p+1];
-	float anglePerSegment = 180/(p-1);
+	// m=número de muestras, p=número de puntos del perfil
+	dvec3* perfil = new dvec3[p + 1];
+	float anglePerSegment = 180 / (p - 1);
 	float currentAngle = -90;
 	for (int i = 0; i < p; i++) {
 		perfil[i] = dvec3(cos(radians(currentAngle)) * r, sin(radians(currentAngle)) * r, 0.0);
 		currentAngle += anglePerSegment;
 	}
-	perfil[int(p)] = glm::dvec3(0,-r,0);
+	perfil[int(p)] = glm::dvec3(0, -r, 0);
 
 	this->iMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
 
@@ -697,9 +697,9 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 Plane::Plane()
 {
 	spotLight = new SpotLight();
-	spotLight->setPosDir({0,50,0});
-	spotLight->setSpot({.0,-1.0,.0}, 25.0, 0.0);
-	spotLight->setAmb({0,0,0,1});
+	spotLight->setPosDir({ 0,50,0 });
+	spotLight->setSpot({ .0,-1.0,.0 }, 25.0, 0.0);
+	spotLight->setAmb({ 0,0,0,1 });
 }
 
 void Plane::update()
@@ -732,15 +732,21 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 		glEnable(GL_FILL);
 		glPolygonMode(GL_FRONT, GL_FILL);
 
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT); 
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+
 		mTexture->bind(GL_REPLACE);
-		glColor3f(mColor.r, mColor.g, mColor.b);
 		if (material != nullptr) {
 			material->upload();
+		}
+
+		if (mTexture != nullptr) {
+			mTexture->bind(GL_MODULATE);
+			iMesh->render();
+			mTexture->unbind();
 		}
 
 		iMesh->render();
@@ -756,21 +762,22 @@ void Grid::render(glm::dmat4 const& modelViewMat) const
 
 GridCube::GridCube(std::vector<Texture*>* text)
 {
-	int lado = 600, nDiv = 10;
+	int lado = 50, nDiv = 5;
 
 	gTextures = text;
 
 	Grid* g = new Grid(lado, nDiv);		//primera pared
 	g->setTexture((*gTextures)[5]);
 	glm::dmat4 mAux = g->modelMat();
-	mAux = translate(mAux, dvec3(0, 0,lado/2));
+	mAux = rotate(mAux, radians(180.0), dvec3(0, 1, 0));
+	mAux = translate(mAux, dvec3(0, 0, -lado / 2));
 	g->setModelMat(mAux);
 	addEntity(g);
 
 	g = new Grid(lado, nDiv);
 	g->setTexture((*gTextures)[5]);
 	mAux = g->modelMat();
-	mAux = translate(mAux, dvec3(lado/2, 0, 0));
+	mAux = translate(mAux, dvec3(-lado / 2, 0, 0));
 	mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
 	g->setModelMat(mAux);
 	addEntity(g);
@@ -778,15 +785,14 @@ GridCube::GridCube(std::vector<Texture*>* text)
 	g = new Grid(lado, nDiv);
 	g->setTexture((*gTextures)[5]);
 	mAux = g->modelMat();
-	mAux = rotate(mAux, radians(180.0), dvec3(0, 1.0, 0));
-	mAux = translate(mAux, dvec3(0, 0, lado / 2));
+	mAux = translate(mAux, dvec3(0, 0, -lado / 2));
 	g->setModelMat(mAux);
 	addEntity(g);
 
 	g = new Grid(lado, nDiv);	//ultima pared
 	g->setTexture((*gTextures)[5]);
 	mAux = g->modelMat();
-	mAux = translate(mAux, dvec3(-lado / 2, 0, 0));
+	mAux = translate(mAux, dvec3(lado / 2, 0, 0));
 	mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
 	g->setModelMat(mAux);
 	addEntity(g);
@@ -795,20 +801,48 @@ GridCube::GridCube(std::vector<Texture*>* text)
 	g->setTexture((*gTextures)[6]);
 	mAux = g->modelMat();
 	mAux = translate(mAux, dvec3(0, -lado / 2, 0));
-	mAux = rotate(mAux, radians(90.0), dvec3(1, 0, 0));
+	mAux = rotate(mAux, radians(-90.0), dvec3(1, 0, 0));
 	g->setModelMat(mAux);
 	addEntity(g);
 
-	//g = new Grid(lado, nDiv);	//tapa
-	//g->setTexture((*gTextures)[6]);
-	//mAux = g->modelMat();
-	//mAux = translate(mAux, dvec3(0, lado / 2, 0));
-	//mAux = rotate(mAux, radians(-90.0), dvec3(1, 0, 0));
-	//g->setModelMat(mAux);
-	//addEntity(g);
+	g = new Grid(lado, nDiv);	//tapa
+	g->setTexture((*gTextures)[6]);
+	mAux = g->modelMat();
+	mAux = translate(mAux, dvec3(0, lado / 2, 0));
+	mAux = rotate(mAux, radians(90.0), dvec3(1, 0, 0));
+	g->setModelMat(mAux);
+	addEntity(g);
 }
 
 void GridCube::render(glm::dmat4 const& modelViewMat) const
 {
 	CompoundEntity::render(modelViewMat);
+}
+
+SirenCube::SirenCube()
+{
+	light = new SpotLight();
+	light->setPosDir({ 0,-5,0 });
+	light->setSpot({ .0,-1.0,0.3 }, 45.0, 0.0);
+
+	light->setDiff({ 1,1,1,1 });
+	light->setAmb({ 0,0,0,1 });
+	light->setSpec({ 0.5,0.5,0.5,1 });
+}
+
+void SirenCube::render(glm::dmat4 const& modelViewMat) const
+{
+	CompoundEntity::render(modelViewMat);
+	dmat4 aMat = modelViewMat * mModelMat;
+
+	dmat4 mI = dmat4(1);
+
+	dmat4 rMat = rotate(mI, radians((double)frame), dvec3(0.0, 1.0, 0.0));
+
+	light->upload(aMat * rMat);
+}
+
+void SirenCube::update()
+{
+	frame++;
 }

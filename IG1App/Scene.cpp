@@ -29,7 +29,7 @@ void Scene::init()
 	papelC->load("../Bmps/papelC.bmp");
 	gTextures.push_back(papelC);
 	windowC->load("../Bmps/windowC.bmp", 150);
-	gTextures.push_back(windowC);	
+	gTextures.push_back(windowC);
 	stone->load("../Bmps/stones.bmp");
 	gTextures.push_back(stone);
 	checkers->load("../Bmps/checker.bmp");
@@ -46,60 +46,26 @@ void Scene::init()
 	}
 	else if (mId == 0) {
 		glm::dmat4 mAux;
-		//AnilloCuadrado* anilloC = new AnilloCuadrado();
-		//gObjects.push_back(anilloC);
 
-		//Cubo* cuboTapas = new Cubo(100);
-		//gObjects.push_back(cuboTapas);
+		SirenCube* sC = new SirenCube();
+		sceneLights.push_back(sC->getLight());
+		gObjects.push_back(sC);
 
+		GridCube* gC = new GridCube(&gTextures);
+		sC->addEntity(gC);
 
-		CompoundEntity* helices = new CompoundEntity();
-		Cylinder* c1 = new Cylinder(20,10,60);
-		c1->setQuadricObjColor(fvec3(0, 0, 1));
-		mAux = c1->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, 110));
-		mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
-		c1->setModelMat(mAux);
-		helices->addEntity(c1);
-		Cylinder* c2 = new Cylinder(20, 10, 60);
-		c2->setQuadricObjColor(fvec3(0,0,1));
-		mAux = c2->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, 110));
-		mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
-		c2->setModelMat(mAux);
-		helices->addEntity(c2);
+		Sphere* siren = new Sphere(20);
+		siren->setQuadricObjColor({ 1, 0, 0 });
+		mAux = siren->modelMat();
+		mAux = translate(mAux, dvec3(0, 10, 0));
+		siren->setModelMat(mAux);
+		sC->addEntity(siren);
 
-		CompoundEntity* chasis = new CompoundEntity();
-		chasis->addEntity(helices);
-		Sphere* bola = new Sphere(100.0);
-		bola->setQuadricObjColor({ 1, 0, 0 });
-		chasis->addEntity(bola);
-
-		Plane* avion = new Plane();
-		gObjects.push_back(avion);
-		avion->addEntity(chasis);
-		Cubo* alas = new Cubo(100);
-		//color COBRE
-		alas->changeColor(dvec4(0.462, 0.235, 0.156,1));
-		Material* coppMat = new Material();
-		coppMat->setCopper();
-		alas->setMaterial(coppMat);
-		mAux = alas->modelMat();
-		mAux = scale(mAux, dvec3(4,0.3, 1.5));
-		alas->setModelMat(mAux);
-		avion->addEntity(alas);
-
-		mAux = avion->modelMat();
-		mAux = translate(mAux, dvec3(0, 260, 0));
-		mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
-		avion->setModelMat(mAux);
-		sceneLights.push_back(avion->getLight());
-		avion->setHelices(helices);
-		scenePlane = avion;
-
-		//Cono* c = new Cono(200,100,30);
-		//c->changeColor(dvec4(0, 0, 1, 1));
-		//gObjects.push_back(c);
+		mAux = sC->modelMat();
+		mAux = translate(mAux, dvec3(0, 230, 0));
+		//mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
+		sC->setModelMat(mAux);
+		sceneSiren = sC;
 
 		Esfera* es = new Esfera(200, 200, 200);
 		//color AZUL
@@ -110,6 +76,73 @@ void Scene::init()
 		goldMat->setGold();
 		es->setMaterial(goldMat);
 		gObjects.push_back(es);
+
+
+		//glm::dmat4 mAux;
+		////anillocuadrado* anilloc = new anillocuadrado();
+		////gobjects.push_back(anilloc);
+
+		////cubo* cubotapas = new cubo(100);
+		////gobjects.push_back(cubotapas);
+
+
+		//CompoundEntity* helices = new CompoundEntity();
+		//Cylinder* c1 = new Cylinder(20, 10, 60);
+		//c1->setQuadricObjColor(fvec3(0, 0, 1));
+		//mAux = c1->modelMat();
+		//mAux = translate(mAux, dvec3(0, 0, 110));
+		//mAux = rotate(mAux, radians(90.0), dvec3(0, 1, 0));
+		//c1->setModelMat(mAux);
+		//helices->addEntity(c1);
+		//Cylinder* c2 = new Cylinder(20, 10, 60);
+		//c2->setQuadricObjColor(fvec3(0, 0, 1));
+		//mAux = c2->modelMat();
+		//mAux = translate(mAux, dvec3(0, 0, 110));
+		//mAux = rotate(mAux, radians(-90.0), dvec3(0, 1, 0));
+		//c2->setModelMat(mAux);
+		//helices->addEntity(c2);
+
+		//CompoundEntity* chasis = new CompoundEntity();
+		//chasis->addEntity(helices);
+		//Sphere* bola = new Sphere(100.0);
+		//bola->setQuadricObjColor({ 1, 0, 0 });
+		//chasis->addEntity(bola);
+
+		//Plane* avion = new Plane();
+		//gObjects.push_back(avion);
+		//avion->addEntity(chasis);
+		//Cubo* alas = new Cubo(100);
+		////color COBRE
+		//alas->changeColor(dvec4(0.462, 0.235, 0.156, 1));
+		//Material* coppMat = new Material();
+		//coppMat->setCopper();
+		//alas->setMaterial(coppMat);
+		//mAux = alas->modelMat();
+		//mAux = scale(mAux, dvec3(4, 0.3, 1.5));
+		//alas->setModelMat(mAux);
+		//avion->addEntity(alas);
+
+		//mAux = avion->modelMat();
+		//mAux = translate(mAux, dvec3(0, 260, 0));
+		//mAux = scale(mAux, dvec3(0.3, 0.3, 0.3));
+		//avion->setModelMat(mAux);
+		//sceneLights.push_back(avion->getLight());
+		//avion->setHelices(helices);
+		//scenePlane = avion;
+
+		////Cono* c = new Cono(200,100,30);
+		////c->changeColor(dvec4(0, 0, 1, 1));
+		////gObjects.push_back(c);
+
+		//Esfera* es = new Esfera(200, 200, 200);
+		////color AZUL
+		//es->changeColor(dvec4(0.403, 0.925, 0.956, 1));
+		////color ORO
+		////es->changeColor(dvec4(0.854, 0.647, 0.125, 1));
+		//Material* goldMat = new Material();
+		//goldMat->setGold();
+		//es->setMaterial(goldMat);
+		//gObjects.push_back(es);
 
 	}
 	else if (mId == 2) {
@@ -237,7 +270,7 @@ void Scene::setGL()
 {
 	// OpenGL basic setting
 
-	if (mId <2) glClearColor(0.7, 0.8, 0.9, 1.0);
+	if (mId < 2) glClearColor(0.7, 0.8, 0.9, 1.0);
 	else glClearColor(1.0, 1.0, 1.0, 1.0);// background color (alpha=1 -> opaque)
 
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
@@ -262,7 +295,7 @@ void Scene::setState(int id)
 
 void Scene::saveCapture()
 {
-	Texture *temp = new Texture();
+	Texture* temp = new Texture();
 	temp->loadColorBuffer();
 	temp->save("name.bmp");
 }
@@ -346,21 +379,28 @@ void Scene::setLights()
 	glEnable(GL_LIGHTING);
 
 	directionalLight = new DirLight();
-	directionalLight->setPosDir({1,1,1});
+	directionalLight->setPosDir({ 1,1,1 });
 
 	positionalLight = new PosLight();
-	positionalLight->setPosDir({300,300,0});
-	positionalLight->setDiff({0,1,0,1});
+	positionalLight->setPosDir({ 300,300,0 });
+	positionalLight->setDiff({ 0,1,0,1 });
+
+	/*spotSceneLight = new SpotLight();
+	spotSceneLight->setPosDir({ 0, 0, 300 });
+	spotSceneLight->setSpot({ .0,.0,-1.0 }, 90.0, 0.0);
+	spotSceneLight->setDiff({ 0,1,0,1 });*/
 
 	spotSceneLight = new SpotLight();
 	spotSceneLight->setPosDir({ 0, 0, 300 });
-	spotSceneLight->setSpot({ .0,.0,-1.0 }, 90.0, 0.0);
-	spotSceneLight->setDiff({ 0,1,0,1 });
+	spotSceneLight->setSpot({ 0,0,-1 }, 20.0, 0.0);
+	spotSceneLight->setDiff({ 1,1,1,1 });
+	spotSceneLight->setAmb({ 0,0,0,1 });
+	spotSceneLight->setSpec({ 0.5,0.5,0.5,1 });
 
 	mineroLight = new DirLight();
 	mineroLight->setPosDir({ 0, 0, 1 });
-	mineroLight->setAmb({0,0,0,1});
-	mineroLight->setDiff({0.8,0.8,0.8,1});
+	mineroLight->setAmb({ 0,0,0,1 });
+	mineroLight->setDiff({ 0.8,0.8,0.8,1 });
 
 	sceneLights.push_back(directionalLight);
 	sceneLights.push_back(positionalLight);
@@ -387,6 +427,28 @@ void Scene::move()
 		//currentAngle++;
 	}
 }
+//-------------------------------------------------------------------------
+
+void Scene::sirenMove()
+{
+	if (sceneSiren != nullptr) {
+
+		GLdouble radiusTranslation = 230, speedRotation = 4.0, speedTranslation = 4.0;
+
+		dmat4 mI = dmat4(1);	//matriz unidad
+		dmat4 rMat = rotate(mI, radians((speedRotation * frame)), dvec3(1.0, 0.0, 0.0));
+		dmat4 tMat = translate(mI, dvec3(0.0,
+			-cos(radians((speedTranslation * frame) - 180)) * radiusTranslation,
+			-sin(radians((speedTranslation * frame) - 180)) * radiusTranslation));
+		sceneSiren->setModelMat(tMat * rMat * mI);
+		frame++;
+		//dmat4 mAux = scenePlane->modelMat();
+		////mAux = translate(mAux,dvec3(0,0,0));
+		//mAux = translate(mAux, dvec3(0.0, (sin(radians(currentAngle)) * 15), cos(radians(currentAngle)) * 15));
+		//currentAngle++;
+	}
+}
+
 //-------------------------------------------------------------------------
 
 void Scene::update()
