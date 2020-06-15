@@ -13,7 +13,7 @@ protected:
     // Añade setter’s para cambiar el valor de los atributos lumínicos
 public:
     Light();
-    virtual ~Light() { disable(); }
+    virtual ~Light() { --cont; disable(); }
     void uploadL() const;
     // Método abstracto
     virtual void upload(glm::dmat4 const& modelViewMat) const = 0;
