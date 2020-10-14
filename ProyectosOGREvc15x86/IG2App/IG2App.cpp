@@ -14,10 +14,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
     getRoot()->queueEndRendering();
   }
   else if (evt.keysym.sym == SDLK_g) {
-	  mClockNode->roll(Ogre::Degree(3));
+	 // aspasNode->roll(Ogre::Degree(5));
+	 // int num = 12;
+
+	 // for (int i = 0; i < num; i++) {
+		//Ogre::SceneNode* cilindroNode = mSM->getSceneNode("adorno_" + std::to_string(i+1));
+		//cilindroNode->roll(Ogre::Degree(-5));
+	 // }
   }
   else if (evt.keysym.sym == SDLK_h) {
-	  mExternalClockNode->roll(Ogre::Degree(3));
+	 
   }
   //else if (evt.keysym.sym == SDLK_???)
   
@@ -33,7 +39,7 @@ void IG2App::shutdown()
 
   delete mTrayMgr;  mTrayMgr = nullptr;
   delete mCamMgr; mCamMgr = nullptr;
-  
+  delete aspasMol; aspasMol = nullptr;
   // do not forget to call the base 
   IG2ApplicationContext::shutdown();
 }
@@ -107,42 +113,11 @@ void IG2App::setupScene(void)
   //mSinbadNode->yaw(Ogre::Degree(-45));
   //mSinbadNode->showBoundingBox(true);
   //mSinbadNode->setVisible(false);
-  mClockNode = mSM->getRootSceneNode()->createChildSceneNode("nClock");
 
-  mExternalClockNode = mClockNode->createChildSceneNode("nEClock");
-  Ogre::SceneNode* mHourNode[12];
+  aspasNode = mSM->getRootSceneNode()->createChildSceneNode("aspas");
 
-  for (int i = 0; i < 12; i++) {
-	  Ogre::Entity* hourEnt = mSM->createEntity("sphere.mesh");
-	  mHourNode[i] = mExternalClockNode->createChildSceneNode("Hora "+ std::to_string(i+1));
-	  mHourNode[i]->attachObject(hourEnt);
-
-	  mHourNode[i]->setPosition(Ogre::Math::Cos(Ogre::Math::DegreesToRadians(i*30))*200, Ogre::Math::Sin(Ogre::Math::DegreesToRadians(i*30))*200, 0);
-	  mSM->getSceneNode("Hora " + std::to_string(i + 1))->setScale(0.25, 0.25, 0.25);
-  }
-
-  Ogre::Entity* hE = mSM->createEntity("cube.mesh");
-  Ogre::SceneNode* hourNode = mClockNode->createChildSceneNode("nHour");
-  hourNode->attachObject(hE);
-  hourNode->setPosition(40, 0, 0);
-  hourNode->setScale(0.2, 1.8, 0.2);
-  hourNode->roll(Ogre::Degree(90));
-
-  hE = mSM->createEntity("cube.mesh");
-  Ogre::SceneNode* minNode = mClockNode->createChildSceneNode("nMin");
-  minNode->attachObject(hE);
-  minNode->setPosition(0, 40, 0);
-  minNode->setScale(0.15, 1.9, 0.25);
-
-
-  hE = mSM->createEntity("cube.mesh");
-  Ogre::SceneNode* secNode = mClockNode->createChildSceneNode("nSec");
-  secNode->attachObject(hE);
-  secNode->setPosition(-40, -40, 0);
-  secNode->setScale(0.05, 1.5, 0.25);
-  secNode->roll(Ogre::Degree(135));
-
-
+  aspasMol = new AspasMolino(aspasNode,12);
+  addInputListener(aspasMol);
 
   //------------------------------------------------------------------------
 

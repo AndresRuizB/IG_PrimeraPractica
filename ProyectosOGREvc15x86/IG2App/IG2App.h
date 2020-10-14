@@ -6,6 +6,7 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
+#include "AspasMolino.h"
 
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
@@ -26,8 +27,9 @@ protected:
   Ogre::SceneNode* mLightNode = nullptr;
   Ogre::SceneNode* mCamNode = nullptr;
   Ogre::SceneNode* mSinbadNode = nullptr;
-  Ogre::SceneNode* mClockNode = nullptr;
-  Ogre::SceneNode* mExternalClockNode = nullptr;
+  Ogre::SceneNode* aspasNode = nullptr;
+
+  AspasMolino* aspasMol = nullptr;
   OgreBites::CameraMan* mCamMgr = nullptr;
  
 };
