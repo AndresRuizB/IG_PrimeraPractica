@@ -1,0 +1,1 @@
+Ejecutar en modo Realese x86
