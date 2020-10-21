@@ -230,7 +230,7 @@ void IG2App::setupScene(void)
 	}
 	else if (mSceneIndex == 4) {
 
-		aspasMolino = new AspasMolino(10, mSM->getRootSceneNode(), mSM);
+		aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
 
 	}
 
