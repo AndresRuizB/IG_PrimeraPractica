@@ -1,28 +1,27 @@
 #include "Aspa.h"
-#include <SDL_keycode.h>
 
-Aspa::Aspa(Ogre::SceneNode* aspaN, Ogre::SceneNode* tableroN, Ogre::SceneNode* cilindroN)
+Aspa::Aspa(Ogre::SceneNode* parentNode, Ogre::SceneManager* mSM, int index, Ogre::Degree ang) :mSM_(mSM)
 {
-	aspaNode = aspaN;
-	tableroNode = tableroN;
-	cilindroNode = cilindroN;
-	Ogre::SceneManager* mSM = aspaNode->getCreator();
+	aspaNode = parentNode->createChildSceneNode("nAspa" + std::to_string(index));
 
-	Ogre::Entity* e = mSM->createEntity("cube.mesh");
-	tableroNode->attachObject(e);
-	tableroNode->setScale(4, 0.5, 0.07);
+	tableroNode = aspaNode->createChildSceneNode("nTablero" + std::to_string(index));
+	Ogre::Entity* cubo = mSM->createEntity("cube.mesh");
+	tableroNode->attachObject(cubo);
+	tableroNode->setScale(3, 0.6, 0.25);
+	tableroNode->setPosition(130, 0, 0);
 
-	e = mSM->createEntity("Barrel.mesh");
-	cilindroNode->attachObject(e);
-	cilindroNode->setPosition(200, 0, 0);
-	cilindroNode->setScale(3.5, 5.5, 3.5);
+	cilindroNode = aspaNode->createChildSceneNode("nAdorno" + std::to_string(index));
+	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
+	cilindroNode->attachObject(cilindro);
+	cilindroNode->setScale(7, 12, 7);
+	cilindroNode->translate(250, 0, 20);
+
+	cilindroNode->roll(-ang);
+
+	aspaNode->roll(ang);
 }
 
-bool Aspa::keyPressed(const OgreBites::KeyboardEvent& evt)
-{
-	if (evt.keysym.sym == SDLK_g) // #include <SDL_keycode.h>
-	{
-		cilindroNode->roll(Ogre::Degree(-5));
-	}
-	return true;
+void Aspa::roll(Ogre::Degree a){
+
+	cilindroNode->roll(Ogre::Degree(-a));
 }

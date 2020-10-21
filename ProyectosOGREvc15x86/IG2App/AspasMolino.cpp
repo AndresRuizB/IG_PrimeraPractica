@@ -1,51 +1,34 @@
 #include "AspasMolino.h"
-#include <SDL_keycode.h>
-#include "IG2App.h"
 
-AspasMolino::AspasMolino(Ogre::SceneNode* node, int nAspas)
+void AspasMolino::giraMolino()
 {
-	//La constructora pasa el nodo asociado al objeto
-	//creado, como parámetro
-	aspasNode = node;
-
-	numAspas = nAspas;
-	arrayAspas = new Aspa* [numAspas];
+	aspasNode->roll(Ogre::Degree(2));
 
 	for (int i = 0; i < numAspas; i++) {
 
-		Ogre::SceneNode* aspaNode = aspasNode->createChildSceneNode("aspa_" + std::to_string(i + 1));
-
-		Ogre::SceneNode* tableroNode = aspaNode->createChildSceneNode("tablero_" + std::to_string(i + 1));
-
-		Ogre::SceneNode* cilindroNode = aspaNode->createChildSceneNode("adorno_" + std::to_string(i + 1));
-
-		arrayAspas[i] = new Aspa(aspaNode, tableroNode, cilindroNode);
-
-		tableroNode->setPosition(Ogre::Math::Cos(Ogre::Math::DegreesToRadians(i * 30)) * 50, Ogre::Math::Sin(Ogre::Math::DegreesToRadians(i * 30)) * 50, 0);
-		tableroNode->roll(Ogre::Degree(i * 30));
-
-		cilindroNode->setPosition(Ogre::Math::Cos(Ogre::Math::DegreesToRadians(i * 30)) * 230, Ogre::Math::Sin(Ogre::Math::DegreesToRadians(i * 30)) * 230, 0);
-
+		arrayAspas[i]->roll(Ogre::Degree(2));
 	}
 }
 
-AspasMolino::~AspasMolino()
+AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM) :numAspas(numA)
 {
-	for (int i = 0; i < numAspas;i++) {
-		delete arrayAspas[i];
+	arrayAspas = new Aspa * [numA];
+
+	aspasNode = mSM->getRootSceneNode()->createChildSceneNode("nAspas");
+
+	for (int i = 0; i < numA; i++) {
+		Ogre::Degree ang = Ogre::Degree(360 / numA * i);
+		arrayAspas[i] = new Aspa(aspasNode, mSM, i, ang);
 	}
-	delete[] arrayAspas;
-	arrayAspas = nullptr;
+
 }
 
 bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	if (evt.keysym.sym == SDLK_g) // #include <SDL_keycode.h>
-	{
-		aspasNode->roll(Ogre::Degree(5));
-		for (int i = 0; i < numAspas; i++) {
-			arrayAspas[i]->keyPressed(evt);
-		}
+	if (evt.keysym.sym == SDLK_g) {
+		giraMolino();
+		return true;
 	}
-	return true;
+
+	return false;
 }
