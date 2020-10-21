@@ -11,7 +11,6 @@ private:
 	Ogre::SceneNode* aspasNode;
 	Aspa** arrayAspas;
 	int numAspas;
-	int radio = 100;
 
 	void giraMolino();
 

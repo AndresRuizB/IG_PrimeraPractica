@@ -17,7 +17,7 @@ AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* 
 	aspasNode = mSM->getRootSceneNode()->createChildSceneNode("nAspas");
 
 	for (int i = 0; i < numA; i++) {
-		Ogre::Degree ang = Ogre::Degree(360 / numA * i);
+		Ogre::Degree ang = Ogre::Degree(360.0 / numA * i);
 		arrayAspas[i] = new Aspa(aspasNode, mSM, i, ang);
 	}
 
