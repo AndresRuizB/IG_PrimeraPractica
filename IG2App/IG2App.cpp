@@ -233,6 +233,9 @@ void IG2App::setupScene(void)
 		aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
 
 	}
+	else if (mSceneIndex == 5) {
+		
+}
 
 	//------------------------------------------------------------------------
 
