@@ -5,25 +5,22 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 #include <string>
-#include "Aspa.h"
-#include "AspasMolino.h"
 
 using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	aspasMolino->keyPressed(evt);
 
 	if (evt.keysym.sym == SDLK_ESCAPE)
 	{
 		getRoot()->queueEndRendering();
 	}
 	else if (evt.keysym.sym == SDLK_g) {
-		if (mSceneIndex == 3) giraMolino();
-		else if(mSceneIndex == 2) mSpikesComplete->roll(Ogre::Degree(2));
+		//if (mSceneIndex == 3) giraMolino();
+		//else if(mSceneIndex == 2) mSpikesComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
-		mClockComplete->roll(Ogre::Degree(2));
+		//mClockComplete->roll(Ogre::Degree(2));
 	}
 
 
@@ -53,6 +50,8 @@ void IG2App::shutdown()
 
 	delete mTrayMgr;  mTrayMgr = nullptr;
 	delete mCamMgr; mCamMgr = nullptr;
+	//delete aspasMolino; aspasMolino = nullptr;
+	delete molino; molino = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -110,7 +109,7 @@ void IG2App::setupScene(void)
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0.5, 0, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
 
 	//------------------------------------------------------------------------
@@ -230,9 +229,16 @@ void IG2App::setupScene(void)
 	}
 	else if (mSceneIndex == 4) {
 
-		aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
+		//aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
+		//addInputListener(aspasMolino);
 
 	}
+	else if (mSceneIndex == 5) {
+
+		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+		molino = new Molino(nodoMolino);
+		addInputListener(molino);
+	}	
 
 	//------------------------------------------------------------------------
 

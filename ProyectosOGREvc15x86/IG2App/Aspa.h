@@ -12,7 +12,7 @@ private:
 	Ogre::SceneManager* mSM_;
 
 public:
-	Aspa(Ogre::SceneNode* parentNode, Ogre::SceneManager* mSM, int index, Ogre::Degree ang);
+	Aspa(Ogre::SceneNode* node, Ogre::SceneManager* mSM, int index, Ogre::Degree ang);
 	void roll(Ogre::Degree a);
 };
 
