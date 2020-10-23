@@ -5,16 +5,16 @@ void AspasMolino::giraMolino()
 	aspasNode->roll(Ogre::Degree(2), Ogre::Node::TS_LOCAL);
 
 	for (int i = 0; i < numAspas; i++) {
-
 		arrayAspas[i]->roll(Ogre::Degree(2));
 	}
 }
 
-AspasMolino::AspasMolino(int numA, Ogre::SceneNode* node, Ogre::SceneManager* mSM) : numAspas(numA)
+AspasMolino::AspasMolino(int numA, Ogre::SceneNode* node, Ogre::SceneManager* mSceneManager) : numAspas(numA)
 {
 	arrayAspas = new Aspa * [numAspas];
 
 	aspasNode = node;
+	mSM = mSceneManager;
 	aspasNode->translate(0,0,150, Ogre::Node::TS_WORLD);
 
 	centroNode = aspasNode->createChildSceneNode("nCentro");
@@ -46,7 +46,7 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 		giraMolino();
 	}
 	else if (evt.keysym.sym == SDLK_c) {
-		centroNode->translate(0, 0, -3);
+		centroNode->translate(0, 0, -5);
 	}
 
 	return true;

@@ -34,7 +34,7 @@ protected:
   OgreBites::CameraMan* mCamMgr = nullptr;
 
   Ogre::SceneNode* mhourNode[12];
-  Ogre::SceneNode* mClockNode = nullptr;
+  Ogre::SceneNode* mSpheresClockNode = nullptr;
   Ogre::SceneNode* mHoursSpikeNode = nullptr;
   Ogre::SceneNode* mMinutesSpikeNode = nullptr;
   Ogre::SceneNode* mSecondsSpikeNode = nullptr;
@@ -47,10 +47,14 @@ protected:
   Ogre::SceneNode* mAspasNode = nullptr;
   int nAspas;
 
+  Ogre::SceneNode* mSolNode = nullptr;
+  Ogre::SceneNode* mTierraNode = nullptr;
+  Ogre::SceneNode* mLunaNode = nullptr;
+
   //AspasMolino* aspasMolino = nullptr;
   Molino* molino = nullptr;
 
-  int mSceneIndex = 5;
+  int mSceneIndex = 7;
 
 };
 

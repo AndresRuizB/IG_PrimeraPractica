@@ -10,6 +10,7 @@ class AspasMolino : public OgreBites::InputListener
 private:
 	Ogre::SceneNode* aspasNode;
 	Ogre::SceneNode* centroNode;
+	Ogre::SceneManager* mSM;
 	Aspa** arrayAspas;
 	int numAspas;
 
