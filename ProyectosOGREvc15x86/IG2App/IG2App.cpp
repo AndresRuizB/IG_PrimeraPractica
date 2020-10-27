@@ -70,6 +70,7 @@ void IG2App::shutdown()
 	delete mCamMgr; mCamMgr = nullptr;
 	//delete aspasMolino; aspasMolino = nullptr;
 	delete molino; molino = nullptr;
+	delete avion; avion = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -317,7 +318,13 @@ void IG2App::setupScene(void)
 		mLunaNode->translate(-150, 0, 0, Ogre::Node::TS_LOCAL);
 		mLunaNode->setScale(0.3, 0.3, 0.3);
 	}
+	else if (mSceneIndex == 8) {
+		
+		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
+		avion = new Avion(nodoAvion);
+		addInputListener(avion);
 
+	}
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);

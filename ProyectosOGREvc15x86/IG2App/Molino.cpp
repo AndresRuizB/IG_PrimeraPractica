@@ -22,7 +22,7 @@ Molino::Molino(Ogre::SceneNode* node)
 
 	//Ogre::SceneNode* aspasNode = ficticioNode->createChildSceneNode("nAspas");
 	Ogre::SceneNode* aspasNode = mNode->createChildSceneNode("nAspas");
-	aspas = new AspasMolino(6,aspasNode,mSM);
+	aspas = new AspasMolino(6,aspasNode);
 
 }
 

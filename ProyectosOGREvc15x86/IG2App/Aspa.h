@@ -13,6 +13,7 @@ private:
 
 public:
 	Aspa(Ogre::SceneNode* node, Ogre::SceneManager* mSM, int index, Ogre::Degree ang);
+	~Aspa() {};
 	void roll(Ogre::Degree a);
 };
 
