@@ -12,7 +12,8 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	aspasMolino->keyPressed(evt);
+	if (mSceneIndex == 4) aspasMolino->keyPressed(evt);
+	else if (mSceneIndex == 5); molino->keyPressed(evt);
 
 	if (evt.keysym.sym == SDLK_ESCAPE)
 	{
@@ -20,7 +21,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_g) {
 		if (mSceneIndex == 3) giraMolino();
-		else if(mSceneIndex == 2) mSpikesComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 2) mSpikesComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
 		mClockComplete->roll(Ogre::Degree(2));
@@ -110,7 +111,7 @@ void IG2App::setupScene(void)
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0, 0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0, -0.5, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
 
 	//------------------------------------------------------------------------
@@ -234,8 +235,8 @@ void IG2App::setupScene(void)
 
 	}
 	else if (mSceneIndex == 5) {
-		
-}
+	Molino* a = new Molino(mSM);
+	}
 
 	//------------------------------------------------------------------------
 

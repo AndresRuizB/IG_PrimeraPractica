@@ -9,13 +9,15 @@ class AspasMolino
 {
 private:
 	Ogre::SceneNode* aspasNode;
+	Ogre::SceneNode* cilindroCentral;
 	Aspa** arrayAspas;
 	int numAspas;
 
-	void giraMolino();
 
 public:
 	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM);
 	bool keyPressed(const OgreBites::KeyboardEvent& evt);
+
+	void giraMolino();
 };
 
