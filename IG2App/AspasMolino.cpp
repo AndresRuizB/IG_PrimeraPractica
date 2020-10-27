@@ -10,6 +10,11 @@ void AspasMolino::giraMolino()
 	}
 }
 
+void AspasMolino::mueveCentro()
+{
+	cilindroCentral->translate(0,0,-1);
+}
+
 AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM) :numAspas(numA)
 {
 	arrayAspas = new Aspa * [numA];
@@ -34,6 +39,9 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
 	if (evt.keysym.sym == SDLK_g) {
 		giraMolino();
+		return true;
+	}else if (evt.keysym.sym == SDLK_c) {
+		mueveCentro();
 		return true;
 	}
 

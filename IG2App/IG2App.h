@@ -52,7 +52,7 @@ protected:
 
   Molino* molino = nullptr;
   
-  int mSceneIndex = 5;
+  int mSceneIndex = 6;
 
 };
 

@@ -5,7 +5,7 @@
 #include <OgreEntity.h>
 #include "Aspa.h"
 
-class AspasMolino
+class AspasMolino : public OgreBites::InputListener
 {
 private:
 	Ogre::SceneNode* aspasNode;
@@ -14,9 +14,11 @@ private:
 	int numAspas;
 
 
+	void mueveCentro();
+
 public:
 	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM);
-	bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 
 	void giraMolino();
 };

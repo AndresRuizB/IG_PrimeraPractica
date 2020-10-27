@@ -12,8 +12,6 @@ using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
-	if (mSceneIndex == 4) aspasMolino->keyPressed(evt);
-	else if (mSceneIndex == 5); molino->keyPressed(evt);
 
 	if (evt.keysym.sym == SDLK_ESCAPE)
 	{
@@ -21,10 +19,15 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_g) {
 		if (mSceneIndex == 3) giraMolino();
-		else if (mSceneIndex == 2) mSpikesComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 2 || mSceneIndex==6) mSpikesComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
-		mClockComplete->roll(Ogre::Degree(2));
+		if (mSceneIndex == 2 )mClockComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 6) { 
+			mSecondsSpikeNode->translate(-240, 0, 0, Ogre::Node::TS_LOCAL);
+			mSecondsSpikeNode->roll(Ogre::Degree(-1), Ogre::Node::TS_WORLD);
+			mSecondsSpikeNode->translate(240, 0, 0, Ogre::Node::TS_LOCAL);
+		}
 	}
 
 
@@ -231,11 +234,50 @@ void IG2App::setupScene(void)
 	}
 	else if (mSceneIndex == 4) {
 
-		aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
-
+		/*aspasMolino = new AspasMolino(5, mSM->getRootSceneNode(), mSM);
+		addInputListener(aspasMolino);*/
 	}
 	else if (mSceneIndex == 5) {
-	Molino* a = new Molino(mSM);
+		Molino* a = new Molino(mSM);
+		addInputListener(a);
+	}
+	else if (mSceneIndex == 6) {
+		mClockComplete = mSM->getRootSceneNode()->createChildSceneNode("nClock");
+
+		mClockNode = mClockComplete->createChildSceneNode("nSpheresClock");
+		Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
+		int radio = 800;
+
+		for (int i = 0; i < 12; i++) {
+			mhourNode[i] = mClockNode->createChildSceneNode()->createChildSceneNode("nHora" + std::to_string(i));
+			mhourNode[i]->attachObject(sphere);
+			sphere = mSM->createEntity("sphere.mesh");/*
+			mhourNode[i]->setPosition(Ogre::Math::Cos(360 * i * radio), Ogre::Math::Sin(360 * i * radio), 0);*/
+			double ang = (2 * Ogre::Math::PI / 12) * i;
+			mhourNode[i]->setPosition(Ogre::Math::Cos(ang) * radio, Ogre::Math::Sin(ang) * radio, 0);
+		}
+
+		mSpikesComplete = mClockComplete->createChildSceneNode("nClockComplete");
+
+		Ogre::Entity* hours = mSM->createEntity("cube.mesh");
+		mHoursSpikeNode = mSpikesComplete->createChildSceneNode("nHoursSpike");
+		mHoursSpikeNode->attachObject(hours);
+		mHoursSpikeNode->setPosition(250, 0, 0);
+		mHoursSpikeNode->setScale(5.5, 0.3, 0.3);
+
+		Ogre::Entity* minutes = mSM->createEntity("cube.mesh");
+		mMinutesSpikeNode = mSpikesComplete->createChildSceneNode("nMinutesSpike");
+		mMinutesSpikeNode->attachObject(minutes);
+		mMinutesSpikeNode->roll((Radian)(Ogre::Math::PI / 2));
+		mMinutesSpikeNode->setPosition(0, 280, 0);
+		mMinutesSpikeNode->setScale(6.5, 0.2, 0.2);
+
+		Ogre::Entity* seconds = mSM->createEntity("cube.mesh");
+		mSecondsSpikeNode = mSpikesComplete->createChildSceneNode("nSecondsSpike");
+		mSecondsSpikeNode->attachObject(seconds);
+		mSecondsSpikeNode->roll(Ogre::Degree(225), Ogre::Node::TS_WORLD);
+		mSecondsSpikeNode->translate(240, 0, 0, Ogre::Node::TS_LOCAL);
+		mSecondsSpikeNode->setScale(7, 0.1, 0.1);
 	}
 
 	//------------------------------------------------------------------------
