@@ -8,6 +8,7 @@
 #include <OgreCameraMan.h>
 #include "AspasMolino.h"
 #include "Molino.h"
+#include "Avion.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -56,7 +57,7 @@ protected:
   Ogre::SceneNode* mTierraNode = nullptr;
   Ogre::SceneNode* mLunaNode = nullptr;
 
-  int mSceneIndex = 8;
+  int mSceneIndex = 9;
 
 };
 

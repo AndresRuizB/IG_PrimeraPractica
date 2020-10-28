@@ -18,7 +18,9 @@ private:
 
 public:
 	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM);
+	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM, int index);
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+
 
 	void giraMolino();
 };

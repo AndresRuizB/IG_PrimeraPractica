@@ -324,6 +324,10 @@ void IG2App::setupScene(void)
 	mLunaNode->translate(250, 0, 0);
 	mLunaNode->setScale(0.2, 0.2, 0.2);
 	}
+	else if (mSceneIndex == 9) {
+	Avion* a = new Avion(mSM->getRootSceneNode(), mSM);
+	addInputListener(a);
+	}
 
 	//------------------------------------------------------------------------
 
