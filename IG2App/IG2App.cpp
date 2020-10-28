@@ -19,14 +19,26 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_g) {
 		if (mSceneIndex == 3) giraMolino();
-		else if (mSceneIndex == 2 || mSceneIndex==6) mSpikesComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 2 || mSceneIndex == 6) mSpikesComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
-		if (mSceneIndex == 2 )mClockComplete->roll(Ogre::Degree(2));
-		else if (mSceneIndex == 6) { 
+		if (mSceneIndex == 2)mClockComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 6) {
 			mSecondsSpikeNode->translate(-240, 0, 0, Ogre::Node::TS_LOCAL);
 			mSecondsSpikeNode->roll(Ogre::Degree(-1), Ogre::Node::TS_WORLD);
 			mSecondsSpikeNode->translate(240, 0, 0, Ogre::Node::TS_LOCAL);
+		}
+	}
+	else if (evt.keysym.sym == SDLK_j) {
+		if (mSceneIndex == 7 || mSceneIndex == 8) {
+			mTierraNode->translate(-300, 0, 0, Ogre::Node::TS_LOCAL);
+			mTierraNode->yaw(Ogre::Degree(-2), Ogre::Node::TS_WORLD);
+			mTierraNode->translate(300, 0, 0, Ogre::Node::TS_LOCAL);
+		}
+		if(mSceneIndex == 8){
+			mLunaNode->translate(-250, 0, 0, Ogre::Node::TS_LOCAL);
+			mLunaNode->yaw(Ogre::Degree(5), Ogre::Node::TS_WORLD);
+			mLunaNode->translate(250, 0, 0, Ogre::Node::TS_LOCAL);
 		}
 	}
 
@@ -278,6 +290,39 @@ void IG2App::setupScene(void)
 		mSecondsSpikeNode->roll(Ogre::Degree(225), Ogre::Node::TS_WORLD);
 		mSecondsSpikeNode->translate(240, 0, 0, Ogre::Node::TS_LOCAL);
 		mSecondsSpikeNode->setScale(7, 0.1, 0.1);
+	}
+	else if (mSceneIndex == 7) {
+
+		Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
+		mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSolNode");
+		mSolNode->attachObject(sphere);
+
+		sphere = mSM->createEntity("sphere.mesh");
+		mTierraNode = mSolNode->createChildSceneNode("nTierraNode");
+		mTierraNode->attachObject(sphere);
+
+		mTierraNode->translate(300, 0, 0);
+		mTierraNode->setScale(0.5, 0.5, 0.5);
+	}
+	else if (mSceneIndex == 8) {
+
+	Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
+	mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSolNode");
+	mSolNode->attachObject(sphere);
+
+	sphere = mSM->createEntity("sphere.mesh");
+	mTierraNode = mSolNode->createChildSceneNode("nTierraNode");
+	mTierraNode->attachObject(sphere);
+
+	mTierraNode->translate(300, 0, 0);
+	mTierraNode->setScale(0.5, 0.5, 0.5);
+
+	sphere = mSM->createEntity("sphere.mesh");
+	mLunaNode = mTierraNode->createChildSceneNode("nLunaNode");
+	mLunaNode->attachObject(sphere);
+
+	mLunaNode->translate(250, 0, 0);
+	mLunaNode->setScale(0.2, 0.2, 0.2);
 	}
 
 	//------------------------------------------------------------------------

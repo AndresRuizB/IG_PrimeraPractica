@@ -50,9 +50,13 @@ protected:
 
   AspasMolino* aspasMolino = nullptr;
 
-  Molino* molino = nullptr;
-  
-  int mSceneIndex = 6;
+  Molino* molino = nullptr;  
+
+  Ogre::SceneNode* mSolNode = nullptr;
+  Ogre::SceneNode* mTierraNode = nullptr;
+  Ogre::SceneNode* mLunaNode = nullptr;
+
+  int mSceneIndex = 8;
 
 };
 

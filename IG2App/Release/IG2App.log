@@ -475,25 +475,30 @@ C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\OGREsdk\include\OGRE\Bites\
 C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\OGREsdk\include\OGRE\Bites\OgreTrays.h(189): message : vea la declaración de 'std::vector<OgreBites::Widget *,std::allocator<OgreBites::Widget *>>'
 C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\OGREsdk\include\OGRE\Bites\OgreTrays.h(1174,35): warning C4251: 'OgreBites::TrayManager::mWidgetDeathRow': class 'std::vector<OgreBites::Widget *,std::allocator<OgreBites::Widget *>>' necesita tener una interfaz DLL para que la utilicen los clientes de class 'OgreBites::TrayManager'
 C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\OGREsdk\include\OGRE\Bites\OgreTrays.h(189): message : vea la declaración de 'std::vector<OgreBites::Widget *,std::allocator<OgreBites::Widget *>>'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(103,57): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(154,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(154,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(179,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(179,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(188,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(195,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(202,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(217,39): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(226,49): warning C4244: 'argumento': conversión de 'int' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(257,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(257,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(266,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(273,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
-C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(280,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(115,57): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(166,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(166,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(191,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(191,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(200,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(207,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(214,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(229,39): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(238,49): warning C4244: 'argumento': conversión de 'int' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(269,46): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(269,76): warning C4244: 'argumento': conversión de 'double' a 'Ogre::Real'; posible pérdida de datos
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(278,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(285,44): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(292,42): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
+C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\IG2App\IG2App.cpp(325,35): warning C4305: 'argumento': truncamiento de 'double' a 'Ogre::Real'
   Generando código
-  2 of 605 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+  1 of 605 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
+Aspa.obj : warning LNK4099: no se encontró PDB 'vc142.pdb' con 'Aspa.obj' o en 'C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\vc142.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+AspasMolino.obj : warning LNK4099: no se encontró PDB 'vc142.pdb' con 'AspasMolino.obj' o en 'C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\vc142.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+IG2ApplicationContext.obj : warning LNK4099: no se encontró PDB 'vc142.pdb' con 'IG2ApplicationContext.obj' o en 'C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\vc142.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
+Molino.obj : warning LNK4099: no se encontró PDB 'vc142.pdb' con 'Molino.obj' o en 'C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\vc142.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
 SDL2main.lib(SDL_windows_main.obj) : warning LNK4099: no se encontró PDB 'SDL2main.pdb' con 'SDL2main.lib(SDL_windows_main.obj)' o en 'C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\SDL2main.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
   IG2App.vcxproj -> C:\Users\usuario\Documents\GitHub\IG_PrimeraPractica\bin\IG2AppRelease.exe
