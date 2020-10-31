@@ -1,11 +1,11 @@
 #include "Molino.h"
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
+#include "EntidadIG.h"
 
-Molino::Molino(Ogre::SceneNode* node)
+Molino::Molino(Ogre::SceneNode* node) : EntidadIG(node)
 {
-	mNode = node;
-	mSM = mNode->getCreator();
-
-	mNode->translate(0,0,-150);
+	mNode->translate(330,120,-250);
 
 	techoNode = mNode->createChildSceneNode("nTecho");
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
@@ -23,7 +23,6 @@ Molino::Molino(Ogre::SceneNode* node)
 	//Ogre::SceneNode* aspasNode = ficticioNode->createChildSceneNode("nAspas");
 	Ogre::SceneNode* aspasNode = mNode->createChildSceneNode("nAspas");
 	aspas = new AspasMolino(6,aspasNode);
-
 }
 
 bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -35,4 +34,9 @@ bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)
 	aspas->keyPressed(evt);
 
 	return true;
+}
+
+void Molino::frameRendered(const Ogre::FrameEvent& evt)
+{
+	aspas->frameRendered(evt);
 }

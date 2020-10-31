@@ -1,18 +1,13 @@
 #pragma once
+#include "EntidadIG.h"
 
-#include "IG2ApplicationContext.h"
-#include <OgreSceneManager.h>
-#include <OgreSceneNode.h>
-#include <OgreEntity.h>
-
-class Aspa
+class Aspa : public EntidadIG
 {
 private:
-	Ogre::SceneNode* aspaNode, *tableroNode, *cilindroNode;
-	Ogre::SceneManager* mSM_;
+	Ogre::SceneNode* tableroNode, *cilindroNode;
 
 public:
-	Aspa(Ogre::SceneNode* node, Ogre::SceneManager* mSM, int index, Ogre::Degree ang);
+	Aspa(Ogre::SceneNode* node, int index, Ogre::Degree ang);
 	~Aspa() {};
 	void roll(Ogre::Degree a);
 };

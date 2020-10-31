@@ -1,23 +1,25 @@
 #include "AspasMolino.h"
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
+#include "EntidadIG.h"
 
 void AspasMolino::giraMolino()
 {
-	aspasNode->roll(Ogre::Degree(-2), Ogre::Node::TS_LOCAL);
+	mNode->roll(Ogre::Degree(-2), Ogre::Node::TS_LOCAL);
 
 	for (int i = 0; i < numAspas; i++) {
 		arrayAspas[i]->roll(Ogre::Degree(-2));
 	}
 }
 
-AspasMolino::AspasMolino(int numA, Ogre::SceneNode* node) : numAspas(numA)
+AspasMolino::AspasMolino(int numA, Ogre::SceneNode* node) : numAspas(numA), EntidadIG(node)
 {
 	arrayAspas = new Aspa * [numAspas];
 
-	aspasNode = node;
-	mSM = aspasNode->getCreator();
-	aspasNode->translate(0,0,150, Ogre::Node::TS_WORLD);
+	mSM = mNode->getCreator();
+	mNode->translate(0,0,150, Ogre::Node::TS_WORLD);
 
-	centroNode = aspasNode->createChildSceneNode("nCentro");
+	centroNode = mNode->createChildSceneNode("nCentro");
 	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
 	centroNode->attachObject(cilindro);
 	centroNode->pitch(Ogre::Degree(90));
@@ -25,21 +27,19 @@ AspasMolino::AspasMolino(int numA, Ogre::SceneNode* node) : numAspas(numA)
 
 	for (int i = 0; i < numAspas; i++) {
 		Ogre::Degree ang = Ogre::Degree(360.0 / numAspas * i);
-		Ogre::SceneNode* aspaNode = aspasNode->createChildSceneNode("nAspa" + std::to_string(i));
-		arrayAspas[i] = new Aspa(aspaNode, mSM, i, ang);
+		Ogre::SceneNode* aspaNode = mNode->createChildSceneNode("nAspa" + std::to_string(i));
+		arrayAspas[i] = new Aspa(aspaNode, i, ang);
 	}
 
 }
 
-AspasMolino::AspasMolino(int numA,int numHelice, Ogre::SceneNode* node) : numAspas(numA)
+AspasMolino::AspasMolino(int numA,int numHelice, Ogre::SceneNode* node) : numAspas(numA), EntidadIG(node)
 {
 	arrayAspas = new Aspa * [numAspas];
 
-	aspasNode = node;
-	mSM = aspasNode->getCreator();
-	aspasNode->translate(0, 0, 150, Ogre::Node::TS_WORLD);
+	mNode->translate(0, 0, 150, Ogre::Node::TS_WORLD);
 
-	centroNode = aspasNode->createChildSceneNode("nCentro" + std::to_string(numHelice));
+	centroNode = mNode->createChildSceneNode("nCentro" + std::to_string(numHelice));
 	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
 	centroNode->attachObject(cilindro);
 	centroNode->pitch(Ogre::Degree(90));
@@ -49,8 +49,8 @@ AspasMolino::AspasMolino(int numA,int numHelice, Ogre::SceneNode* node) : numAsp
 
 	for (int i = 0; i < numAspas; i++) {
 		Ogre::Degree ang = Ogre::Degree(360.0 / numAspas * i);
-		Ogre::SceneNode* aspaNode = aspasNode->createChildSceneNode("nAspa" + std::to_string(offset+i));
-		arrayAspas[i] = new Aspa(aspaNode, mSM, offset+i, ang);
+		Ogre::SceneNode* aspaNode = mNode->createChildSceneNode("nAspa" + std::to_string(offset+i));
+		arrayAspas[i] = new Aspa(aspaNode, offset+i, ang);
 	}
 
 }
@@ -67,9 +67,9 @@ AspasMolino::~AspasMolino()
 void AspasMolino::orbitaMolino()
 {
 	//el truco
-	aspasNode->translate(0, 0, -150, Ogre::Node::TS_LOCAL);
-	aspasNode->yaw(Ogre::Degree(-3), Ogre::Node::TS_PARENT);
-	aspasNode->translate(0, 0, 150, Ogre::Node::TS_LOCAL);
+	mNode->translate(0, 0, -150, Ogre::Node::TS_LOCAL);
+	mNode->yaw(Ogre::Degree(-3), Ogre::Node::TS_PARENT);
+	mNode->translate(0, 0, 150, Ogre::Node::TS_LOCAL);
 
 }
 
@@ -83,4 +83,10 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 
 	return true;
+}
+
+void AspasMolino::frameRendered(const Ogre::FrameEvent& evt)
+{
+	/*Ogre::Real time = evt.timeSinceLastFrame;*/
+	giraMolino();
 }

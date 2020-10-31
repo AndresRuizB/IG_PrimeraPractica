@@ -1,13 +1,9 @@
 #pragma once
-#include "IG2ApplicationContext.h"
-#include <OgreSceneNode.h>
 #include "AspasMolino.h"
 
-class Avion : public OgreBites::InputListener
+class Avion : public EntidadIG
 {
 private:
-	Ogre::SceneNode* mNode;
-	Ogre::SceneManager* mSM;
 
 	Ogre::SceneNode* cuerpoNode;
 	Ogre::SceneNode* alaINode;

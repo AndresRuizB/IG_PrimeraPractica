@@ -1,9 +1,10 @@
 #include "Avion.h"
+#include "EntidadIG.h"
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
 
-Avion::Avion(Ogre::SceneNode* node)
+Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 {
-    mNode = node;
-    mSM = mNode->getCreator();
 
 	cuerpoNode = mNode->createChildSceneNode("nCuerpo");
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
@@ -35,12 +36,12 @@ Avion::Avion(Ogre::SceneNode* node)
 	pilotoNode->yaw(Ogre::Degree(180));
 
 	Ogre::SceneNode* hN = mNode->createChildSceneNode("nHeliceD");
-	hN->translate(270,0,-100);
+	hN->translate(270,0,-94);
 	hN->setScale(0.25, 0.25, 0.25);
 	heliceDNode = new AspasMolino(5,0,hN);
 
 	hN = mNode->createChildSceneNode("nHeliceI");
-	hN->translate(-270, 0, -100);
+	hN->translate(-270, 0, -94);
 	hN->setScale(0.25, 0.25, 0.25);
 	heliceINode = new AspasMolino(5,1,hN);
 

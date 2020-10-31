@@ -38,7 +38,6 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			mLunaNode->yaw(Ogre::Degree(6));
 			mLunaNode->translate(-150, 0, 0, Ogre::Node::TS_LOCAL);
 		}
-
 	}
 
 
@@ -71,6 +70,7 @@ void IG2App::shutdown()
 	//delete aspasMolino; aspasMolino = nullptr;
 	delete molino; molino = nullptr;
 	delete avion; avion = nullptr;
+	delete plano; plano = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -128,7 +128,7 @@ void IG2App::setupScene(void)
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0.5, 0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0.5, -1.0, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
 
 	//------------------------------------------------------------------------
@@ -325,6 +325,21 @@ void IG2App::setupScene(void)
 		addInputListener(avion);
 
 	}
+	//------------------------------------------------------------------------
+
+	//PRACTICA 1.3 ----------------------------------------------------------------------
+
+	else if (mSceneIndex == 9) {
+		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+		molino = new Molino(nodoMolino);
+		addInputListener(molino);
+		EntidadIG::addListener(molino);
+
+		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
+		plano = new Plano(planoNode);
+		EntidadIG::addListener(plano);
+	}
+
 	//------------------------------------------------------------------------
 
 	mCamMgr = new OgreBites::CameraMan(mCamNode);
