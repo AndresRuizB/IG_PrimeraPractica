@@ -1,14 +1,10 @@
 #pragma once
-#include "IG2ApplicationContext.h"
-#include <OgreSceneManager.h>
-#include <OgreSceneNode.h>
-#include <OgreEntity.h>
+#include "EntidadIG.h"
 #include "Aspa.h"
 
-class AspasMolino : public OgreBites::InputListener
+class AspasMolino : public EntidadIG
 {
 private:
-	Ogre::SceneNode* aspasNode;
 	Ogre::SceneNode* cilindroCentral;
 	Aspa** arrayAspas;
 	int numAspas;
@@ -17,11 +13,11 @@ private:
 	void mueveCentro();
 
 public:
-	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM);
-	AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM, int index);
+	AspasMolino(int numA, Ogre::SceneNode* parent);
+	AspasMolino(int numA, Ogre::SceneNode* parent,  int index);
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 
-
+	virtual void frameRendered(const Ogre::FrameEvent& evt);
 	void giraMolino();
 };
 

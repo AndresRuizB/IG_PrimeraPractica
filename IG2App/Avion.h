@@ -1,12 +1,11 @@
 #pragma once
-#include "IG2ApplicationContext.h"
-#include <OgreSceneNode.h>
 #include "AspasMolino.h"
-class Avion :public OgreBites::InputListener
+#include "EntidadIG.h"
+
+class Avion :public EntidadIG
 {
 private:
-	Ogre::SceneNode* mNode = nullptr;
-	Ogre::SceneManager* mSM_ = nullptr;
+
 
 	Ogre::SceneNode* cuerpoNode = nullptr;
 	Ogre::SceneNode* alaINode = nullptr;
@@ -20,9 +19,10 @@ private:
 	AspasMolino* heliceDerNode = nullptr;
 public:
 
-	Avion(Ogre::SceneNode* parent, Ogre::SceneManager* msm);
+	Avion(Ogre::SceneNode* parent);
 	~Avion();
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual void frameRendered(const Ogre::FrameEvent& evt);
 };
 

@@ -1,4 +1,7 @@
 #include "Molino.h"
+#include <OgreSceneManager.h>
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
 
 void Molino::orbitaAspas()
 {
@@ -9,8 +12,8 @@ void Molino::orbitaAspas()
 	auxNode->yaw(Ogre::Degree(1));
 }
 
-Molino::Molino(Ogre::SceneManager* mSM) {
-	mNode = mSM->getRootSceneNode()->createChildSceneNode("nMolino");	
+Molino::Molino(Ogre::SceneNode* parent):EntidadIG(parent) {
+	mNode = parent->createChildSceneNode("nMolino");	
 
 	Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
 	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
@@ -29,7 +32,7 @@ Molino::Molino(Ogre::SceneManager* mSM) {
 	aspasNode->setPosition(0, 0, 140);
 
 	//aspasNode = mNode->createChildSceneNode("nAspasMolino");
-	aspas = new AspasMolino(9, aspasNode, mSM);
+	aspas = new AspasMolino(9, aspasNode);
 	//aspasNode->setPosition(0, 190, 140);
 }
 

@@ -35,7 +35,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			mTierraNode->yaw(Ogre::Degree(-2), Ogre::Node::TS_WORLD);
 			mTierraNode->translate(300, 0, 0, Ogre::Node::TS_LOCAL);
 		}
-		if(mSceneIndex == 8){
+		if (mSceneIndex == 8) {
 			mLunaNode->translate(-250, 0, 0, Ogre::Node::TS_LOCAL);
 			mLunaNode->yaw(Ogre::Degree(5), Ogre::Node::TS_WORLD);
 			mLunaNode->translate(250, 0, 0, Ogre::Node::TS_LOCAL);
@@ -126,7 +126,7 @@ void IG2App::setupScene(void)
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0, -0.5, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0, -1, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
 
 	//------------------------------------------------------------------------
@@ -250,7 +250,7 @@ void IG2App::setupScene(void)
 		addInputListener(aspasMolino);*/
 	}
 	else if (mSceneIndex == 5) {
-		Molino* a = new Molino(mSM);
+		Molino* a = new Molino(mSM->getRootSceneNode());
 		addInputListener(a);
 	}
 	else if (mSceneIndex == 6) {
@@ -306,27 +306,71 @@ void IG2App::setupScene(void)
 	}
 	else if (mSceneIndex == 8) {
 
-	Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
-	mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSolNode");
-	mSolNode->attachObject(sphere);
+		Ogre::Entity* sphere = mSM->createEntity("sphere.mesh");
+		mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSolNode");
+		mSolNode->attachObject(sphere);
 
-	sphere = mSM->createEntity("sphere.mesh");
-	mTierraNode = mSolNode->createChildSceneNode("nTierraNode");
-	mTierraNode->attachObject(sphere);
+		sphere = mSM->createEntity("sphere.mesh");
+		mTierraNode = mSolNode->createChildSceneNode("nTierraNode");
+		mTierraNode->attachObject(sphere);
 
-	mTierraNode->translate(300, 0, 0);
-	mTierraNode->setScale(0.5, 0.5, 0.5);
+		mTierraNode->translate(300, 0, 0);
+		mTierraNode->setScale(0.5, 0.5, 0.5);
 
-	sphere = mSM->createEntity("sphere.mesh");
-	mLunaNode = mTierraNode->createChildSceneNode("nLunaNode");
-	mLunaNode->attachObject(sphere);
+		sphere = mSM->createEntity("sphere.mesh");
+		mLunaNode = mTierraNode->createChildSceneNode("nLunaNode");
+		mLunaNode->attachObject(sphere);
 
-	mLunaNode->translate(250, 0, 0);
-	mLunaNode->setScale(0.2, 0.2, 0.2);
+		mLunaNode->translate(250, 0, 0);
+		mLunaNode->setScale(0.2, 0.2, 0.2);
 	}
 	else if (mSceneIndex == 9) {
-	Avion* a = new Avion(mSM->getRootSceneNode(), mSM);
-	addInputListener(a);
+		Avion* a = new Avion(mSM->getRootSceneNode());
+		addInputListener(a);
+	}
+	else if (mSceneIndex == 10) {
+
+		MeshManager::getSingleton().createPlane("mPlane1080x800",
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0),
+			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+		Ogre::SceneNode* planoGranNode = mSM->getRootSceneNode()->createChildSceneNode("nPlanoGran");
+		planoGrande = new Plano(planoGranNode);
+		EntidadIG::addListener(planoGrande);
+
+		Ogre::SceneNode* planoMolinoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlanoMol");
+		planoMol = new Plano(planoMolinoNode);
+		EntidadIG::addListener(planoMol);
+		planoMolinoNode->setScale(0.3, 0.3, 0.3);
+		planoMolinoNode->translate(400, 20, -300);
+
+		Ogre::SceneNode* molinoEscena = mSM->getRootSceneNode()->createChildSceneNode("nMolinoescena");
+		Molino* mol = new Molino(molinoEscena);
+		addInputListener(mol);
+		molinoEscena->translate(400, 150, -300);
+		molinoEscena->setScale(0.9, 0.9, 0.9);
+
+		Ogre::SceneNode* avionEscena = mSM->getRootSceneNode()->createChildSceneNode("nAvionescena");
+		Avion* av = new Avion(avionEscena);
+		addInputListener(av);
+		avionEscena->translate(300, 800, -200);
+		avionEscena->setScale(0.5, 0.5, 0.5);
+
+		Ogre::SceneNode* planoSimNode = mSM->getRootSceneNode()->createChildSceneNode("nPlanoSim");
+		planoSim = new Plano(planoSimNode);
+		EntidadIG::addListener(planoSim);
+		planoSimNode->setScale(0.3, 0.3, 0.3);
+		planoSimNode->translate(-400, 20, 300);
+
+		Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+		mSinbadNode->attachObject(ent);
+		mSinbadNode->setScale(18, 18, 18);
+		mSinbadNode->translate(-400, 90, 300);
+
+
+
 	}
 
 	//------------------------------------------------------------------------

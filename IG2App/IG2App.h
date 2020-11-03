@@ -9,6 +9,7 @@
 #include "AspasMolino.h"
 #include "Molino.h"
 #include "Avion.h"
+#include "Plano.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -57,7 +58,9 @@ protected:
   Ogre::SceneNode* mTierraNode = nullptr;
   Ogre::SceneNode* mLunaNode = nullptr;
 
-  int mSceneIndex = 9;
+  Plano* planoGrande = nullptr, *planoMol = nullptr, * planoSim = nullptr;
+
+  int mSceneIndex = 10;
 
 };
 

@@ -1,16 +1,18 @@
 #include "Aspa.h"
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
 
-Aspa::Aspa(Ogre::SceneNode* parentNode, Ogre::SceneManager* mSM, int index, Ogre::Degree ang) :mSM_(mSM)
+Aspa::Aspa(Ogre::SceneNode* parentNode, int index, Ogre::Degree ang) :EntidadIG(parentNode)
 {
-	aspaNode = parentNode->createChildSceneNode("nAspa" + std::to_string(index));
+	mNode = parentNode->createChildSceneNode(/*"nAspa" + std::to_string(index)*/);
 
-	tableroNode = aspaNode->createChildSceneNode("nTablero" + std::to_string(index));
+	tableroNode = mNode->createChildSceneNode(/*"nTablero" + std::to_string(index)*/);
 	Ogre::Entity* cubo = mSM->createEntity("cube.mesh");
 	tableroNode->attachObject(cubo);
 	tableroNode->setScale(3, 0.6, 0.25);
 	tableroNode->setPosition(130, 0, 0);
 
-	cilindroNode = aspaNode->createChildSceneNode("nAdorno" + std::to_string(index));
+	cilindroNode = mNode->createChildSceneNode(/*"nAdorno" + std::to_string(index)*/);
 	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
 	cilindroNode->attachObject(cilindro);
 	cilindroNode->setScale(7, 12, 7);
@@ -18,7 +20,7 @@ Aspa::Aspa(Ogre::SceneNode* parentNode, Ogre::SceneManager* mSM, int index, Ogre
 
 	cilindroNode->roll(-ang);
 
-	aspaNode->roll(ang);
+	mNode->roll(ang);
 }
 
 void Aspa::roll(Ogre::Degree a){

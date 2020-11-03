@@ -1,8 +1,10 @@
 #include "AspasMolino.h"
+#include <OgreSceneNode.h>
+#include <OgreEntity.h>
 
 void AspasMolino::giraMolino()
 {
-	aspasNode->roll(Ogre::Degree(2));
+	mNode->roll(Ogre::Degree(2));
 
 	for (int i = 0; i < numAspas; i++) {
 
@@ -15,15 +17,15 @@ void AspasMolino::mueveCentro()
 	cilindroCentral->translate(0,0,-1);
 }
 
-AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM) :numAspas(numA)
+AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent) :numAspas(numA), EntidadIG(parent)
 {
 	arrayAspas = new Aspa * [numA];
 
-	aspasNode = parent->createChildSceneNode("nAspas");
+	mNode = parent->createChildSceneNode("nAspas");
 
 	for (int i = 0; i < numA; i++) {
 		Ogre::Degree ang = Ogre::Degree(360.0 / numA * i);
-		arrayAspas[i] = new Aspa(aspasNode, mSM, i, ang);
+		arrayAspas[i] = new Aspa(mNode, i, ang);
 	}
 
 	cilindroCentral = parent->createChildSceneNode("nCilindroCentral");
@@ -35,15 +37,15 @@ AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* 
 
 }
 
-AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, Ogre::SceneManager* mSM, int index)
+AspasMolino::AspasMolino(int numA, Ogre::SceneNode* parent, int index): numAspas(numA), EntidadIG(parent)
 {
 	arrayAspas = new Aspa * [numA];
 
-	aspasNode = parent->createChildSceneNode("nAspas" + index);
+	mNode = parent->createChildSceneNode(/*"nAspas" + index*/);
 
 	for (int i = 0; i < numA; i++) {
 		Ogre::Degree ang = Ogre::Degree(360.0 / numA * i);
-		arrayAspas[i] = new Aspa(aspasNode, mSM, i+index*numA, ang);
+		arrayAspas[i] = new Aspa(mNode, i+index*numA, ang);
 	}
 
 	cilindroCentral = parent->createChildSceneNode("nCilindroCentral"+index);
@@ -66,4 +68,10 @@ bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 
 	return false;
+}
+
+void AspasMolino::frameRendered(const Ogre::FrameEvent& evt)
+{
+	/*Ogre::Real time = evt.timeSinceLastFrame;*/
+	giraMolino();
 }
