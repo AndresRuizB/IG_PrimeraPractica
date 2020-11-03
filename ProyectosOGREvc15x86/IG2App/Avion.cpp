@@ -6,7 +6,7 @@
 Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 {
 
-	cuerpoNode = mNode->createChildSceneNode("nCuerpo");
+	cuerpoNode = mNode->createChildSceneNode("nCuerpoAvion");
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
 	cuerpoNode->attachObject(e);
 	cuerpoNode->setScale(1.4, 1.4, 1.4);
@@ -30,7 +30,7 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 	frenteNode->setScale(15, 5, 15);
 	frenteNode->translate(0, 0, 150);
 
-	pilotoNode = mNode->createChildSceneNode("nPoloto");
+	pilotoNode = mNode->createChildSceneNode("nPiloto");
 	e = mSM->createEntity("ninja.mesh");
 	pilotoNode->attachObject(e);
 	pilotoNode->yaw(Ogre::Degree(180));
@@ -55,4 +55,10 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 
 	return true;
+}
+
+void Avion::frameRendered(const Ogre::FrameEvent& evt)
+{
+	heliceDNode->frameRendered(evt);
+	heliceINode->frameRendered(evt);
 }

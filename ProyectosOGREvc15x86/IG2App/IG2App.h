@@ -57,8 +57,10 @@ protected:
   Molino* molino = nullptr;
   Avion* avion = nullptr;
   Plano* plano = nullptr;
+  Plano* plano2 = nullptr;
+  Plano* plano3 = nullptr;
 
-  int mSceneIndex = 9;
+  int mSceneIndex = 10;
 
 };
 

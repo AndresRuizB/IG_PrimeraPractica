@@ -13,7 +13,7 @@ private:
 public:
 	AspasMolino(int numA, Ogre::SceneNode* node);
 	/*Constructora para el avion*/
-	AspasMolino(int numA,int numHelice, Ogre::SceneNode* node);
+	AspasMolino(int numA,int numAspasScene, Ogre::SceneNode* node);
 	~AspasMolino();
 	void orbitaMolino();
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);

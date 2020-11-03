@@ -12,7 +12,7 @@ Molino::Molino(Ogre::SceneNode* node) : EntidadIG(node)
 	techoNode->attachObject(e);
 	techoNode->setScale(1.3, 1.3, 1.3);
 	techoNode->translate(0, 50, 0);
-	cuerpoNode = mNode->createChildSceneNode("nCuerpo");
+	cuerpoNode = mNode->createChildSceneNode("nCuerpoMolino");
 	e = mSM->createEntity("Barrel.mesh");
 	cuerpoNode->attachObject(e);
 	cuerpoNode->setScale(55, 60, 55);
@@ -22,7 +22,7 @@ Molino::Molino(Ogre::SceneNode* node) : EntidadIG(node)
 
 	//Ogre::SceneNode* aspasNode = ficticioNode->createChildSceneNode("nAspas");
 	Ogre::SceneNode* aspasNode = mNode->createChildSceneNode("nAspas");
-	aspas = new AspasMolino(6,aspasNode);
+	aspas = new AspasMolino(6,2,aspasNode);
 }
 
 bool Molino::keyPressed(const OgreBites::KeyboardEvent& evt)

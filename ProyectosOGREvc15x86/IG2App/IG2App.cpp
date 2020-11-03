@@ -71,6 +71,8 @@ void IG2App::shutdown()
 	delete molino; molino = nullptr;
 	delete avion; avion = nullptr;
 	delete plano; plano = nullptr;
+	delete plano2; plano2 = nullptr;
+	delete plano3; plano3 = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -335,9 +337,58 @@ void IG2App::setupScene(void)
 		addInputListener(molino);
 		EntidadIG::addListener(molino);
 
+		MeshManager::getSingleton().createPlane("mPlane1080x800",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
 		plano = new Plano(planoNode);
 		EntidadIG::addListener(plano);
+
+		planoNode->translate(0, -200, 0);
+	}
+	else if (mSceneIndex == 10) {
+
+		Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+		mSinbadNode->attachObject(ent);
+		mSinbadNode->setScale(15, 15, 15);
+		mSinbadNode->translate(-350, -120, 230);
+
+		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
+		avion = new Avion(nodoAvion);
+		addInputListener(avion);
+		EntidadIG::addListener(avion);
+		nodoAvion->setScale(0.4, 0.4, 0.4);
+		nodoAvion->translate(0, 300, 200);
+
+		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+		molino = new Molino(nodoMolino);
+		addInputListener(molino);
+		EntidadIG::addListener(molino);
+
+		MeshManager::getSingleton().createPlane("mPlane1080x800",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
+		plano = new Plano(planoNode);
+		EntidadIG::addListener(plano);
+		planoNode->translate(0, -220, 0);
+
+		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
+		plano2 = new Plano(plano2Node);
+		EntidadIG::addListener(plano2);
+		plano2Node->setScale(0.4, 1, 0.4);
+		plano2Node->translate(-330, -210, 240);
+
+		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
+		plano3 = new Plano(plano3Node);
+		EntidadIG::addListener(plano3);
+		plano3Node->setScale(0.4, 1, 0.4);
+		plano3Node->translate(330, -210, -240);
 	}
 
 	//------------------------------------------------------------------------
