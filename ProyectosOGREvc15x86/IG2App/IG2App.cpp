@@ -361,7 +361,7 @@ void IG2App::setupScene(void)
 		addInputListener(avion);
 		EntidadIG::addListener(avion);
 		nodoAvion->setScale(0.4, 0.4, 0.4);
-		nodoAvion->translate(0, 300, 200);
+		nodoAvion->translate(200, 500, 50);
 
 		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
 		molino = new Molino(nodoMolino);
@@ -388,7 +388,7 @@ void IG2App::setupScene(void)
 		plano3 = new Plano(plano3Node);
 		EntidadIG::addListener(plano3);
 		plano3Node->setScale(0.4, 1, 0.4);
-		plano3Node->translate(330, -210, -240);
+		plano3Node->translate(330, -210, -300);
 	}
 
 	//------------------------------------------------------------------------

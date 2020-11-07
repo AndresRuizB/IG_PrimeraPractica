@@ -45,6 +45,15 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 	hN->setScale(0.25, 0.25, 0.25);
 	heliceINode = new AspasMolino(5,1,hN);
 
+	Ogre::Light* luz = mSM->createLight("LuzAvion");
+	luz->setType(Ogre::Light::LT_SPOTLIGHT);
+	luz->setDiffuseColour(0.75, 0.75, 0.75);
+
+	mLightNode = mNode->createChildSceneNode("nLuzAvion");
+	mLightNode->attachObject(luz);
+
+	mLightNode->setDirection(Ogre::Vector3(0, -1.0, 0));  //vec3.normalise();
+
 }
 
 bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -61,4 +70,7 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 {
 	heliceDNode->frameRendered(evt);
 	heliceINode->frameRendered(evt);
+
+	mNode->translate(0, 0, 10, Ogre::Node::TS_LOCAL);
+	mNode->yaw(Ogre::Degree(-2), Ogre::Node::TS_WORLD);
 }

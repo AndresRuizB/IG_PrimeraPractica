@@ -10,6 +10,7 @@ private:
 	Ogre::SceneNode* alaDNode;
 	Ogre::SceneNode* frenteNode;
 	Ogre::SceneNode* pilotoNode;
+	Ogre::SceneNode* mLightNode;
 	AspasMolino* heliceINode;
 	AspasMolino* heliceDNode;
 
