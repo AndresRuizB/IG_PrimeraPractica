@@ -16,6 +16,7 @@ public:
 	AspasMolino(int numA,int numAspasScene, Ogre::SceneNode* node);
 	~AspasMolino();
 	void orbitaMolino();
+	void ocultaAdornos();
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 };

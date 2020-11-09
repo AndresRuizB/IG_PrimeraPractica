@@ -1,7 +1,7 @@
 #pragma once
 #include "IG2ApplicationContext.h"
 
-enum MessageType { };
+enum MessageType { EventoR };
 
 class EntidadIG : public OgreBites::InputListener {
 public:

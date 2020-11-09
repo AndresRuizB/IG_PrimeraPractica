@@ -73,6 +73,7 @@ void IG2App::shutdown()
 	delete plano; plano = nullptr;
 	delete plano2; plano2 = nullptr;
 	delete plano3; plano3 = nullptr;
+	delete simbad; simbad = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -130,9 +131,9 @@ void IG2App::setupScene(void)
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0.5, -1.0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0.0, -1.0, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
-
+	mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	//------------------------------------------------------------------------
 
 	// finally something to render
@@ -348,20 +349,23 @@ void IG2App::setupScene(void)
 
 		planoNode->translate(0, -200, 0);
 	}
+
+	//PRACTICA 1.4 ----------------------------------------------------------------------
+
 	else if (mSceneIndex == 10) {
 
-		Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
+
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-		mSinbadNode->attachObject(ent);
 		mSinbadNode->setScale(15, 15, 15);
-		mSinbadNode->translate(-350, -120, 230);
+		mSinbadNode->translate(-350, -135, 230);
+		simbad = new Simbad(mSinbadNode);
 
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
 		addInputListener(avion);
 		EntidadIG::addListener(avion);
-		nodoAvion->setScale(0.4, 0.4, 0.4);
-		nodoAvion->translate(0, 300, 200);
+		nodoAvion->setScale(0.3, 0.3, 0.3);
+		nodoAvion->translate(-300, 500, 0);
 
 		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
 		molino = new Molino(nodoMolino);
@@ -374,21 +378,26 @@ void IG2App::setupScene(void)
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode);
+		plano = new Plano(planoNode,1);
 		EntidadIG::addListener(plano);
 		planoNode->translate(0, -220, 0);
 
 		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-		plano2 = new Plano(plano2Node);
-		EntidadIG::addListener(plano2);
+		plano2 = new Plano(plano2Node,2);
 		plano2Node->setScale(0.4, 1, 0.4);
 		plano2Node->translate(-330, -210, 240);
 
 		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
-		plano3 = new Plano(plano3Node);
-		EntidadIG::addListener(plano3);
+		plano3 = new Plano(plano3Node,3);
 		plano3Node->setScale(0.4, 1, 0.4);
 		plano3Node->translate(330, -210, -240);
+
+		Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("nCabeza");
+		cabezaNode->setScale(0.4, 0.4, 0.4);
+		cabezaNode->translate(500, -170, -150);
+		Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
+		ent->setMaterialName("Practica1/cabeza");
+		cabezaNode->attachObject(ent);
 	}
 
 	//------------------------------------------------------------------------
