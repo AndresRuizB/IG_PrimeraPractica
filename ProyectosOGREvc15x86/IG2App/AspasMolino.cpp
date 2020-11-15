@@ -41,6 +41,7 @@ AspasMolino::AspasMolino(int numA,int numAspasScene, Ogre::SceneNode* node) : nu
 
 	centroNode = mNode->createChildSceneNode("nCentro" + std::to_string(numAspasScene));
 	Ogre::Entity* cilindro = mSM->createEntity("Barrel.mesh");
+	cilindro->setMaterialName("centroAspas");	
 	centroNode->attachObject(cilindro);
 	centroNode->pitch(Ogre::Degree(90));
 	centroNode->setScale(18, 10, 18);
@@ -71,6 +72,13 @@ void AspasMolino::orbitaMolino()
 	mNode->yaw(Ogre::Degree(-3), Ogre::Node::TS_PARENT);
 	mNode->translate(0, 0, 150, Ogre::Node::TS_LOCAL);
 
+}
+
+void AspasMolino::ocultaAdornos()
+{
+	for (int i = 0; i < numAspas; i++) {
+		arrayAspas[i]->ocultaAdorno();
+	}
 }
 
 bool AspasMolino::keyPressed(const OgreBites::KeyboardEvent& evt)

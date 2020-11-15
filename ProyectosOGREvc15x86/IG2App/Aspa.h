@@ -10,5 +10,6 @@ public:
 	Aspa(Ogre::SceneNode* node, int index, Ogre::Degree ang);
 	~Aspa() {};
 	void roll(Ogre::Degree a);
+	void ocultaAdorno();
 };
 

@@ -6,6 +6,7 @@
 #include <OgreMeshManager.h>
 #include <string>
 
+
 using namespace Ogre;
 
 bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -121,6 +122,9 @@ void IG2App::setupScene(void)
 	//------------------------------------------------------------------------
 
 	// without light we would just get a black screen 
+
+	mSM->setShadowTechnique(
+		Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
 	Light* luz = mSM->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);
@@ -350,11 +354,8 @@ void IG2App::setupScene(void)
 	}
 	else if (mSceneIndex == 10) {
 
-		Ogre::Entity* ent = mSM->createEntity("Sinbad.mesh");
-		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-		mSinbadNode->attachObject(ent);
-		mSinbadNode->setScale(15, 15, 15);
-		mSinbadNode->translate(-350, -120, 230);
+		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSimbad");
+		Simbad simbad(mSinbadNode);
 
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
@@ -374,21 +375,29 @@ void IG2App::setupScene(void)
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode);
+		plano = new Plano(planoNode, "planoAgua");
 		EntidadIG::addListener(plano);
 		planoNode->translate(0, -220, 0);
 
 		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-		plano2 = new Plano(plano2Node);
+		plano2 = new Plano(plano2Node, "planoRojo");
 		EntidadIG::addListener(plano2);
 		plano2Node->setScale(0.4, 1, 0.4);
 		plano2Node->translate(-330, -210, 240);
 
 		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
-		plano3 = new Plano(plano3Node);
+		plano3 = new Plano(plano3Node, "planoNaranja");
 		EntidadIG::addListener(plano3);
 		plano3Node->setScale(0.4, 1, 0.4);
 		plano3Node->translate(330, -210, -300);
+
+		Ogre::Entity* cabezaEntity = mSM->createEntity("sphere.mesh");
+		cabezaEntity = mSM->createEntity("sphere.mesh");
+		Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("cabezaMiraTodo");
+		cabezaEntity->setMaterialName("cabeza");
+		cabezaNode->attachObject(cabezaEntity);
+		cabezaNode->translate(500, -160, -140);
+		cabezaNode->setScale(0.5, 0.5, 0.5);
 	}
 
 	//------------------------------------------------------------------------

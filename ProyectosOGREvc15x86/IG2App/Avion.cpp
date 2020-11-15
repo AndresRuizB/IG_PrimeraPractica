@@ -8,23 +8,27 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 
 	cuerpoNode = mNode->createChildSceneNode("nCuerpoAvion");
 	Ogre::Entity* e = mSM->createEntity("sphere.mesh");
+	e->setMaterialName("cuerpoAvion");
 	cuerpoNode->attachObject(e);
 	cuerpoNode->setScale(1.4, 1.4, 1.4);
 
 	alaDNode = mNode->createChildSceneNode("nAlaD");
 	e = mSM->createEntity("cube.mesh");
+	e->setMaterialName("alas");
 	alaDNode->attachObject(e);
 	alaDNode->setScale(2.8, 0.2, 1);
 	alaDNode->translate(270, 0, 0);
 
 	alaINode = mNode->createChildSceneNode("nAlaI");
 	e = mSM->createEntity("cube.mesh");
+	e->setMaterialName("alas");
 	alaINode->attachObject(e);
 	alaINode->setScale(2.8, 0.2, 1);
 	alaINode->translate(-270, 0, 0);
 
 	frenteNode = mNode->createChildSceneNode("nFrente");
 	e = mSM->createEntity("Barrel.mesh");
+	e->setMaterialName("narizAvion");
 	frenteNode->attachObject(e);
 	frenteNode->pitch(Ogre::Degree(90));
 	frenteNode->setScale(15, 5, 15);
@@ -32,25 +36,26 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 
 	pilotoNode = mNode->createChildSceneNode("nPiloto");
 	e = mSM->createEntity("ninja.mesh");
+	e->setMaterialName("piloto");
 	pilotoNode->attachObject(e);
 	pilotoNode->yaw(Ogre::Degree(180));
 
 	Ogre::SceneNode* hN = mNode->createChildSceneNode("nHeliceD");
-	hN->translate(270,0,-94);
+	hN->translate(270, 0, -94);
 	hN->setScale(0.25, 0.25, 0.25);
-	heliceDNode = new AspasMolino(5,0,hN);
+	heliceDNode = new AspasMolino(5, 0, hN);
 
 	hN = mNode->createChildSceneNode("nHeliceI");
 	hN->translate(-270, 0, -94);
 	hN->setScale(0.25, 0.25, 0.25);
-	heliceINode = new AspasMolino(5,1,hN);
+	heliceINode = new AspasMolino(5, 1, hN);
 
-	Ogre::Light* luz = mSM->createLight("LuzAvion");
-	luz->setType(Ogre::Light::LT_SPOTLIGHT);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	luzAvion = mSM->createLight("LuzAvion");
+	luzAvion->setType(Ogre::Light::LT_SPOTLIGHT);
+	luzAvion->setDiffuseColour(0.75, 0.75, 0.75);
 
 	mLightNode = mNode->createChildSceneNode("nLuzAvion");
-	mLightNode->attachObject(luz);
+	mLightNode->attachObject(luzAvion);
 
 	mLightNode->setDirection(Ogre::Vector3(0, -1.0, 0));  //vec3.normalise();
 
@@ -62,6 +67,9 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 		heliceDNode->keyPressed(evt);
 		heliceINode->keyPressed(evt);
 	}
+	else if (evt.keysym.sym == SDLK_r) {
+		sendEvent(R_KEY, this);
+	}
 
 	return true;
 }
@@ -71,6 +79,23 @@ void Avion::frameRendered(const Ogre::FrameEvent& evt)
 	heliceDNode->frameRendered(evt);
 	heliceINode->frameRendered(evt);
 
-	mNode->translate(0, 0, 10, Ogre::Node::TS_LOCAL);
-	mNode->yaw(Ogre::Degree(-2), Ogre::Node::TS_WORLD);
+	if (!rWasPressed) {
+		mNode->translate(0, 0, 10, Ogre::Node::TS_LOCAL);
+		mNode->yaw(Ogre::Degree(-2), Ogre::Node::TS_WORLD);
+	}
+
+}
+
+void Avion::receiveEvent(MessageType msgType, EntidadIG* entidad)
+{
+	switch (msgType)
+	{
+	case R_KEY:
+		mLightNode->setVisible(false);
+		rWasPressed = true;
+		break;
+	default:
+		break;
+	}
+
 }

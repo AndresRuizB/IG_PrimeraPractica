@@ -9,6 +9,7 @@
 #include "Molino.h"
 #include "Avion.h"
 #include "Plano.h"
+#include "Simbad.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {

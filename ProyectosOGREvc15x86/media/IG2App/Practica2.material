@@ -1,0 +1,140 @@
+material techoMolino{
+    technique{
+        pass{
+        diffuse 0.9 0.9 0.1
+        }
+    }
+}
+
+material techoMolinoAlt{
+    technique{
+        pass{
+        diffuse 0.9 0.1 0.05
+        }
+    }
+}
+
+material cuerpoMolino{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture floor_ao.PNG
+            }
+        }
+    }
+}
+
+
+material centroAspas{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture BumpyMetal.jpg
+            }
+        }
+    }
+}
+
+material tablones{
+    technique{
+        pass{
+            diffuse 0.5 0.2 0.0
+        }
+    }
+}
+
+material adornos{
+    technique{
+        pass{
+            diffuse 0.0 0.9 0.9
+        }
+    }
+}
+
+material cuerpoAvion{
+    technique{
+        pass{
+            diffuse 0.9 0.1 0.0
+        }
+    }
+}
+
+material alas{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture checker.png
+            }
+        }
+    }
+}
+
+material piloto{
+    technique{
+        pass{
+            diffuse 0.9 0.9 0.1
+        }
+    }
+}
+
+material narizAvion{
+    technique{
+        pass{
+            diffuse 0.9 0.6 0.0
+        }
+    }
+}
+
+material planoNaranja{
+    technique{
+        pass{
+            diffuse 0.95 0.45 0.05
+        }
+    }
+}
+
+material planoRojo{
+    technique{
+        pass{
+            diffuse 0.9 0.1 0.05
+        }
+    }
+}
+
+material planoAgua{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture Water02.jpg
+                scroll_anim -0.1 0.0
+            }
+        }
+    }
+}
+
+material piedrasRio{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture BeachStones.jpg
+            }
+        }
+    }
+}
+
+material cabeza{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture spotlight_image.png
+                env_map spherical
+            }
+        }
+    }
+}

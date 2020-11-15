@@ -1,7 +1,9 @@
 #pragma once
 #include "IG2ApplicationContext.h"
+#include <OgreEntity.h>
+#include <OgreSceneNode.h>
 
-enum MessageType { };
+enum MessageType { R_KEY };
 
 class EntidadIG : public OgreBites::InputListener {
 public:

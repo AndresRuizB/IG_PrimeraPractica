@@ -13,7 +13,9 @@ private:
 	Ogre::SceneNode* mLightNode;
 	AspasMolino* heliceINode;
 	AspasMolino* heliceDNode;
+	Ogre::Light* luzAvion = nullptr;
 
+	bool rWasPressed = false;
 
 public:
 	Avion(Ogre::SceneNode* node);
@@ -21,5 +23,7 @@ public:
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
+
+	virtual void receiveEvent(MessageType msgType, EntidadIG* entidad);
 };
 

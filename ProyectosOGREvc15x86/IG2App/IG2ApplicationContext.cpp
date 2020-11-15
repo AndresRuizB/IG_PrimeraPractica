@@ -108,7 +108,7 @@ namespace OgreBites {
 
 	void IG2ApplicationContext::setup()
 	{
-		/*mRoot->showConfigDialog(OgreBites::getNativeConfigDialog());*/
+		//mRoot->showConfigDialog(OgreBites::getNativeConfigDialog());
 		mRoot->initialise(false);
 		createWindow(mAppName);
 		setWindowGrab(false);   // IG2: ratón libre
