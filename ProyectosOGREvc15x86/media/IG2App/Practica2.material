@@ -138,3 +138,14 @@ material cabeza{
         }
     }
 }
+
+material boya{
+    technique{
+        pass{
+            diffuse 1.0 1.0 1.0
+            texture_unit{
+                texture checker.png
+            }
+        }
+    }
+}

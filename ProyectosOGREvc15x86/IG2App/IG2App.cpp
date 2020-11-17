@@ -18,7 +18,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_g) {
 		if (mSceneIndex == 3) giraMolino();
-		else if(mSceneIndex == 6) mClockComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 6) mClockComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
 		if (mSceneIndex == 6) {
@@ -26,8 +26,8 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			mSecondsSpikeNode->translate(-80, 0, 0, Ogre::Node::TS_LOCAL);
 			mSecondsSpikeNode->roll(Ogre::Degree(-1), Ogre::Node::TS_PARENT);
 			mSecondsSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
-		} 
-			
+		}
+
 	}
 	else if (evt.keysym.sym == SDLK_j) {
 		if (mSceneIndex == 7) {
@@ -97,6 +97,7 @@ void IG2App::setup(void)
 
 	addInputListener(this);
 	setupScene();
+
 }
 
 void IG2App::setupScene(void)
@@ -281,8 +282,8 @@ void IG2App::setupScene(void)
 			double ang = (2 * Ogre::Math::PI / 12) * i;
 
 			Ogre::SceneNode* mHN = mSM->getSceneNode("nHora" + std::to_string(i));
-			mHN->setPosition(Ogre::Math::Cos(ang)* radio, Ogre::Math::Sin(ang)* radio, 0);
-			mHN->setScale(0.3,0.3,0.3);
+			mHN->setPosition(Ogre::Math::Cos(ang) * radio, Ogre::Math::Sin(ang) * radio, 0);
+			mHN->setScale(0.3, 0.3, 0.3);
 		}
 
 		mSpikesComplete = mClockComplete->createChildSceneNode("nClockComplete");
@@ -296,7 +297,7 @@ void IG2App::setupScene(void)
 		Ogre::Entity* minutes = mSM->createEntity("cube.mesh");
 		mMinutesSpikeNode = mSpikesComplete->createChildSceneNode("nMinutesSpike");
 		mMinutesSpikeNode->attachObject(minutes);
-		mMinutesSpikeNode->roll(Ogre::Degree(90),Ogre::Node::TS_WORLD);
+		mMinutesSpikeNode->roll(Ogre::Degree(90), Ogre::Node::TS_WORLD);
 		mMinutesSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
 		mMinutesSpikeNode->setScale(2.5, 0.2, 0.2);
 
@@ -304,9 +305,9 @@ void IG2App::setupScene(void)
 		mSecondsSpikeNode = mSpikesComplete->createChildSceneNode("nSecondsSpike");
 		mSecondsSpikeNode->attachObject(seconds);
 		mSecondsSpikeNode->roll(Ogre::Degree(225), Ogre::Node::TS_WORLD);
-		mSecondsSpikeNode->translate(80,0,0,Ogre::Node::TS_LOCAL);
+		mSecondsSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
 		mSecondsSpikeNode->setScale(2.5, 0.1, 0.1);
-}
+	}
 	else if (mSceneIndex == 7) {
 		Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
 		mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSol");
@@ -315,7 +316,7 @@ void IG2App::setupScene(void)
 		ent = mSM->createEntity("sphere.mesh");
 		mTierraNode = mSM->getRootSceneNode()->createChildSceneNode("nTierra");
 		mTierraNode->attachObject(ent);
-		mTierraNode->translate(0,0,200, Ogre::Node::TS_LOCAL);
+		mTierraNode->translate(0, 0, 200, Ogre::Node::TS_LOCAL);
 		mTierraNode->setScale(0.5, 0.5, 0.5);
 
 		ent = mSM->createEntity("sphere.mesh");
@@ -325,7 +326,7 @@ void IG2App::setupScene(void)
 		mLunaNode->setScale(0.3, 0.3, 0.3);
 	}
 	else if (mSceneIndex == 8) {
-		
+
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
 		addInputListener(avion);
@@ -342,9 +343,9 @@ void IG2App::setupScene(void)
 		EntidadIG::addListener(molino);
 
 		MeshManager::getSingleton().createPlane("mPlane1080x800",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Plane(Vector3::UNIT_Y, 0),
-		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0),
+			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
 		plano = new Plano(planoNode);
@@ -355,7 +356,15 @@ void IG2App::setupScene(void)
 	else if (mSceneIndex == 10) {
 
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSimbad");
-		Simbad simbad(mSinbadNode);
+		simbad = new Simbad(mSinbadNode);
+		addInputListener(simbad);
+		EntidadIG::addListener(simbad);
+
+
+		/*Ogre::SceneNode* mBoyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+		Boya* boya = new Boya(mBoyaNode);
+		addInputListener(boya);
+		EntidadIG::addListener(boya);*/
 
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
@@ -370,9 +379,9 @@ void IG2App::setupScene(void)
 		EntidadIG::addListener(molino);
 
 		MeshManager::getSingleton().createPlane("mPlane1080x800",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Plane(Vector3::UNIT_Y, 0),
-		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0),
+			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
 		plano = new Plano(planoNode, "planoAgua");
@@ -383,13 +392,13 @@ void IG2App::setupScene(void)
 		plano2 = new Plano(plano2Node, "planoRojo");
 		EntidadIG::addListener(plano2);
 		plano2Node->setScale(0.4, 1, 0.4);
-		plano2Node->translate(-330, -210, 240);
+		plano2Node->translate(-330, -219, 240);
 
 		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
 		plano3 = new Plano(plano3Node, "planoNaranja");
 		EntidadIG::addListener(plano3);
 		plano3Node->setScale(0.4, 1, 0.4);
-		plano3Node->translate(330, -210, -300);
+		plano3Node->translate(330, -219, -300);
 
 		Ogre::Entity* cabezaEntity = mSM->createEntity("sphere.mesh");
 		cabezaEntity = mSM->createEntity("sphere.mesh");

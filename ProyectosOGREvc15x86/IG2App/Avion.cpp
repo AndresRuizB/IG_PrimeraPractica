@@ -70,6 +70,14 @@ bool Avion::keyPressed(const OgreBites::KeyboardEvent& evt)
 	else if (evt.keysym.sym == SDLK_r) {
 		sendEvent(R_KEY, this);
 	}
+	else if (evt.keysym.sym == SDLK_c) {
+
+		sendEvent(C_KEY, this);
+	}
+	else if (evt.keysym.sym == SDLK_e) {
+
+		sendEvent(E_KEY, this);
+	}
 
 	return true;
 }

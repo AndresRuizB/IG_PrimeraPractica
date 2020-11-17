@@ -3,7 +3,7 @@
 #include <OgreEntity.h>
 #include <OgreSceneNode.h>
 
-enum MessageType { R_KEY };
+enum MessageType { R_KEY , C_KEY, E_KEY};
 
 class EntidadIG : public OgreBites::InputListener {
 public:
