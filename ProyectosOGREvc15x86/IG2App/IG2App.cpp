@@ -359,7 +359,7 @@ void IG2App::setupScene(void)
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
 		mSinbadNode->setScale(15, 15, 15);
 		mSinbadNode->translate(-350, -140, 230);
-		mSinbadNode->yaw(Ogre::Degree(135));
+		//mSinbadNode->yaw(Ogre::Degree(135));
 		simbad = new Simbad(mSinbadNode);
 		addInputListener(simbad);
 

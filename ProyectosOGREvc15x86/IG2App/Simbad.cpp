@@ -4,19 +4,8 @@
 #include <OgreAnimation.h>
 #include <OgreKeyFrame.h>
 
-Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
+void Simbad::createAnimWalk()
 {
-	alternateAnimation = true;
-	alternateSword = true;
-	walking = false;
-
-	simbadEntity = mSM->createEntity("Sinbad.mesh");
-	swordEntity = mSM->createEntity("Sword.mesh");
-	mNode->attachObject(simbadEntity);
-	simbadEntity->attachObjectToBone("Handle.R", swordEntity);
-
-	mNode->setInitialState();
-
 	Ogre::Real duracion = 12;
 	Ogre::Animation* animation = mSM->createAnimation("simbadWalk", duracion);
 	Ogre::NodeAnimationTrack* track = animation->createNodeTrack(0);
@@ -33,7 +22,7 @@ Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
 	kf->setTranslate(keyframePos); // Origen: Vector3
 
 	kf = track->createNodeKeyFrame(durPaso * 2); // Keyframe 1: abajo
-	keyframePos += Ogre::Vector3(350,0,-230);
+	keyframePos += Ogre::Vector3(350, 0, -230);
 	kf->setTranslate(keyframePos); // Abajo
 	kf->setRotation(src.getRotationTo(Ogre::Vector3(1, 0, 0))); // Yaw(45)
 
@@ -50,7 +39,22 @@ Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
 	kf = track->createNodeKeyFrame(durPaso * 6); // Keyframe 3: origen
 	kf->setTranslate(keyframePos); // Origen
 	kf->setRotation(src.getRotationTo(Ogre::Vector3(1, 0, 0))); // Yaw(180)
+}
 
+Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
+{
+	alternateAnimation = true;
+	alternateSword = true;
+	walking = false;
+
+	simbadEntity = mSM->createEntity("Sinbad.mesh");
+	swordEntity = mSM->createEntity("Sword.mesh");
+	mNode->attachObject(simbadEntity);
+	simbadEntity->attachObjectToBone("Handle.R", swordEntity);
+
+	mNode->setInitialState();
+
+	createAnimWalk();
 
 	animationStateDance = simbadEntity->getAnimationState("Dance");
 	animationStateRunT = simbadEntity->getAnimationState("RunTop");
@@ -75,6 +79,10 @@ bool Simbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 		animationStateDance->setEnabled(alternateAnimation);
 		animationStateRunT->setEnabled(!alternateAnimation);
 		animationStateRunB->setEnabled(!alternateAnimation);
+
+		animationStateDance->setTimePosition(0);
+		animationStateRunT->setTimePosition(0);
+		animationStateRunB->setTimePosition(0);
 	}
 	else if (evt.keysym.sym == SDLK_e) {
 		alternateSword = !alternateSword;

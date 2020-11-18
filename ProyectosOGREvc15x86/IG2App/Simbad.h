@@ -12,6 +12,8 @@ private:
 	bool alternateAnimation;
 	bool alternateSword;
 	bool walking;
+
+	void createAnimWalk();
 public:
 	Simbad(Ogre::SceneNode* node);
 	~Simbad() {};
