@@ -74,6 +74,7 @@ void IG2App::shutdown()
 	delete plano2; plano2 = nullptr;
 	delete plano3; plano3 = nullptr;
 	delete simbad; simbad = nullptr;
+	delete boya; boya = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -357,8 +358,10 @@ void IG2App::setupScene(void)
 
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
 		mSinbadNode->setScale(15, 15, 15);
-		mSinbadNode->translate(-350, -135, 230);
+		mSinbadNode->translate(-350, -140, 230);
+		mSinbadNode->yaw(Ogre::Degree(135));
 		simbad = new Simbad(mSinbadNode);
+		addInputListener(simbad);
 
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
@@ -384,8 +387,8 @@ void IG2App::setupScene(void)
 
 		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
 		plano2 = new Plano(plano2Node,2);
-		plano2Node->setScale(0.4, 1, 0.4);
-		plano2Node->translate(-330, -210, 240);
+		plano2Node->setScale(0.35, 1, 0.4);
+		plano2Node->translate(-350, -215, 240);
 
 		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
 		plano3 = new Plano(plano3Node,3);
@@ -398,6 +401,13 @@ void IG2App::setupScene(void)
 		Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
 		ent->setMaterialName("Practica1/cabeza");
 		cabezaNode->attachObject(ent);
+
+		//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+		//boyaNode->setScale(35, 35, 35);
+		//boyaNode->translate(0, -220, 0);
+		//boya = new Boya(boyaNode);
+		//addInputListener(boya);
+
 	}
 
 	//------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "Avion.h"
 #include "Plano.h"
 #include "Simbad.h"
+#include "Boya.h"
 
 class IG2App : public  OgreBites::IG2ApplicationContext, OgreBites::InputListener 
 {
@@ -61,6 +62,7 @@ protected:
   Plano* plano2 = nullptr;
   Plano* plano3 = nullptr;
   Simbad* simbad = nullptr;
+  Boya* boya = nullptr;
 
   int mSceneIndex = 10;
 
