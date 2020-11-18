@@ -14,6 +14,10 @@ private:
 	AspasMolino* heliceINode;
 	AspasMolino* heliceDNode;
 
+	Ogre::BillboardSet* cartel;
+	Ogre::ParticleSystem* humo;
+	Ogre::ParticleSystem* estela;
+
 	bool avionMov;
 	Ogre::Light* luzFoco;
 

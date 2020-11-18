@@ -41,11 +41,26 @@ void Simbad::createAnimWalk()
 	kf->setRotation(src.getRotationTo(Ogre::Vector3(1, 0, 0))); // Yaw(180)
 }
 
+void Simbad::die()
+{
+	dead = true;
+	walking = false;
+	animationStateDance->setEnabled(false);
+	animationStateRunT->setEnabled(false);
+	animationStateRunB->setEnabled(false);
+	animationStateWalk->setEnabled(false);
+	animationStateIdleT->setEnabled(true);
+
+	mNode->pitch(Ogre::Degree(-90));
+	mNode->translate(0, -65, 0);
+}
+
 Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
 {
 	alternateAnimation = true;
 	alternateSword = true;
 	walking = false;
+	dead = false;
 
 	simbadEntity = mSM->createEntity("Sinbad.mesh");
 	swordEntity = mSM->createEntity("Sword.mesh");
@@ -59,17 +74,34 @@ Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
 	animationStateDance = simbadEntity->getAnimationState("Dance");
 	animationStateRunT = simbadEntity->getAnimationState("RunTop");
 	animationStateRunB = simbadEntity->getAnimationState("RunBase");
+	animationStateIdleT = simbadEntity->getAnimationState("IdleTop");
 	animationStateWalk = mSM->createAnimationState("simbadWalk");
 
 	animationStateDance->setEnabled(true);
 	animationStateRunT->setEnabled(false);
 	animationStateRunB->setEnabled(false);
+	animationStateIdleT->setEnabled(false);
 	animationStateWalk->setEnabled(false);
 
 	animationStateDance->setLoop(true);
 	animationStateRunT->setLoop(true);
 	animationStateRunB->setLoop(true);
+	animationStateIdleT->setLoop(true);
 	animationStateWalk->setLoop(true);
+}
+
+void Simbad::receiveEvent(MessageType msgType, EntidadIG* entidad)
+{
+	switch (msgType)
+	{
+	case EventoR:
+	{
+		if(!dead) die();
+	}
+	break;
+	default:
+		break;
+	}
 }
 
 bool Simbad::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -92,9 +124,11 @@ bool Simbad::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_w) {
 		walking = !walking;
+		if (walking && dead) dead = false;
 		simbadEntity->detachObjectFromBone(swordEntity);
 		simbadEntity->attachObjectToBone("Handle.R", swordEntity);
 		animationStateDance->setEnabled(!walking);
+		animationStateIdleT->setEnabled(!walking);
 		animationStateRunB->setEnabled(walking);
 		animationStateRunT->setEnabled(walking);
 		animationStateWalk->setEnabled(walking);
@@ -107,5 +141,6 @@ void Simbad::frameRendered(const Ogre::FrameEvent& evt)
 	animationStateDance->addTime(evt.timeSinceLastFrame);
 	animationStateRunT->addTime(evt.timeSinceLastFrame);
 	animationStateRunB->addTime(evt.timeSinceLastFrame);
+	animationStateIdleT->addTime(evt.timeSinceLastFrame);
 	if (walking) animationStateWalk->addTime(evt.timeSinceLastFrame);
 }

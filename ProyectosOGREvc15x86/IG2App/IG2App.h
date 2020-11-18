@@ -64,7 +64,7 @@ protected:
   Simbad* simbad = nullptr;
   Boya* boya = nullptr;
 
-  int mSceneIndex = 10;
+  int mSceneIndex = 11;
 
 };
 

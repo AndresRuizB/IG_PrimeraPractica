@@ -313,7 +313,7 @@ void IG2App::setupScene(void)
 		ent = mSM->createEntity("sphere.mesh");
 		mTierraNode = mSM->getRootSceneNode()->createChildSceneNode("nTierra");
 		mTierraNode->attachObject(ent);
-		mTierraNode->translate(0,0,200, Ogre::Node::TS_LOCAL);
+		mTierraNode->translate(0, 0, 200, Ogre::Node::TS_LOCAL);
 		mTierraNode->setScale(0.5, 0.5, 0.5);
 
 		ent = mSM->createEntity("sphere.mesh");
@@ -323,10 +323,10 @@ void IG2App::setupScene(void)
 		mLunaNode->setScale(0.3, 0.3, 0.3);
 	}
 	else if (mSceneIndex == 8) {
-		
-		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
-		avion = new Avion(nodoAvion);
-		addInputListener(avion);
+
+	Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
+	avion = new Avion(nodoAvion);
+	addInputListener(avion);
 
 	}
 	//------------------------------------------------------------------------
@@ -334,21 +334,21 @@ void IG2App::setupScene(void)
 	//PRACTICA 1.3 ----------------------------------------------------------------------
 
 	else if (mSceneIndex == 9) {
-		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
-		molino = new Molino(nodoMolino);
-		addInputListener(molino);
-		EntidadIG::addListener(molino);
+	Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+	molino = new Molino(nodoMolino);
+	addInputListener(molino);
+	EntidadIG::addListener(molino);
 
-		MeshManager::getSingleton().createPlane("mPlane1080x800",
+	MeshManager::getSingleton().createPlane("mPlane1080x800",
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
-		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode);
-		EntidadIG::addListener(plano);
+	Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
+	plano = new Plano(planoNode);
+	EntidadIG::addListener(plano);
 
-		planoNode->translate(0, -200, 0);
+	planoNode->translate(0, -200, 0);
 	}
 
 	//PRACTICA 1.4 ----------------------------------------------------------------------
@@ -356,58 +356,117 @@ void IG2App::setupScene(void)
 	else if (mSceneIndex == 10) {
 
 
-		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
-		mSinbadNode->setScale(15, 15, 15);
-		mSinbadNode->translate(-350, -140, 230);
-		//mSinbadNode->yaw(Ogre::Degree(135));
-		simbad = new Simbad(mSinbadNode);
-		addInputListener(simbad);
+	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+	mSinbadNode->setScale(15, 15, 15);
+	mSinbadNode->translate(-350, -140, 230);
+	mSinbadNode->yaw(Ogre::Degree(135));
+	simbad = new Simbad(mSinbadNode);
+	addInputListener(simbad);
 
-		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
-		avion = new Avion(nodoAvion);
-		addInputListener(avion);
-		EntidadIG::addListener(avion);
-		nodoAvion->setScale(0.3, 0.3, 0.3);
-		nodoAvion->translate(-300, 500, 0);
+	Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
+	avion = new Avion(nodoAvion);
+	addInputListener(avion);
+	EntidadIG::addListener(avion);
+	nodoAvion->setScale(0.3, 0.3, 0.3);
+	nodoAvion->translate(-300, 500, 0);
 
-		Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
-		molino = new Molino(nodoMolino);
-		addInputListener(molino);
-		EntidadIG::addListener(molino);
+	Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+	molino = new Molino(nodoMolino);
+	addInputListener(molino);
+	EntidadIG::addListener(molino);
 
-		MeshManager::getSingleton().createPlane("mPlane1080x800",
+	MeshManager::getSingleton().createPlane("mPlane1080x800",
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
-		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode,1);
-		EntidadIG::addListener(plano);
-		planoNode->translate(0, -220, 0);
+	Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
+	plano = new Plano(planoNode, 1);
+	EntidadIG::addListener(plano);
+	planoNode->translate(0, -220, 0);
 
-		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-		plano2 = new Plano(plano2Node,2);
-		plano2Node->setScale(0.35, 1, 0.4);
-		plano2Node->translate(-350, -215, 240);
+	Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
+	plano2 = new Plano(plano2Node, 2);
+	plano2Node->setScale(0.35, 1, 0.4);
+	plano2Node->translate(-350, -215, 240);
 
-		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
-		plano3 = new Plano(plano3Node,3);
-		plano3Node->setScale(0.4, 1, 0.4);
-		plano3Node->translate(330, -210, -240);
+	Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
+	plano3 = new Plano(plano3Node, 3);
+	plano3Node->setScale(0.4, 1, 0.4);
+	plano3Node->translate(330, -210, -240);
 
-		Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("nCabeza");
-		cabezaNode->setScale(0.4, 0.4, 0.4);
-		cabezaNode->translate(500, -170, -150);
-		Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
-		ent->setMaterialName("Practica1/cabeza");
-		cabezaNode->attachObject(ent);
+	Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("nCabeza");
+	cabezaNode->setScale(0.4, 0.4, 0.4);
+	cabezaNode->translate(500, -170, -150);
+	Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
+	ent->setMaterialName("Practica1/cabeza");
+	cabezaNode->attachObject(ent);
 
-		//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
-		//boyaNode->setScale(35, 35, 35);
-		//boyaNode->translate(0, -220, 0);
-		//boya = new Boya(boyaNode);
-		//addInputListener(boya);
+	//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+	//boyaNode->setScale(35, 35, 35);
+	//boyaNode->translate(0, -220, 0);
+	//boya = new Boya(boyaNode);
+	//addInputListener(boya);
 
+	}
+
+	//PRACTICA 2.0
+
+	else if(mSceneIndex == 11){
+
+	mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
+	mSinbadNode->setScale(15, 15, 15);
+	mSinbadNode->translate(-350, -140, 230);
+	mSinbadNode->yaw(Ogre::Degree(135));
+	simbad = new Simbad(mSinbadNode);
+	addInputListener(simbad);
+	EntidadIG::addListener(simbad);
+
+	Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
+	avion = new Avion(nodoAvion);
+	addInputListener(avion);
+	EntidadIG::addListener(avion);
+	nodoAvion->setScale(0.3, 0.3, 0.3);
+	nodoAvion->translate(-300, 500, 0);
+
+	Ogre::SceneNode* nodoMolino = mSM->getRootSceneNode()->createChildSceneNode("nMolino");
+	molino = new Molino(nodoMolino);
+	addInputListener(molino);
+	EntidadIG::addListener(molino);
+
+	MeshManager::getSingleton().createPlane("mPlane1080x800",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		Plane(Vector3::UNIT_Y, 0),
+		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+
+	Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
+	plano = new Plano(planoNode, 1);
+	EntidadIG::addListener(plano);
+	planoNode->translate(0, -220, 0);
+
+	Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
+	plano2 = new Plano(plano2Node, 2);
+	plano2Node->setScale(0.35, 1, 0.4);
+	plano2Node->translate(-350, -215, 240);
+
+	Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
+	plano3 = new Plano(plano3Node, 3);
+	plano3Node->setScale(0.4, 1, 0.4);
+	plano3Node->translate(330, -210, -240);
+
+	Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("nCabeza");
+	cabezaNode->setScale(0.4, 0.4, 0.4);
+	cabezaNode->translate(500, -170, -150);
+	Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
+	ent->setMaterialName("Practica1/cabeza");
+	cabezaNode->attachObject(ent);
+
+	//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+	//boyaNode->setScale(35, 35, 35);
+	//boyaNode->translate(0, -220, 0);
+	//boya = new Boya(boyaNode);
+	//addInputListener(boya);
+	
 	}
 
 	//------------------------------------------------------------------------
