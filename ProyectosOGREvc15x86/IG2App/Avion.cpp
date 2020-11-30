@@ -2,8 +2,6 @@
 #include "EntidadIG.h"
 #include <OgreSceneNode.h>
 #include <OgreEntity.h>
-#include <OgreBillboardSet.h>
-#include <OgreParticleSystem.h>
 
 Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 {
@@ -20,30 +18,6 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 	luzFoco->setSpotlightOuterAngle(Ogre::Degree(45.0f));
 	luzFoco->setSpotlightFalloff(0.0f);
 	lightNode->attachObject(luzFoco);
-	//-----------------------------------------------------------------------
-
-	//CARTEL
-	Ogre::SceneNode* cartelNode = mNode->createChildSceneNode();
-	cartel = mSM->createBillboardSet("cartelBS", 1);
-	cartel->setDefaultDimensions(200,100);
-	cartel->setMaterialName("IG2App/Cartel");
-	cartelNode->attachObject(cartel);
-	cartelNode->translate(0, 0, -300,Ogre::Node::TS_PARENT);
-	cartel->createBillboard(Ogre::Vector3(0,0,0));
-	//-----------------------------------------------------------------------
-
-	//ESTELA
-	Ogre::SceneNode* estelaNode = mNode->createChildSceneNode();
-	estela = mSM->createParticleSystem("psTrail", "IG2App/SmokeTrail");
-	estela->setEmitting(true);
-	estelaNode->attachObject(estela);
-	//-----------------------------------------------------------------------
-
-	//EXPLOSION
-	Ogre::SceneNode* humoNode = mNode->createChildSceneNode();
-	humo = mSM->createParticleSystem("psSmoke", "IG2App/Explosion");
-	humo->setEmitting(false);
-	humoNode->attachObject(humo);
 	//-----------------------------------------------------------------------
 
 	cuerpoNode = mNode->createChildSceneNode("nCuerpoAvion");
@@ -99,12 +73,7 @@ void Avion::receiveEvent(MessageType msgType, EntidadIG* entidad)
 	case EventoR: 
 	{
 		luzFoco->setVisible(false);
-		estela->setEmitting(false);
 		avionMov = false;
-
-		mNode->setVisible(false);
-		humo->setVisible(true);
-		humo->setEmitting(true);
 	}
 		break;
 	default:
