@@ -28,6 +28,8 @@ protected:
   virtual void shutdown();
   virtual void setupScene();
 
+  virtual void windowResized(Ogre::RenderWindow* rw);
+
   virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);  // InputListener
   
   virtual void giraMolino();

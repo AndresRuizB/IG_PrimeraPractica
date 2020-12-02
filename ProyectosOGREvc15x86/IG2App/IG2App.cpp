@@ -5,6 +5,12 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 #include <string>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+#include <OgrePrerequisites.h>
+#include <OgreSharedPtr.h>
+#include <OgreTexture.h>
+#include <OgreHardwarePixelBuffer.h>
 
 using namespace Ogre;
 
@@ -67,14 +73,14 @@ void IG2App::shutdown()
 
 	delete mTrayMgr;  mTrayMgr = nullptr;
 	delete mCamMgr; mCamMgr = nullptr;
-	//delete aspasMolino; aspasMolino = nullptr;
-	delete molino; molino = nullptr;
-	delete avion; avion = nullptr;
-	delete plano; plano = nullptr;
-	delete plano2; plano2 = nullptr;
-	delete plano3; plano3 = nullptr;
-	delete simbad; simbad = nullptr;
-	delete boya; boya = nullptr;
+	////delete aspasMolino; aspasMolino = nullptr;
+	//delete molino; molino = nullptr;
+	//delete avion; avion = nullptr;
+	//delete plano; plano = nullptr;
+	//delete plano2; plano2 = nullptr;
+	//delete plano3; plano3 = nullptr;
+	//delete simbad; simbad = nullptr;
+	//delete boya; boya = nullptr;
 
 	// do not forget to call the base 
 	IG2ApplicationContext::shutdown();
@@ -109,17 +115,8 @@ void IG2App::setupScene(void)
 	cam->setAutoAspectRatio(true);
 	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
-	//para el reflejo
-	camRef = mSM->createCamera("CamRef");
-	camRef->setNearClipDistance(1);
-	camRef->setFarClipDistance(10000);
-	camRef->setAutoAspectRatio(true);
-
-
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
-
-	mCamNode->attachObject(camRef);
 
 	mCamNode->setPosition(0, 0, 1000);
 	mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
@@ -396,19 +393,31 @@ void IG2App::setupScene(void)
 			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode, 1);
+		plano = new Plano(planoNode);
 		EntidadIG::addListener(plano);
 		planoNode->translate(0, -220, 0);
 
-		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-		plano2 = new Plano(plano2Node, 2);
-		plano2Node->setScale(0.35, 1, 0.4);
-		plano2Node->translate(-350, -215, 240);
+		camRef = mSM->createCamera("RefCam");
+		camRef->setNearClipDistance(1);
+		camRef->setFarClipDistance(10000);
+		camRef->setAutoAspectRatio(true);
 
-		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
-		plano3 = new Plano(plano3Node, 3);
-		plano3Node->setScale(0.4, 1, 0.4);
-		plano3Node->translate(330, -210, -240);
+		mCamNode->attachObject(camRef);
+		//---------------------------------------------------------------------------
+		Ogre::TexturePtr rttRef = TextureManager::getSingleton().createManual(
+			"rttReflejo", // name ejemplo -> (*)
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			TEX_TYPE_2D,
+			(Real)mWindow.render->getViewport(0)->getActualWidth(), // widht ejemplo
+			(Real)cam->getViewport()->getActualHeight(), // height ejemplo
+			0, PF_R8G8B8, TU_RENDERTARGET);
+
+		RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
+		Viewport* vpt = renderTexture->addViewport(camRef); // ocupando toda
+		vpt->setClearEveryFrame(true); // la textura
+		vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+
+		plano->setCameraReflejo(camRef);
 
 		Ogre::SceneNode* cabezaNode = mSM->getRootSceneNode()->createChildSceneNode("nCabeza");
 		cabezaNode->setScale(0.4, 0.4, 0.4);
@@ -425,24 +434,6 @@ void IG2App::setupScene(void)
 
 		//mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200), "Practica2/space", 1, 1, true, 0.0, 10, 10);
 
-		MovablePlane* mpRef = new MovablePlane(Plane(Vector3::UNIT_Y, 0));
-		planoNode->attachObject(mpRef);
-
-		camRef->enableReflection(mpRef);
-		camRef->enableCustomNearClipPlane(mpRef);
-
-		TexturePtr rttRef = TextureManager::getSingleton().createManual(
-			"rttRelejo",
-			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-			TEX_TYPE_2D,
-			720,
-			480,
-			0, PF_R8G8B8, TU_RENDERTARGET
-		);
-
-		RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
-		Ogre::Viewport* vpt = renderTexture->addViewPort();
-
 	}
 
 	//------------------------------------------------------------------------
@@ -455,6 +446,29 @@ void IG2App::setupScene(void)
 	//mCamMgr->setYawPitchDist(Radian(0), Degree(30), 100);
 
 	//------------------------------------------------------------------------
+
+}
+
+void IG2App::windowResized(Ogre::RenderWindow* rw)
+{
+	TextureManager::getSingleton().remove(TextureManager::getSingleton().getByName("rttReflejo"));	;
+
+	Ogre::TexturePtr rttRef = TextureManager::getSingleton().createManual(
+		"rttReflejo", // name ejemplo -> (*)
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		TEX_TYPE_2D,
+		(Real)rw->getViewport(0)->getWidth(), // widht ejemplo
+		(Real)rw->getViewport(0)->getHeight(), // height ejemplo
+		0, PF_R8G8B8, TU_RENDERTARGET);
+
+
+	RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
+	renderTexture->removeAllViewports();
+	Viewport* vpt = renderTexture->addViewport(camRef); // ocupando toda
+	vpt->setClearEveryFrame(true); // la textura
+
+	plano->deatach();
+	plano->setCameraReflejo(camRef);
 
 }
 

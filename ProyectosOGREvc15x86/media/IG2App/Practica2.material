@@ -50,3 +50,29 @@ material Practica2/space
         }
 	}
 }
+
+
+material Practica2/reflejo
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+			ambient 1.0 1.0 1.0
+			diffuse 1.0 1.0 1.0
+			texture_unit
+				{
+				texture BeachStones.jpg
+				}
+			texture_unit
+				{
+				texture Water02.jpg
+				scroll_anim 0.1 0.0
+				color_op modulate
+				}
+		}
+	}
+}
