@@ -59,16 +59,19 @@ Simbad::Simbad(Ogre::SceneNode* node) : EntidadIG(node)
 	animationStateDance = simbadEntity->getAnimationState("Dance");
 	animationStateRunT = simbadEntity->getAnimationState("RunTop");
 	animationStateRunB = simbadEntity->getAnimationState("RunBase");
+	animationStateIdleTop = simbadEntity->getAnimationState("IdleTop");
 	animationStateWalk = mSM->createAnimationState("simbadWalk");
 
 	animationStateDance->setEnabled(true);
 	animationStateRunT->setEnabled(false);
 	animationStateRunB->setEnabled(false);
+	animationStateIdleTop->setEnabled(false);
 	animationStateWalk->setEnabled(false);
 
 	animationStateDance->setLoop(true);
 	animationStateRunT->setLoop(true);
 	animationStateRunB->setLoop(true);
+	animationStateIdleTop->setLoop(true);
 	animationStateWalk->setLoop(true);
 }
 
@@ -107,5 +110,26 @@ void Simbad::frameRendered(const Ogre::FrameEvent& evt)
 	animationStateDance->addTime(evt.timeSinceLastFrame);
 	animationStateRunT->addTime(evt.timeSinceLastFrame);
 	animationStateRunB->addTime(evt.timeSinceLastFrame);
+	animationStateIdleTop->addTime(evt.timeSinceLastFrame);
 	if (walking) animationStateWalk->addTime(evt.timeSinceLastFrame);
+}
+
+void Simbad::receiveEvent(MessageType msgType, EntidadIG* entidad)
+{
+	switch (msgType)
+	{
+	case EventoR:
+	{
+		walking = false; 
+		animationStateWalk->setEnabled(false); 
+		animationStateDance->setEnabled(false);
+		animationStateRunT->setEnabled(false);
+		animationStateRunB->setEnabled(false);
+		animationStateIdleTop->setEnabled(true);
+		mNode->pitch(Ogre::Degree(-90));
+	}
+	break;
+	default:
+		break;
+	}
 }

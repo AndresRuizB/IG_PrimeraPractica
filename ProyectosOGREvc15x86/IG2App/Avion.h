@@ -11,11 +11,15 @@ private:
 	Ogre::SceneNode* alaDNode;
 	Ogre::SceneNode* frenteNode;
 	Ogre::SceneNode* pilotoNode;
+	Ogre::SceneNode* avionNode;
 	AspasMolino* heliceINode;
 	AspasMolino* heliceDNode;
 
+	Ogre::ParticleSystem* pSysExplosion;
+	Ogre::ParticleSystem* pSysEstela;
+
 	bool avionMov;
-	Ogre::Light* luzFoco;
+	//Ogre::Light* luzFoco;
 
 
 public:

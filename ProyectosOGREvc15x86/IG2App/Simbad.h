@@ -9,6 +9,8 @@ private:
 	Ogre::AnimationState* animationStateRunT;
 	Ogre::AnimationState* animationStateRunB;
 	Ogre::AnimationState* animationStateWalk;
+	Ogre::AnimationState* animationStateIdleTop;
+
 	bool alternateAnimation;
 	bool alternateSword;
 	bool walking;
@@ -20,5 +22,6 @@ public:
 
 	virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
+	virtual void receiveEvent(MessageType msgType, EntidadIG* entidad);
 };
 

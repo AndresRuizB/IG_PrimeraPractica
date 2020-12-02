@@ -87,7 +87,7 @@ typedef struct
  *  \sa SDL_SetWindowTitle()
  *  \sa SDL_ShowWindow()
  */
-typedef struct SDL_Window SDL_Window;
+typedef struct SDL_WindowSDL_Window SDL_Window;
 
 /**
  *  \brief The flags on a window

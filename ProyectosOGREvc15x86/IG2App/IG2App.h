@@ -6,6 +6,11 @@
 #include <OgreSceneNode.h>
 #include <OgreTrays.h>
 #include <OgreCameraMan.h>
+#include <OgreMovablePlane.h>
+#include <OgreTexture.h>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+
 #include "Molino.h"
 #include "Avion.h"
 #include "Plano.h"
@@ -63,6 +68,8 @@ protected:
   Plano* plano3 = nullptr;
   Simbad* simbad = nullptr;
   Boya* boya = nullptr;
+
+  Ogre::Camera* camRef = nullptr;
 
   int mSceneIndex = 10;
 

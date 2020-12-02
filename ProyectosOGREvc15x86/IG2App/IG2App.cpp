@@ -17,7 +17,7 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 	}
 	else if (evt.keysym.sym == SDLK_g) {
 		if (mSceneIndex == 3) giraMolino();
-		else if(mSceneIndex == 6) mClockComplete->roll(Ogre::Degree(2));
+		else if (mSceneIndex == 6) mClockComplete->roll(Ogre::Degree(2));
 	}
 	else if (evt.keysym.sym == SDLK_h) {
 		if (mSceneIndex == 6) {
@@ -25,8 +25,8 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			mSecondsSpikeNode->translate(-80, 0, 0, Ogre::Node::TS_LOCAL);
 			mSecondsSpikeNode->roll(Ogre::Degree(-1), Ogre::Node::TS_PARENT);
 			mSecondsSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
-		} 
-			
+		}
+
 	}
 	else if (evt.keysym.sym == SDLK_j) {
 		if (mSceneIndex == 7) {
@@ -109,8 +109,17 @@ void IG2App::setupScene(void)
 	cam->setAutoAspectRatio(true);
 	//cam->setPolygonMode(Ogre::PM_WIREFRAME); 
 
+	//para el reflejo
+	camRef = mSM->createCamera("CamRef");
+	camRef->setNearClipDistance(1);
+	camRef->setFarClipDistance(10000);
+	camRef->setAutoAspectRatio(true);
+
+
 	mCamNode = mSM->getRootSceneNode()->createChildSceneNode("nCam");
 	mCamNode->attachObject(cam);
+
+	mCamNode->attachObject(camRef);
 
 	mCamNode->setPosition(0, 0, 1000);
 	mCamNode->lookAt(Ogre::Vector3(0, 0, 0), Ogre::Node::TS_WORLD);
@@ -118,7 +127,12 @@ void IG2App::setupScene(void)
 
 	// and tell it to render into the main window
 	Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
+
+
+	//vp->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
+	vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+
+	Ogre::RenderWindow* a = getRenderWindow();
 
 	//------------------------------------------------------------------------
 
@@ -126,7 +140,7 @@ void IG2App::setupScene(void)
 
 	Light* luz = mSM->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	luz->setDiffuseColour(1.0, 1.0, 1.0);
 
 	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
@@ -134,7 +148,7 @@ void IG2App::setupScene(void)
 
 	mLightNode->setDirection(Ogre::Vector3(0.0, -1.0, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
-	mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	//mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 	//------------------------------------------------------------------------
 
 	// finally something to render
@@ -279,8 +293,8 @@ void IG2App::setupScene(void)
 			double ang = (2 * Ogre::Math::PI / 12) * i;
 
 			Ogre::SceneNode* mHN = mSM->getSceneNode("nHora" + std::to_string(i));
-			mHN->setPosition(Ogre::Math::Cos(ang)* radio, Ogre::Math::Sin(ang)* radio, 0);
-			mHN->setScale(0.3,0.3,0.3);
+			mHN->setPosition(Ogre::Math::Cos(ang) * radio, Ogre::Math::Sin(ang) * radio, 0);
+			mHN->setScale(0.3, 0.3, 0.3);
 		}
 
 		mSpikesComplete = mClockComplete->createChildSceneNode("nClockComplete");
@@ -294,7 +308,7 @@ void IG2App::setupScene(void)
 		Ogre::Entity* minutes = mSM->createEntity("cube.mesh");
 		mMinutesSpikeNode = mSpikesComplete->createChildSceneNode("nMinutesSpike");
 		mMinutesSpikeNode->attachObject(minutes);
-		mMinutesSpikeNode->roll(Ogre::Degree(90),Ogre::Node::TS_WORLD);
+		mMinutesSpikeNode->roll(Ogre::Degree(90), Ogre::Node::TS_WORLD);
 		mMinutesSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
 		mMinutesSpikeNode->setScale(2.5, 0.2, 0.2);
 
@@ -302,9 +316,9 @@ void IG2App::setupScene(void)
 		mSecondsSpikeNode = mSpikesComplete->createChildSceneNode("nSecondsSpike");
 		mSecondsSpikeNode->attachObject(seconds);
 		mSecondsSpikeNode->roll(Ogre::Degree(225), Ogre::Node::TS_WORLD);
-		mSecondsSpikeNode->translate(80,0,0,Ogre::Node::TS_LOCAL);
+		mSecondsSpikeNode->translate(80, 0, 0, Ogre::Node::TS_LOCAL);
 		mSecondsSpikeNode->setScale(2.5, 0.1, 0.1);
-}
+	}
 	else if (mSceneIndex == 7) {
 		Ogre::Entity* ent = mSM->createEntity("sphere.mesh");
 		mSolNode = mSM->getRootSceneNode()->createChildSceneNode("nSol");
@@ -313,7 +327,7 @@ void IG2App::setupScene(void)
 		ent = mSM->createEntity("sphere.mesh");
 		mTierraNode = mSM->getRootSceneNode()->createChildSceneNode("nTierra");
 		mTierraNode->attachObject(ent);
-		mTierraNode->translate(0,0,200, Ogre::Node::TS_LOCAL);
+		mTierraNode->translate(0, 0, 200, Ogre::Node::TS_LOCAL);
 		mTierraNode->setScale(0.5, 0.5, 0.5);
 
 		ent = mSM->createEntity("sphere.mesh");
@@ -323,7 +337,7 @@ void IG2App::setupScene(void)
 		mLunaNode->setScale(0.3, 0.3, 0.3);
 	}
 	else if (mSceneIndex == 8) {
-		
+
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
 		addInputListener(avion);
@@ -340,9 +354,9 @@ void IG2App::setupScene(void)
 		EntidadIG::addListener(molino);
 
 		MeshManager::getSingleton().createPlane("mPlane1080x800",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Plane(Vector3::UNIT_Y, 0),
-		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0),
+			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
 		plano = new Plano(planoNode);
@@ -359,9 +373,10 @@ void IG2App::setupScene(void)
 		mSinbadNode = mSM->getRootSceneNode()->createChildSceneNode("nSinbad");
 		mSinbadNode->setScale(15, 15, 15);
 		mSinbadNode->translate(-350, -140, 230);
-		//mSinbadNode->yaw(Ogre::Degree(135));
+		mSinbadNode->yaw(Ogre::Degree(135));
 		simbad = new Simbad(mSinbadNode);
 		addInputListener(simbad);
+		EntidadIG::addListener(simbad);
 
 		Ogre::SceneNode* nodoAvion = mSM->getRootSceneNode()->createChildSceneNode("nAvion");
 		avion = new Avion(nodoAvion);
@@ -376,22 +391,22 @@ void IG2App::setupScene(void)
 		EntidadIG::addListener(molino);
 
 		MeshManager::getSingleton().createPlane("mPlane1080x800",
-		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-		Plane(Vector3::UNIT_Y, 0),
-		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			Plane(Vector3::UNIT_Y, 0),
+			1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 		Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-		plano = new Plano(planoNode,1);
+		plano = new Plano(planoNode, 1);
 		EntidadIG::addListener(plano);
 		planoNode->translate(0, -220, 0);
 
 		Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-		plano2 = new Plano(plano2Node,2);
+		plano2 = new Plano(plano2Node, 2);
 		plano2Node->setScale(0.35, 1, 0.4);
 		plano2Node->translate(-350, -215, 240);
 
 		Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
-		plano3 = new Plano(plano3Node,3);
+		plano3 = new Plano(plano3Node, 3);
 		plano3Node->setScale(0.4, 1, 0.4);
 		plano3Node->translate(330, -210, -240);
 
@@ -402,11 +417,31 @@ void IG2App::setupScene(void)
 		ent->setMaterialName("Practica1/cabeza");
 		cabezaNode->attachObject(ent);
 
-		//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
-		//boyaNode->setScale(35, 35, 35);
-		//boyaNode->translate(0, -220, 0);
-		//boya = new Boya(boyaNode);
-		//addInputListener(boya);
+		Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+		boyaNode->setScale(35, 35, 35);
+		boyaNode->translate(0, -220, 0);
+		boya = new Boya(boyaNode);
+		addInputListener(boya);
+
+		//mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200), "Practica2/space", 1, 1, true, 0.0, 10, 10);
+
+		MovablePlane* mpRef = new MovablePlane(Plane(Vector3::UNIT_Y, 0));
+		planoNode->attachObject(mpRef);
+
+		camRef->enableReflection(mpRef);
+		camRef->enableCustomNearClipPlane(mpRef);
+
+		TexturePtr rttRef = TextureManager::getSingleton().createManual(
+			"rttRelejo",
+			ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+			TEX_TYPE_2D,
+			720,
+			480,
+			0, PF_R8G8B8, TU_RENDERTARGET
+		);
+
+		RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
+		Ogre::Viewport* vpt = renderTexture->addViewPort();
 
 	}
 
