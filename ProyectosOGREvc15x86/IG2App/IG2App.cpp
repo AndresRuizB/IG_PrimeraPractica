@@ -5,6 +5,12 @@
 #include <SDL_keycode.h>
 #include <OgreMeshManager.h>
 #include <string>
+#include <OgreTextureManager.h>
+#include <OgreRenderTexture.h>
+#include <OgrePrerequisites.h>
+#include <OgreSharedPtr.h>
+#include <OgreTexture.h>
+#include <OgreHardwarePixelBuffer.h>
 
 using namespace Ogre;
 
@@ -118,7 +124,7 @@ void IG2App::setupScene(void)
 
 	// and tell it to render into the main window
 	Viewport* vp = getRenderWindow()->addViewport(cam);
-	vp->setBackgroundColour(Ogre::ColourValue(0.6, 0.7, 0.8));
+	vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
 
 	//------------------------------------------------------------------------
 
@@ -126,15 +132,19 @@ void IG2App::setupScene(void)
 
 	Light* luz = mSM->createLight("Luz");
 	luz->setType(Ogre::Light::LT_DIRECTIONAL);
-	luz->setDiffuseColour(0.75, 0.75, 0.75);
+	luz->setDiffuseColour(1.0, 1.0, 1.0);
 
 	mLightNode = mSM->getRootSceneNode()->createChildSceneNode("nLuz");
 	//mLightNode = mCamNode->createChildSceneNode("nLuz");
 	mLightNode->attachObject(luz);
 
-	mLightNode->setDirection(Ogre::Vector3(0.0, -1.0, -1));  //vec3.normalise();
+	mLightNode->setDirection(Ogre::Vector3(0.0, -1.0, -1.0));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
-	mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+	//mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+	mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -20), "IG2App/space", 1, 1, true, 1.0, 10, 10);
+	//mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200), "IG2App/space", 1, 1, true, 0.0, 10, 10);
 	//------------------------------------------------------------------------
 
 	// finally something to render
@@ -434,20 +444,46 @@ void IG2App::setupScene(void)
 	addInputListener(molino);
 	EntidadIG::addListener(molino);
 
+	//PLANO---------------------------------------------------------------------------------
+
 	MeshManager::getSingleton().createPlane("mPlane1080x800",
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
 		Plane(Vector3::UNIT_Y, 0),
 		1080, 800, 100, 80, true, 1, 1.0, 1.0, Vector3::UNIT_Z);
 
 	Ogre::SceneNode* planoNode = mSM->getRootSceneNode()->createChildSceneNode("nPlano");
-	plano = new Plano(planoNode, 1);
+	plano = new Plano(planoNode);
 	EntidadIG::addListener(plano);
 	planoNode->translate(0, -220, 0);
+	 //CAMARA
+	Camera* camRef = mSM->createCamera("RefCam");
+	camRef->setNearClipDistance(1);
+	camRef->setFarClipDistance(10000);
+	camRef->setAutoAspectRatio(true);
 
-	Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
-	plano2 = new Plano(plano2Node, 2);
-	plano2Node->setScale(0.35, 1, 0.4);
-	plano2Node->translate(-350, -215, 240);
+	mCamNode->attachObject(camRef);
+	 //---------------------------------------------------------------------------
+	Ogre::TexturePtr rttRef = TextureManager::getSingleton().createManual(
+		"rttReflejo", // name ejemplo -> (*)
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
+		TEX_TYPE_2D,
+		(Real)mWindow.render->getViewport(0)->getActualWidth(), // widht ejemplo
+		(Real)cam->getViewport()->getActualHeight(), // height ejemplo
+		0, PF_R8G8B8, TU_RENDERTARGET);
+
+	RenderTexture* renderTexture = rttRef->getBuffer()->getRenderTarget();
+	Viewport* vpt = renderTexture->addViewport(camRef); // ocupando toda
+	vpt->setClearEveryFrame(true); // la textura
+	vp->setBackgroundColour(Ogre::ColourValue(0.0, 0.0, 0.0));
+
+	plano->setReflejo(camRef);
+
+	//-------------------------------------------------------------------------------
+
+	//Ogre::SceneNode* plano2Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano2");
+	//plano2 = new Plano(plano2Node, 2);
+	//plano2Node->setScale(0.35, 1, 0.4);
+	//plano2Node->translate(-350, -215, 240);
 
 	Ogre::SceneNode* plano3Node = mSM->getRootSceneNode()->createChildSceneNode("nPlano3");
 	plano3 = new Plano(plano3Node, 3);
@@ -461,11 +497,11 @@ void IG2App::setupScene(void)
 	ent->setMaterialName("Practica1/cabeza");
 	cabezaNode->attachObject(ent);
 
-	//Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
-	//boyaNode->setScale(35, 35, 35);
-	//boyaNode->translate(0, -220, 0);
-	//boya = new Boya(boyaNode);
-	//addInputListener(boya);
+	Ogre::SceneNode* boyaNode = mSM->getRootSceneNode()->createChildSceneNode("nBoya");
+	boyaNode->setScale(35, 35, 35);
+	boyaNode->translate(0, -220, 0);
+	boya = new Boya(boyaNode);
+	addInputListener(boya);
 	
 	}
 

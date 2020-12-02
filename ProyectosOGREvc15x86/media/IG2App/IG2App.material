@@ -30,3 +30,55 @@ material IG2App/Smoke
 	}
 }
 
+material IG2App/space
+{
+	technique
+	{
+		pass
+		{
+			ambient 0.0 0.0 0.0
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+			diffuse vertexcolour
+			texture_unit
+				{
+				texture lightMap.jpg
+				tex_coord_set 0
+				}
+			texture_unit
+				{
+				texture spaceSky.jpg
+				tex_coord_set 0
+				rotate_anim 0.025
+				color_op modulate
+				}
+		}
+	}
+}
+
+material IG2App/reflejo
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_write off
+			ambient 1.0 1.0 1.0
+			diffuse 1.0 1.0 1.0
+			texture_unit
+				{
+				texture BeachStones.jpg
+				}
+			texture_unit
+				{
+				texture Water02.jpg
+				scroll_anim 0.1 0.0
+				color_op modulate
+				}
+		}
+	}
+}
+

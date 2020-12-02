@@ -9,17 +9,17 @@ Avion::Avion(Ogre::SceneNode* node) : EntidadIG(node)
 {
 	avionMov = true;
 	//FOCO
-	Ogre::SceneNode* lightNode = mSM->createSceneNode();
-	mNode->addChild(lightNode);
-	luzFoco = mSM->createLight("Luz Foco");
-	luzFoco->setType(Ogre::Light::LT_SPOTLIGHT);
-	luzFoco->
-		setDiffuseColour(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
-	luzFoco->setDirection(Ogre::Vector3(1, -1, 0));
-	luzFoco->setSpotlightInnerAngle(Ogre::Degree(5.0f));
-	luzFoco->setSpotlightOuterAngle(Ogre::Degree(45.0f));
-	luzFoco->setSpotlightFalloff(0.0f);
-	lightNode->attachObject(luzFoco);
+	//Ogre::SceneNode* lightNode = mSM->createSceneNode();
+	//mNode->addChild(lightNode);
+	//luzFoco = mSM->createLight("Luz Foco");
+	//luzFoco->setType(Ogre::Light::LT_SPOTLIGHT);
+	//luzFoco->
+	//	setDiffuseColour(Ogre::ColourValue(1.0f, 1.0f, 1.0f));
+	//luzFoco->setDirection(Ogre::Vector3(1, -1, 0));
+	//luzFoco->setSpotlightInnerAngle(Ogre::Degree(5.0f));
+	//luzFoco->setSpotlightOuterAngle(Ogre::Degree(45.0f));
+	//luzFoco->setSpotlightFalloff(0.0f);
+	//lightNode->attachObject(luzFoco);
 	//-----------------------------------------------------------------------
 
 	//CARTEL
@@ -98,6 +98,7 @@ void Avion::receiveEvent(MessageType msgType, EntidadIG* entidad)
 	{
 	case EventoR: 
 	{
+		if(luzFoco)
 		luzFoco->setVisible(false);
 		estela->setEmitting(false);
 		avionMov = false;
