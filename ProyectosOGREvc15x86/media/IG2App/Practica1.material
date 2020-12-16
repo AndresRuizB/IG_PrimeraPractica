@@ -136,7 +136,7 @@ material Practica1/cabeza
 	technique {
 		pass {
 		diffuse 1.0 1.0 1.0
-			texture_unit {
+			texture_unit {	
 				texture spotlight_image.png
 				env_map spherical
 			}

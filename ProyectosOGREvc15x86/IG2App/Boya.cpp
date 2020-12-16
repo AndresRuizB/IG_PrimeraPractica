@@ -7,12 +7,14 @@
 
 Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 {
-	Ogre::Entity* e = mSM->createEntity("Barrel.mesh");
-	e->setMaterialName("Practica1/ala");
+	Ogre::Entity* e = mSM->createEntity("uv_sphere.mesh");
+	e->setMaterialName("IG2/agujeroGLSL");
 	mNode->attachObject(e);
+	float scale = 0.3;
+	mNode->setScale(scale,scale,scale);
 	mNode->setInitialState();
 
-	Ogre::Real duracion = 16;
+	Ogre::Real duracion = 8;
 	Ogre::Animation* animation = mSM->createAnimation("animVV", duracion);
 	Ogre::NodeAnimationTrack* track = animation->createNodeTrack(0);
 	animation->setInterpolationMode(Ogre::Animation::IM_SPLINE);
@@ -22,7 +24,7 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 	Ogre::Vector3 keyframePos(0., 0., 0.); // posición inicial
 	Ogre::Vector3 src(0, 0, 1); // orientación inicial
 	Ogre::Real durPaso = duracion / 4.0; // uniformes
-	long longDesplazamiento = 50; // desplazamiento
+	long longDesplazamiento = 20; // desplazamiento
 
 	Ogre::TransformKeyFrame* kf; // 4 keyFrames: origen(0), abajo, arriba, origen(3)
 	kf = track->createNodeKeyFrame(durPaso * 0); // Keyframe 0: origen

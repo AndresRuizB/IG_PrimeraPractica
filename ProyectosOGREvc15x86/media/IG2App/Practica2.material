@@ -39,7 +39,6 @@ material Practica2/space
 			    texture spaceSky.jpg
 				tex_coord_set 0
 				rotate_anim 0.02
-				colour_op add
 			}
 
 			texture_unit {
