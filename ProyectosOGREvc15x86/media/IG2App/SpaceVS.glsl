@@ -2,7 +2,6 @@
 in vec4 vertex; // atributos de los vértices a procesar
 in vec2 uv0; // coordenadas de textura 0
 uniform mat4 modelViewProjMat; // constante de programa
-uniform float ZF; // constante de programa
 uniform float SinTiempo;
 out vec2 vUv0; // out del vertex shader
 out vec2 vUv1;

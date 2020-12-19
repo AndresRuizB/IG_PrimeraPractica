@@ -7,8 +7,8 @@
 
 Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 {
-	Ogre::Entity* e = mSM->createEntity("Barrel.mesh");
-	e->setMaterialName("Practica1/ala");
+	Ogre::Entity* e = mSM->createEntity("uv_sphere.mesh");
+	e->setMaterialName("IG2/holesGLSL");
 	mNode->attachObject(e);
 	mNode->setInitialState();
 

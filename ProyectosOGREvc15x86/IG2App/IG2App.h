@@ -63,6 +63,8 @@ protected:
   Plano* plano3 = nullptr;
   Simbad* simbad = nullptr;
   Boya* boya = nullptr;
+  bool lumin = true;
+  bool edge = true;
 
   int mSceneIndex = 11;
 
