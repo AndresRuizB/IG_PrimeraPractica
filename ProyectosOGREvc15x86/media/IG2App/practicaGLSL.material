@@ -84,7 +84,9 @@ geometry_program ExplotaGS glsl { // también para el GS
 	output_operation_type triangle_strip // las declaraciones
 	max_output_vertices 3 // del Geometry shader
 	default_params { // para las uniform del shader
+		param_named_auto modelViewMat worldview_matrix
 		param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto normalMat inverse_transpose_worldview_matrix
 		param_named_auto tiempo time
 	} 
 } 
@@ -96,6 +98,9 @@ fragment_program ExplotaFS glsl
 		param_named texturaL int 0 // 1º unidad de textura -> *
 		param_named texturaM int 1 // 2º unidad de textura -> *
 		param_named_auto Flipping render_target_flipping
+		param_named_auto lightAmbient ambient_light_colour 0
+		param_named_auto lightDiffuse light_diffuse_colour 0
+		param_named_auto lightPosition light_position_view_space 0
 	}
 }
 
@@ -123,6 +128,20 @@ fragment_program NormalesFS glsl
 	default_params {
 	}
 }
+
+geometry_program Explota2GS glsl { // también para el GS
+	source Explota2GS.glsl // archivo del Geometry Shader
+	input_operation_type triangles // tiene que coincidir con
+	output_operation_type triangle_strip // las declaraciones
+	max_output_vertices 3 // del Geometry shader
+	default_params { // para las uniform del shader
+		param_named_auto modelViewMat worldview_matrix
+		param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto normalMat inverse_transpose_worldview_matrix
+		param_named_auto tiempo time
+		param_named_auto tiempo2pi sintime_0_2pi 32
+	} 
+} 
 
 material IG2/spaceGLSL
 {
@@ -265,7 +284,7 @@ material IG2/Explota2GS {
 			cull_software none
 			vertex_program_ref ExplotaVS { }
 			fragment_program_ref ExplotaFS { }
-			geometry_program_ref ExplotaGS { } // también para el GS
+			geometry_program_ref Explota2GS { } // también para el GS
 			texture_unit
 				{
 				texture BumpyMetal.jpg
