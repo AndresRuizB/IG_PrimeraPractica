@@ -9,6 +9,7 @@ public:
 	~Boya() {};
 
 	//virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
+	virtual void receiveEvent(MessageType msgType, EntidadIG* entidad);
 	virtual void frameRendered(const Ogre::FrameEvent& evt);
 };
 

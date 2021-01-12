@@ -46,7 +46,7 @@ fragment_program HolesFS glsl //nombre para el shader
 
 vertex_program RenderQuadVS glsl
 {
-	source RenderQuadVS.glsl // podemos reutilizar
+	source RenderQuadVS.glsl 
 	default_params // valores para las variable uniform
 	{
 		param_named_auto modelViewProjMat worldviewproj_matrix
@@ -67,6 +67,60 @@ fragment_program Kernel3x3PS glsl
 	default_params {
 		param_named RTT0 int 0 // textura con la escena
 		param_named kernel float9 0 0 0 0 1 0 0 0 0
+	}
+}
+
+vertex_program ExplotaVS glsl
+{
+	source ExplotaVS.glsl
+	default_params 
+	{
+	}
+}
+
+geometry_program ExplotaGS glsl { // también para el GS
+	source ExplotaGS.glsl // archivo del Geometry Shader
+	input_operation_type triangles // tiene que coincidir con
+	output_operation_type triangle_strip // las declaraciones
+	max_output_vertices 3 // del Geometry shader
+	default_params { // para las uniform del shader
+		param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto tiempo time
+	} 
+} 
+
+fragment_program ExplotaFS glsl
+{
+	source ExplotaFS.glsl
+	default_params {
+		param_named texturaL int 0 // 1º unidad de textura -> *
+		param_named texturaM int 1 // 2º unidad de textura -> *
+		param_named_auto Flipping render_target_flipping
+	}
+}
+
+vertex_program NormalesVS glsl
+{
+	source NormalesVS.glsl
+	default_params 
+	{
+	}
+}
+
+geometry_program NormalesGS glsl {
+	source NormalesGS.glsl // archivo del Geometry Shader
+	input_operation_type triangles // tiene que coincidir con
+	output_operation_type line_strip // las declaraciones del
+	max_output_vertices 6 // Geometry shader
+	default_params { // para las uniform del shader
+		param_named_auto modelViewProjMat worldviewproj_matrix
+	} 
+}
+
+fragment_program NormalesFS glsl
+{
+	source NormalesFS.glsl
+	default_params {
 	}
 }
 
@@ -172,4 +226,54 @@ material IG2/EdgeEmbossPS {
 			}
 		}
 	} 
+}
+
+material IG2/ExplotaGS {
+	technique {
+		pass { 
+			cull_hardware none
+			cull_software none
+			vertex_program_ref ExplotaVS { }
+			fragment_program_ref ExplotaFS { }
+			geometry_program_ref ExplotaGS { } // también para el GS
+			texture_unit
+				{
+				texture BumpyMetal.jpg
+				}
+			texture_unit
+				{
+				texture corrosion.jpg
+				}
+		} 
+	}
+}
+
+material IG2/NormalesGS {
+	technique { 
+		pass {
+			vertex_program_ref NormalesVS { }
+			fragment_program_ref NormalesFS { }
+			geometry_program_ref NormalesGS { } // también para el GS
+		} 
+	}
+}
+
+material IG2/Explota2GS {
+	technique {
+		pass { 
+			cull_hardware none
+			cull_software none
+			vertex_program_ref ExplotaVS { }
+			fragment_program_ref ExplotaFS { }
+			geometry_program_ref ExplotaGS { } // también para el GS
+			texture_unit
+				{
+				texture BumpyMetal.jpg
+				}
+			texture_unit
+				{
+				texture corrosion.jpg
+				}
+		} 
+	}
 }
