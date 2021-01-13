@@ -45,7 +45,7 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 
 	animationState = mSM->createAnimationState("animVV");
 	animationState->setLoop(true);
-	//animationState->setEnabled(true);
+	animationState->setEnabled(true);
 	
 }
 
@@ -55,6 +55,7 @@ void Boya::receiveEvent(MessageType msgType, EntidadIG* entidad)
 	{
 	case EventoR:
 	{
+		animationState->setEnabled(false);
 		mNode->detachAllObjects();
 		Ogre::Entity* e = mSM->createEntity("uv_sphere.mesh");
 		//e->setMaterialName("IG2/ExplotaGS");
