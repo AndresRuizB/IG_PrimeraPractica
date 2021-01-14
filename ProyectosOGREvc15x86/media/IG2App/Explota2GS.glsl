@@ -8,7 +8,7 @@ uniform mat4 normalMat; // = transpose(inverse(modelView))
 uniform float tiempo;
 uniform float tiempo2pi;
 const float VD = 10; // longitud del desplazamiento
-const float SF = 0.5; // factor de escala
+const float SF = 0.4; // factor de escala
 
 in vec2 v_TexCoord[];
 in vec3 v_Normal[];
@@ -18,7 +18,7 @@ out vec3 vViewNormal; // coordenadas de la normal en View space
 out vec3 vViewVertex; // coordenadas del vértice en View space
 
 vec3 baricentroVec(vec3 vertex[3]) {
-    return (vertex[0] + vertex[1] + vertex[2]) / 3.0;
+    return normalize((vertex[0] + vertex[1] + vertex[2]) / 3.0);
 }
 
 void main() {
@@ -30,12 +30,10 @@ void main() {
                     vec4(0, 1, 0, 0),
                     vec4(sin(tiempo2pi), 0, cos(tiempo2pi), 0),
                     vec4(0, 0, 0, 1));
-    vec3 baricentro = baricentroVec(vertices);
-    vec3 dir = normalize(baricentro);
-    for (int i=0; i<3; ++i) { // para emitir 3 vértices
-        vec3 scaleDir = normalize(vertices[i] - baricentro);
 
-        vec3 posDes = vertices[i] + (dir * VD * tiempo) + (scaleDir * SF * tiempo);
+    vec3 dir = baricentroVec(vertices);
+    for (int i=0; i<3; ++i) { // para emitir 3 vértices
+        vec3 posDes = (vertices[i] * SF * tiempo) + (dir * VD * tiempo);
         // se aplica la matriz de rotacion
         vec4 vPosDes = vec4(posDes,1.0) * yawMatrix;
         // outs para el vertice

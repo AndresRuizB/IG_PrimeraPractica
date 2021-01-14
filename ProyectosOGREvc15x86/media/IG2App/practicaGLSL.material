@@ -241,7 +241,7 @@ material IG2/EdgeEmbossPS {
 			{
 				// sin imagen de archivo -> previous render target
 				filtering none // tiene la resolución del viewport
-				tex_address_mod
+				tex_address_mod clamp
 			}
 		}
 	} 
