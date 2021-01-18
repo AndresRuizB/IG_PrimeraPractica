@@ -73,6 +73,9 @@ protected:
 
   Ogre::Camera* camRef = nullptr;
 
+  bool luminActive = true;
+  bool edgeActive = true;
+
   int mSceneIndex = 10;
 
 };

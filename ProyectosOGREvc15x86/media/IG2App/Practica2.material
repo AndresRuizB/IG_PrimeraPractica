@@ -70,7 +70,7 @@ material Practica2/reflejo
 				{
 				texture Water02.jpg
 				scroll_anim 0.1 0.0
-				color_op modulate
+				colour_op modulate
 				}
 		}
 	}

@@ -7,9 +7,9 @@
 
 Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 {
-	Ogre::Entity* e = mSM->createEntity("uv_sphere.mesh");
-	e->setMaterialName("IG2/agujeroGLSL");
-	mNode->attachObject(e);
+	entity = mSM->createEntity("uv_sphere.mesh");
+	entity->setMaterialName("IG2/agujeroGLSL");
+	mNode->attachObject(entity);
 	float scale = 0.3;
 	mNode->setScale(scale,scale,scale);
 	mNode->setInitialState();
@@ -54,4 +54,19 @@ Boya::Boya(Ogre::SceneNode* node) : EntidadIG(node)
 void Boya::frameRendered(const Ogre::FrameEvent& evt)
 {
 	animationState->addTime(evt.timeSinceLastFrame);
+}
+
+void Boya::receiveEvent(MessageType msgType, EntidadIG* entidad)
+{
+	switch (msgType)
+	{
+	case EventoR:
+	{
+		entity->setMaterialName("IG2/ExplotaGS");
+		animationState->setEnabled(false);
+	}
+	break;
+	default:
+		break;
+	}
 }

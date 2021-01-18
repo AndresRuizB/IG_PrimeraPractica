@@ -11,6 +11,7 @@
 #include <OgreSharedPtr.h>
 #include <OgreTexture.h>
 #include <OgreHardwarePixelBuffer.h>
+#include <OgreCompositorManager.h>
 
 using namespace Ogre;
 
@@ -45,7 +46,16 @@ bool IG2App::keyPressed(const OgreBites::KeyboardEvent& evt)
 			mLunaNode->translate(-150, 0, 0, Ogre::Node::TS_LOCAL);
 		}
 	}
+	else if (evt.keysym.sym == SDLK_l) {
+		CompositorManager::getSingleton().setCompositorEnabled(mSM->getCamera("Cam")->getViewport(), "IG2/Luminance", luminActive);
+		luminActive = !luminActive;
+	}
+	else if (evt.keysym.sym == SDLK_k) {
 
+		CompositorManager::getSingleton().setCompositorEnabled(mSM->getCamera("Cam")->getViewport(), "IG2/EdgeEmboss", edgeActive);
+		edgeActive = !edgeActive;
+
+	}
 
 	//else if (evt.keysym.sym >= 48 && evt.keysym.sym <= 57) {
 	//	mSceneIndex = evt.keysym.sym - 48;
@@ -146,6 +156,13 @@ void IG2App::setupScene(void)
 	mLightNode->setDirection(Ogre::Vector3(0.0, -1.0, -1));  //vec3.normalise();
 	//lightNode->setPosition(0, 0, 1000);
 	//mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+
+	CompositorManager::getSingleton().addCompositor(vp, "IG2/Luminance");
+	CompositorManager::getSingleton().addCompositor(vp, "IG2/EdgeEmboss");
+
+
+
+
 	//------------------------------------------------------------------------
 
 	// finally something to render
@@ -431,6 +448,7 @@ void IG2App::setupScene(void)
 		boyaNode->translate(0, -220, 0);
 		boya = new Boya(boyaNode);
 		addInputListener(boya);
+		EntidadIG::addListener(boya);
 
 		//mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -200), "Practica2/space", 1, 1, true, 0.0, 10, 10);
 		mSM->setSkyPlane(true, Plane(Vector3::UNIT_Z, -60), "IG2/spaceGLSL", 1, 1, true, 1.5, 10, 10);

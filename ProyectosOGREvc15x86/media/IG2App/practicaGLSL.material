@@ -49,8 +49,8 @@ vertex_program AgujeroVS glsl
 {
 	source AgujeroVS.glsl
 	default_params{
-		param_named_auto modelViewProjMat worldviewproj_matrix
 		param_named_auto modelViewMat worldview_matrix
+		param_named_auto modelViewProjMat worldviewproj_matrix
 		param_named_auto normalMat inverse_transpose_world_matrix
 	}
 }
@@ -62,7 +62,11 @@ fragment_program AgujeroFS glsl
 	{
 		param_named texturaL int 0
 		param_named texturaM int 1
-		param_named BF float 0.5
+		param_named InColor float4 1.0 1.0 0.0 1.0 
+		param_named OutColor float4 0.0 1.0 0.0 1.0
+		param_named_auto Flipping render_target_flipping
+		param_named_auto lightDiffuse light_diffuse_colour 0
+		param_named_auto lightPosition light_position_view_space 0
 	}
 }
 
@@ -77,21 +81,152 @@ material IG2/agujeroGLSL
 			fragment_program_ref AgujeroFS
 			{
 			}
-
-			texture_unit {
-			    texture BumpyMetal.jpg 2d
-				tex_address_mode clamp
-				filtering bilinear
-			}
-
-			texture_unit {
-			    texture corrosion.jpg 2d
-				tex_address_mode clamp
-				filtering bilinear
-			}
-
+			
 			cull_hardware none
 			cull_software none
+			lighting on
+			diffuse vertexcolour
+
+			texture_unit {
+			    texture BumpyMetal.jpg 
+				tex_address_mode clamp
+				filtering bilinear
+			}
+
+			texture_unit {
+			    texture corrosion.jpg 
+				tex_address_mode wrap
+				colour_op modulate
+			}
+        }
+	}
+}
+
+vertex_program RenderQuadVS glsl
+{
+	source RenderQuadVS.glsl 
+	default_params 
+	{
+		param_named_auto modelViewProjMat worldviewproj_matrix
+	}
+}
+
+fragment_program LuminancePS glsl
+{
+	source LuminancePS.glsl
+	default_params {
+		param_named RTT0 int 0
+	}
+}
+
+fragment_program Kernel3x3PS glsl
+{
+	source Kernel3x3PS.glsl
+	default_params {
+		param_named RTT0 int 0
+		param_named kernel float9 0 0 0 0 1 0 0 0 0
+	}
+}
+
+material IG2/LuminancePS {
+	technique {
+		pass {
+			depth_check off 
+			depth_write off
+			vertex_program_ref RenderQuadVS 
+			{
+			}
+			fragment_program_ref LuminancePS 
+			{
+			}
+			texture_unit RTT0
+			{
+				// sin imagen de archivo -> previous render target
+				filtering none 
+			}
+		}
+	} 
+}
+
+material IG2/EdgeEmbossPS {
+	technique {
+		pass {
+			depth_check off 
+			depth_write off
+			vertex_program_ref RenderQuadVS 
+			{
+			}
+			fragment_program_ref Kernel3x3PS
+			{
+				param_named kernel float9 -4 -2 0 -2 1 2 0 2 4
+			}
+			texture_unit RTT0
+			{
+				// sin imagen de archivo -> previous render target -4 -2 0 -2 1 2 0 2 4
+				filtering none
+				tex_address_mode clamp
+			}
+		}
+	} 
+} 
+
+vertex_program ExplotaVS glsl
+{
+	source ExplotaVS.glsl
+	default_params{
+	}
+}
+
+geometry_program ExplotaGS glsl 
+{
+	source ExplotaGS.glsl
+	input_operation_type triangles 
+	output_operation_type triangle_strip 
+	max_output_vertices 3    
+	default_params{ 
+	param_named_auto modelViewProjMat worldviewproj_matrix
+	param_named_auto tiempo time
+}  }
+
+fragment_program ExplotaFS glsl
+{
+	source ExplotaFS.glsl
+	default_params
+	{
+		param_named texturaL int 0
+		param_named texturaM int 1
+		param_named_auto Flipping render_target_flipping
+	}
+}
+
+material IG2/ExplotaGS
+{
+	technique {
+		pass {
+		    
+			vertex_program_ref ExplotaVS
+			{}
+			geometry_program_ref ExplotaGS
+			{}
+			fragment_program_ref ExplotaFS
+			{}
+			
+			cull_hardware none
+			cull_software none
+			lighting on
+			diffuse vertexcolour
+
+			texture_unit {
+			    texture BumpyMetal.jpg
+				tex_address_mode clamp
+				filtering bilinear
+			}
+
+			texture_unit {
+			    texture corrosion.jpg 
+				tex_address_mode wrap
+				colour_op modulate
+			}
         }
 	}
 }
