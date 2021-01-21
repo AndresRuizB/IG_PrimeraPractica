@@ -157,6 +157,8 @@ void IG2App::setupScene(void)
 	//lightNode->setPosition(0, 0, 1000);
 	//mSM->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
+	mSM->setAmbientLight(Ogre::ColourValue(0.2, 0.2, 0.2));
+
 	CompositorManager::getSingleton().addCompositor(vp, "IG2/Luminance");
 	CompositorManager::getSingleton().addCompositor(vp, "IG2/EdgeEmboss");
 

@@ -62,7 +62,7 @@ void Boya::receiveEvent(MessageType msgType, EntidadIG* entidad)
 	{
 	case EventoR:
 	{
-		entity->setMaterialName("IG2/ExplotaGS");
+		entity->setMaterialName("IG2/Explota2GS");
 		animationState->setEnabled(false);
 	}
 	break;

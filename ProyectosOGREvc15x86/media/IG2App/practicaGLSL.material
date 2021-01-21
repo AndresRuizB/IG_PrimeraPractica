@@ -185,6 +185,8 @@ geometry_program ExplotaGS glsl
 	max_output_vertices 3    
 	default_params{ 
 	param_named_auto modelViewProjMat worldviewproj_matrix
+	param_named_auto modelViewMat worldview_matrix
+	param_named_auto normalMat inverse_transpose_worldview_matrix
 	param_named_auto tiempo time
 }  }
 
@@ -196,6 +198,9 @@ fragment_program ExplotaFS glsl
 		param_named texturaL int 0
 		param_named texturaM int 1
 		param_named_auto Flipping render_target_flipping
+		param_named_auto lightAmbient ambient_light_colour 0
+		param_named_auto lightDiffuse light_diffuse_colour 0
+		param_named_auto lightPosition light_position_view_space 0
 	}
 }
 
@@ -228,5 +233,71 @@ material IG2/ExplotaGS
 				colour_op modulate
 			}
         }
+	}
+}
+
+vertex_program NormalesVS glsl
+{
+	source NormalesVS.glsl
+	default_params{}
+}
+
+geometry_program NormalesGS glsl {
+	source NormalesGS.glsl // archivo del Geometry Shader
+	input_operation_type triangles // tiene que coincidir con
+	output_operation_type line_strip // las declaraciones del
+	max_output_vertices 6 // Geometry shader
+	default_params { // para las uniform del shader
+		param_named_auto modelViewProjMat worldviewproj_matrix
+	} 
+}
+
+fragment_program NormalesFS glsl
+{
+	source NormalesFS.glsl
+	default_params {}
+}
+
+material IG2/NormalesGS {
+	technique { 
+		pass {
+			vertex_program_ref NormalesVS { }
+			fragment_program_ref NormalesFS { }
+			geometry_program_ref NormalesGS { } // también para el GS
+		} 
+	}
+}
+
+geometry_program Explota2GS glsl { // también para el GS
+	source Explota2GS.glsl // archivo del Geometry Shader
+	input_operation_type triangles // tiene que coincidir con
+	output_operation_type triangle_strip // las declaraciones
+	max_output_vertices 3 // del Geometry shader
+	default_params { // para las uniform del shader
+		param_named_auto modelViewMat worldview_matrix
+		param_named_auto modelViewProjMat worldviewproj_matrix
+		param_named_auto normalMat inverse_transpose_worldview_matrix
+		param_named_auto tiempo time
+		param_named_auto tiempo2pi sintime_0_2pi 32
+	} 
+} 
+
+material IG2/Explota2GS {
+	technique {
+		pass { 
+			cull_hardware none
+			cull_software none
+			vertex_program_ref ExplotaVS { }
+			fragment_program_ref ExplotaFS { }
+			geometry_program_ref Explota2GS { } // también para el GS
+			texture_unit
+				{
+				texture BumpyMetal.jpg
+				}
+			texture_unit
+				{
+				texture corrosion.jpg
+				}
+		} 
 	}
 }

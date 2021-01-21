@@ -37,7 +37,7 @@ void Molino::receiveEvent(MessageType msgType, EntidadIG* entidad)
 	{
 		techoNode->detachAllObjects();
 		Ogre::Entity* e = mSM->createEntity("sphere.mesh");
-		e->setMaterialName("Practica1/plano2");
+		e->setMaterialName("IG2/NormalesGS");
 		techoNode->attachObject(e);
 		aspasMov = false;
 		aspas->ocultaAdornos();

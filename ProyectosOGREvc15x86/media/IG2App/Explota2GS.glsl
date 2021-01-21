@@ -7,33 +7,47 @@ uniform mat4 modelViewProjMat;// para pasar a Clip-Space
 uniform mat4 modelViewMat;
 uniform mat4 normalMat;
 const float VD=20;// longitud del desplazamiento
+const float ScaleF=1.1;
 uniform float tiempo;
+uniform float tiempo2pi;
 
 in vec2 v_TexCoord[];
 in vec3 v_Normal[];
 
 out vec2 vUv0;
-out vec3 vViewNormal; // coordenadas de la normal en View space
-out vec3 vViewVertex; // coordenadas del vértice en View space
+out vec3 vViewNormal;
+out vec3 vViewVertex;
 
-vec3 normalVec(vec3 vertex[3]){
-    return normalize(cross(vertex[0]-vertex[1],vertex[1]-vertex[2]));
-}// vector normal al triángulo
+vec3 vecBaricentro(vec3 vertex[3]){
+    
+    return(vertex[0]+vertex[1]+vertex[2])/3.;
+    
+}
 
 void main(){
     vec3 vertices[3]=vec3[](
         gl_in[0].gl_Position.xyz,
         gl_in[1].gl_Position.xyz,
     gl_in[2].gl_Position.xyz);
-    vec3 dir=normalVec(vertices);// para los 3 vértices
+    
+    mat4 yawMatrix=mat4(vec4(cos(tiempo2pi),0,-sin(tiempo2pi),0),
+    vec4(0,1,0,0),
+    vec4(sin(tiempo2pi),0,cos(tiempo2pi),0),
+    vec4(0,0,0,1));
+    vec3 barV=vecBaricentro(vertices);
+    vec3 dir=normalize(barV);
+    
     for(int i=0;i<3;++i){// para emitir 3 vértices
-        vec3 posDes=vertices[i]+dir*VD*tiempo;
-        // coordenadas de textura para el vertice
+        vec3 scaleV=normalize(vertices[i]-barV);
+        
+        vec3 posDes=vertices[i]+(dir*VD*tiempo)+(scaleV*ScaleF*tiempo);
+        vec4 posDesV=vec4(posDes,1.)*yawMatrix;
+        
         vUv0=v_TexCoord[i];
-        vViewVertex = vec3(modelViewMat * vec4(vertices[i],0));
-        vViewNormal = normalize(vec3(normalMat * vec4(v_Normal[i],0)));
+        vViewVertex=vec3(modelViewMat*vec4(vertices[i],0));
+        vViewNormal=normalize(vec3(normalMat*vec4(v_Normal[i],0)));
         // vértice desplazado (los 3 en la misma dirección)
-        gl_Position=modelViewProjMat*vec4(posDes,1.);
+        gl_Position=modelViewProjMat*posDesV;
         // paso a Clip-Space
         EmitVertex();
     }
