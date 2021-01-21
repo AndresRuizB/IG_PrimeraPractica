@@ -6,8 +6,8 @@ layout(triangle_strip,max_vertices=3)out;// emite 1 triángulo
 uniform mat4 modelViewProjMat;// para pasar a Clip-Space
 uniform mat4 modelViewMat;
 uniform mat4 normalMat;
-const float VD=20;// longitud del desplazamiento
-const float ScaleF=1.1;
+const float VD=40;// longitud del desplazamiento
+const float ScaleF=0.6;
 uniform float tiempo;
 uniform float tiempo2pi;
 
@@ -20,7 +20,7 @@ out vec3 vViewVertex;
 
 vec3 vecBaricentro(vec3 vertex[3]){
     
-    return(vertex[0]+vertex[1]+vertex[2])/3.;
+    return normalize(vertex[0]+vertex[1]+vertex[2])/3.;
     
 }
 
@@ -34,13 +34,13 @@ void main(){
     vec4(0,1,0,0),
     vec4(sin(tiempo2pi),0,cos(tiempo2pi),0),
     vec4(0,0,0,1));
+
     vec3 barV=vecBaricentro(vertices);
-    vec3 dir=normalize(barV);
     
     for(int i=0;i<3;++i){// para emitir 3 vértices
         vec3 scaleV=normalize(vertices[i]-barV);
         
-        vec3 posDes=vertices[i]+(dir*VD*tiempo)+(scaleV*ScaleF*tiempo);
+        vec3 posDes=(vertices[i]*ScaleF*tiempo)+(barV*VD*tiempo);
         vec4 posDesV=vec4(posDes,1.)*yawMatrix;
         
         vUv0=v_TexCoord[i];
